@@ -6,10 +6,16 @@ Confirmed technology decisions for Woppa MVP development.
 - **Framework**: React Native 0.80+
 - **Language**: TypeScript
 - **Platforms**: Android + iOS
+- **State Management**: 
+  - TanStack Query (React Query) for server state management
+  - Zustand for client state management
 - **Reasoning**: Hybrid development to reduce time and costs while maintaining native performance
 
 ## Web Dashboard
 - **Framework**: React 19+ with TypeScript
+- **State Management**: 
+  - TanStack Query (React Query) for server state management
+  - Zustand for client state management
 - **Reasoning**: Mature ecosystem, team experience, and compatibility with UI generation tools
 
 ## Backend & Database
@@ -37,7 +43,6 @@ Confirmed technology decisions for Woppa MVP development.
 - Payment processing system
 - Push notifications service
 - Admin panel solution (considering AdminJS)
-- State management libraries
 - UI component libraries
 
 ---
