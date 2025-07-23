@@ -24,6 +24,9 @@ This repository is for **requirements analysis, epic definition, and work estima
 
 ## Additional Guidelines
 - All documents you generate must be written in English
+- All your plans must be written in English
+- Always refer to the requirements document when defining any plan I request
+- Always take the requirements from the document and the wireframes. If there's any doubt, the requirements document is the source of truth, as it's the most up-to-date.
 
 ## Estimation Guidelines
 - For time estimation, whenever you provide a total, group by team so it's easy to see how much development work will take, which is what we will charge for in this stage.
