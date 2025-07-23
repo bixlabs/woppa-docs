@@ -76,7 +76,7 @@ Constrains (Restricciones)
 
 * El proyecto debe ajustarse a un tiempo de desarrollo acotado para su entrega inicial.
 
-* El stack tecnológico debe priorizar agilidad y bajo costo operativo (ej.: frameworks híbridos, Firebase, Google Forms para validación).
+* El stack tecnológico debe priorizar agilidad y bajo costo operativo.
 
 * Cumplimiento con LGPD (Ley General de Protección de Datos de Brasil) y mejores prácticas de seguridad de datos.
 
