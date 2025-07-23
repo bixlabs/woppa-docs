@@ -21,3 +21,6 @@ This repository is for **requirements analysis, epic definition, and work estima
 - `source-specs/requirements.docx.md`: **Primary requirements document** this is the authoritative source for all technical and functional requirements
 - `source-specs/discovery-presentación-final.md`: Discovery phase findings (historical context, some details superseded by requirements.docx.md)
 - `source-specs/*.png`: Wireframes for key user flows (current UI reference)
+
+## Additional Guidelines
+- Todo documento que generes debe de estar escrito en ingles
