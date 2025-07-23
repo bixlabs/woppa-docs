@@ -23,4 +23,7 @@ This repository is for **requirements analysis, epic definition, and work estima
 - `source-specs/*.png`: Wireframes for key user flows (current UI reference)
 
 ## Additional Guidelines
-- Todo documento que generes debe de estar escrito en ingles
+- All documents you generate must be written in English
+
+## Estimation Guidelines
+- For time estimation, whenever you provide a total, group by team so it's easy to see how much development work will take, which is what we will charge for in this stage.
