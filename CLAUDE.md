@@ -22,6 +22,11 @@ This repository is for **requirements analysis, epic definition, and work estima
 - `source-specs/discovery-presentación-final.md`: Discovery phase findings (historical context, some details superseded by requirements.docx.md)
 - `source-specs/*.png`: Wireframes for key user flows (current UI reference)
 
+### Technical Documentation
+- `technical/tech-stack.md`: Technology choices and pending decisions for Woppa MVP
+- `technical/infrastructure.md`: Cloud infrastructure, storage, containerization, and CI/CD pipeline documentation
+- `technical/system-architecture-overview.md`: High-level system components, interactions, and architectural decisions for the MVP
+
 ## Additional Guidelines
 - All documents you generate must be written in English
 - All your plans must be written in English
