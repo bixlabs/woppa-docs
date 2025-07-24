@@ -38,9 +38,16 @@ You have full access to all relevant documentation. You **must** analyze and vis
 
 ## 🧵 Additional Guidelines
 
-- Epics may span multiple screens or wireframes.
-- Grouping can be screen-based or logical (cross-cutting); use your judgment.
-- Do not mix client platforms. If functionality appears in both mobile and web, split into two epics.
+### 🔄 Wireframe-Centered Structuring (Epic Design Rule)
+
+- Start from **what the user sees and does** in the wireframes — mobile and web — as the **foundation for epic grouping**.  
+- If functionality appears in both platforms, split the epic accordingly and adapt each to the appropriate UI/UX.  
+- Only **after covering all user-facing flows**, define backend/infrastructure/system-only epics as needed.  
+- If a feature lacks wireframes but is required for functionality (e.g. push notification scheduler, analytics dashboard), document it as a separate epic, with clear justification and dependencies.
+
+> ⚠️ Do not mix client platforms or bundle internal services unless absolutely necessary.
+
+- Epics may span multiple screens or wireframes when they support a common goal.
 - Always use **Sequential Thinking (MCP)**, including the Context7 variant, to ensure decomposition and grouping is disciplined, layered, and avoids hallucination.
 - If there are edge cases not covered in docs but logically necessary, flag them in ⚠️.
 - You are expected to identify and include critical setup or production-readiness epics if applicable to the type of product (e.g., initial infrastructure, CI/CD setup, release readiness).
@@ -143,16 +150,6 @@ graph LR
 - EPIC-NOTIFY
 - EPIC-ANALYTICS
 - EPIC-CONFIG
-
----
-
-## 🧵 Additional Guidelines
-
-- Use **Sequential Thinking (MCP)** and **Context7** when defining and organizing epics.
-- Epics may span multiple screens or wireframes.
-- Grouping can be screen-based or logical (cross-cutting); use your judgment.
-- Always include **setup epics** (e.g., environment/infrastructure) and **deployment epics** if applicable to the delivery model (e.g., mobile store vs web launch).
-- If there are edge cases not covered in docs but logically necessary, flag them in ⚠️.
 
 ---
 
