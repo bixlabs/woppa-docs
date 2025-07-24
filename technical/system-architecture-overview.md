@@ -104,21 +104,6 @@ The system follows a **centralized API architecture** where all business logic f
 └───────┘  └─────────────┘  └─────────────┘  └─────────────┘  └─────────┘
 ```
 
-### Key Interactions
-
-**Consumer Experience Flow:**
-1. Mobile App → Core API → Geolocation Service (map data)
-2. Mobile App → Core API → Database (promotion listings)
-3. Mobile App → Core API → Auth Service (registration/login)
-4. Mobile App → Core API → Payment Service (process payment via Mercado Pago or payment networks)
-5. Mobile App → Core API → Database (redemption code generation after payment confirmation)
-
-**Web Panel Flow:**
-1. Web Panel → Core API → Auth Service (merchant/staff login with role-based access)
-2. Web Panel → Core API → File Storage (promotion image uploads)
-3. Web Panel → Core API → Geolocation Service (merchant address validation)
-4. Web Panel → Core API → Database (promotion submission, validation, and approval)
-
 ## Key Architectural Considerations
 
 ### MVP Constraints and Shortcuts
@@ -127,7 +112,7 @@ The system follows a **centralized API architecture** where all business logic f
 
 **Manual Operations**: 
 - Promotion validation requires human approval (12-hour SLA)
-- Redemption verification is visual at merchant location
+- Redemption requires merchant to validate customer's redemption code through web panel
 - No automated fraud detection or real-time inventory management
 
 **Limited Scope**:
