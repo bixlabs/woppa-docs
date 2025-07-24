@@ -11,8 +11,9 @@ Confirmed technology decisions for Woppa MVP development.
   - Zustand for client state management
 - **Reasoning**: Hybrid development to reduce time and costs while maintaining native performance
 
-## Web Dashboard
+## Web Panel
 - **Framework**: React 19+ with TypeScript
+- **UI Components**: shadcn/ui
 - **State Management**: 
   - TanStack Query (React Query) for server state management
   - Zustand for client state management
@@ -40,10 +41,11 @@ Confirmed technology decisions for Woppa MVP development.
 
 ## Pending Decisions
 - Backend framework (Express.js vs alternatives)
+- Authentication system (Firebase Auth vs direct Google OAuth)
+- SMS validation service (Twilio vs Brazilian providers like Zenvia, TotalVoice)
 - Payment processing system
 - Push notifications service
 - Admin panel solution (considering AdminJS)
-- UI component libraries
 
 ---
-*Document updated: 2025-01-23*
+*Document updated: 2025-01-24*
