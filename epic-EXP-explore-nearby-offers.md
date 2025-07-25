@@ -57,6 +57,7 @@ List any unclear, undefined, or mismatched areas affecting the epic as a whole.
 - 🧩 **External dependency unclear**: Google Maps API integration specifics and rate limits
 - ⚠️ **Uncovered edge case**: Behavior when location services are disabled system-wide vs app-level
 - 🧭 **Mismatch between document and wireframe**: Requirements mention expansion/contraction of search radius but wireframe doesn't show this control
+- 🔄 **UX flow clarification needed**: Wireframes show "Obtener oferta" in exploration views but should be "Ver detalle" to avoid confusion with actual purchase action
 
 ---
 
@@ -204,7 +205,7 @@ Backend API for offer data, offer detail navigation
 
 **✅ Acceptance Criteria**:
 - List displays offers in vertical card format
-- Each card shows business image (or placeholder), business name, category icon, urgency label (if applicable), conditions, 1+1 benefit label, and "Obtener oferta" button
+- Each card shows business image (or placeholder), business name, category icon, urgency label (if applicable), conditions, 1+1 benefit label, and "Ver detalle" button
 - Cards are ordered by proximity and relevance
 - List supports infinite scroll or pagination
 - Cards are tappable to access offer details
@@ -232,6 +233,7 @@ Backend API for offer data, offer detail navigation
 
 **📝 Notes & Observations**
 - Wireframe shows "2x1" but requirements specify "1+1" - using "1+1" per business decisions
+- Wireframe shows "Obtener oferta" button but should be "Ver detalle" to avoid confusion - actual offer acquisition happens in Offer Details screen
 - Image quality and loading performance critical for user experience
 - Urgency labels are managed by Woppa team, not merchants
 
@@ -314,9 +316,9 @@ Map markers (EXP-002), offer details screen (from Offer Redemption epic)
 
 **✅ Acceptance Criteria**:
 - Tapping marker opens preview showing business name and offer type
-- Preview includes navigation option to full offer details
+- Preview includes "Ver detalle" button to navigate to full offer details
 - Preview can be dismissed by tapping outside or close button
-- For clustered markers, shows list of offers at that location
+- For clustered markers, shows list of offers at that location with individual "Ver detalle" buttons
 - Preview loads within 1 second of marker tap
 - Preview works for both single offers and clustered offers
 - Smooth animations for preview appearance/dismissal
@@ -341,6 +343,7 @@ Map markers (EXP-002), offer details screen (from Offer Redemption epic)
 
 **📝 Notes & Observations**
 - Requirements mention tooltip/modal options but don't specify preference
+- Preview should use "Ver detalle" button instead of "Obtener oferta" for clear UX flow - actual offer acquisition happens in Offer Details screen
 - Need to balance information shown vs maintaining map context
 - Clustered marker interaction may need special handling
 
@@ -502,6 +505,12 @@ After analyzing all stories, I've identified the following:
 **Dependencies are well-defined** and create a logical implementation sequence.
 
 **Story coherence is strong** - All stories contribute to the epic's objective of enabling offer exploration without registration barriers.
+
+**UX Flow Clarification Identified**: During analysis, it was identified that wireframes show "Obtener oferta" buttons in multiple places (list view and marker previews) which could confuse users. The correct flow should be:
+- **Exploration views** (list cards, marker previews): "Ver detalle" button → navigates to offer details
+- **Offer Details screen** (Offer Redemption epic): "Obtener oferta" button → initiates purchase process
+
+This ensures a clear user journey: Explore → Review Details → Obtain Offer.
 
 ---
 
