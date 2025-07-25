@@ -21,22 +21,14 @@ This screen shows a list of available offers. Users can browse offers by categor
 **Description:**  
 Displays detailed information about the selected offer, including a link to open directions in Google Maps and an option to redeem the offer.
 
-### Screen: Payment Pending  
-**Wireframe:** _Not defined_  
-**Description:**  
-Temporary screen shown after returning from Mercado Pago, while the backend verifies the payment status. Displays a loading or waiting message.
-
-> Once the payment is confirmed via backend polling, the user is automatically redirected to either the success or failure screen based on the result.
-
-### Screen: Payment (Success / Failure)  
-**Wireframe:** _Not defined_  
-**Description:**  
-Handles the final payment result. Shows a success message if the transaction is confirmed, or an error message if the payment failed or was invalid.
+> If the user is redirected here after a failed payment, an error message will be shown to indicate the issue.
 
 ### Screen: Offer Code  
 **Wireframe:** `woppa-wireframe-5-obtained-cupon.png`  
 **Description:**  
-Displays the unique offer code that the user can present at the store. Shows current status of the offer (e.g., active, used, expired).
+This screen displays the unique offer code that the user can present at the store, along with the current status of the offer (e.g., active, used, expired).
+
+If the user arrives here after completing a payment via Checkout Pro, the app verifies the transaction with the backend before showing the code. While the verification is in progress, a loading state is shown. If the payment is confirmed, the code is displayed. If the payment fails or is invalid, an error message is shown instead.
 
 ---
 
