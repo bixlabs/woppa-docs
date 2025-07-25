@@ -59,6 +59,7 @@ List of wireframes that apply to this epic and the stories that use them.
 - 🧭 **Mismatch between document and wireframe**: Wireframe 4 doesn't show name fields (first name, last name) mentioned in business decisions
 - 📊 **Business decision pending**: Session timeout duration and automatic logout policy
 - ⚠️ **Uncovered edge case**: Handling of existing Google accounts that don't have required profile information
+- 🧩 **Cross-authentication conflict**: Handling of same email across different auth methods (email/password vs Google) needs resolution strategy
 
 ---
 
@@ -141,6 +142,8 @@ Email service provider, backend user creation API, password validation system.
 - Form validates all required fields before enabling submission
 - Successful registration sends verification email to user
 - Clear error messages for validation failures and duplicate emails
+- Form validates email is not already registered with Google OAuth
+- Clear error message for Google-registered emails: "Este email ya está registrado con Google. Usa 'Ingresar con Google'."
 - Terms and conditions checkbox is required before submission
 
 **🧰 Technical Tasks**:
@@ -150,6 +153,9 @@ Email service provider, backend user creation API, password validation system.
 - Create backend API endpoint for user registration (or use Firebase Auth)
 - Integrate email service for verification emails (or use Firebase Auth)
 - Implement duplicate email detection and error handling
+- Implement cross-authentication email conflict detection
+- Add backend API for checking existing registration methods by email
+- Create consistent error messaging for authentication conflicts
 - Add terms and conditions acceptance flow
 - Create client-side form validation logic
 
@@ -207,6 +213,9 @@ Google OAuth 2.0 configuration, Google Cloud Console setup, backend OAuth handli
 - Successful OAuth returns user to app with account created
 - User profile is populated with Google data: name, email, profile picture (if available)
 - If Google account already exists in system, redirect to login instead of duplicate creation
+- OAuth flow validates email is not already registered with email/password
+- Clear error message for email-registered accounts: "Este email ya está registrado. Inicia sesión con email y contraseña."
+- User is redirected to login tab after Google conflict error
 - Error handling for OAuth cancellation or failures
 - Backend creates user record with Google account linking
 
@@ -215,6 +224,9 @@ Google OAuth 2.0 configuration, Google Cloud Console setup, backend OAuth handli
 - Configure Google Sign-In for iOS and Android
 - Create backend OAuth verification and user creation flow
 - Implement Google account duplicate detection
+- Implement cross-authentication email conflict detection
+- Add backend API for checking existing registration methods by email
+- Create consistent error messaging for authentication conflicts
 - Add error handling for OAuth flow failures
 - Create user profile mapping from Google data
 - Add Google account linking to user records
