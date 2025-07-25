@@ -30,6 +30,12 @@ This repository is for **requirements analysis, epic definition, and work estima
 - `source-specs/discovery-presentación-final.md`: Discovery phase findings (historical context, some details superseded by requirements.docx.md)
 - `source-specs/*.png`: Wireframes for key user flows (current UI reference)
 
+### Epic Definitions
+**All defined epics and their screens are contained in the `epics/` directory:**
+- `epics/mobile-epics.md`: Epic definitions for the mobile application
+- `epics/web-panel-epics.md`: Epic definitions for the web panel
+- **Always check these files when you have questions about epics and their contained screens**
+
 ### Technical Documentation
 - `technical/tech-stack.md`: Technology choices and pending decisions for Woppa MVP
 - `technical/infrastructure.md`: Cloud infrastructure, storage, containerization, and CI/CD pipeline documentation
