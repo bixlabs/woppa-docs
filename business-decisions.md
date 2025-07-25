@@ -21,5 +21,10 @@ This document contains confirmed business decisions for the Woppa MVP project. T
 - **Decision**: No specific wireframes will be created for payment flow. Implementation must follow most straightforward MVP approach where payment is completed before redemption code is generated and displayed.
 - **Affects**: Wireframe 5 (Obtained Coupon) and payment flow design
 
+### Mercado Pago implementation decision:
+- **Date**: 2025-01-25
+- **Decision**: Use Mercado Pago Checkout Pro for payment processing. This provides an embedded controlled experience that includes the complete purchase detail display, multiple payment methods, and control over the checkout content. Webhook notifications will inform our backend when payment is confirmed, and we maintain redirection control. Mercado Pago Link is discarded because it doesn't provide payment confirmation to the app, lacks redirection control, and doesn't allow checkout content customization.
+- **Affects**: Payment flow implementation, webhook handling, and checkout experience
+
 ---
 **Last Updated**: 2025-01-25
