@@ -18,7 +18,8 @@ This repository is for **requirements analysis, epic definition, and work estima
 ## Key Documentation
 
 ### Source of Truth
-- `source-specs/requirements.docx.md`: **Primary requirements document** this is the authoritative source for all technical and functional requirements
+- `business-decisions.md`: **Ultimate source of truth** - supersedes all other documents for any conflicts in business logic and functional requirements
+- `source-specs/requirements.docx.md`: **Secondary requirements document** - use for details not covered in business-decisions.md
 - `source-specs/discovery-presentación-final.md`: Discovery phase findings (historical context, some details superseded by requirements.docx.md)
 - `source-specs/*.png`: Wireframes for key user flows (current UI reference)
 
@@ -30,8 +31,9 @@ This repository is for **requirements analysis, epic definition, and work estima
 ## Additional Guidelines
 - All documents you generate must be written in English
 - All your plans must be written in English
+- **Always check business-decisions.md first** and prioritize it over any conflicting information in other documents
 - Always refer to the requirements document when defining any plan I request
-- Always take the requirements from the document and the wireframes. If there's any doubt, the requirements document is the source of truth, as it's the most up-to-date.
+- Always take the requirements from the document and the wireframes. If there's any doubt, business-decisions.md is the source of truth, followed by requirements.docx.md.
 
 ## Estimation Guidelines
 - For time estimation, whenever you provide a total, group by team so it's easy to see how much development work will take, which is what we will charge for in this stage.
