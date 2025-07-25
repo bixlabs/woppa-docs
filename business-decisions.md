@@ -36,5 +36,10 @@ This document contains confirmed business decisions for the Woppa MVP project. T
 - **Decision**: Phone number will NOT be requested during registration in this first phase. Registration will be simplified to only require email, password, and names (first name, last name). Google Sign-In will also be supported and will obtain the same basic information (email, names, and potentially profile image) without requiring additional phone verification.
 - **Affects**: Registration flow, user data model, authentication implementation, and all registration-related wireframes and user stories
 
+### Redemption code format decision:
+- **Date**: 2025-01-25
+- **Decision**: Redemption codes will be displayed in alphanumeric format (characters and numbers). QR code format will NOT be implemented in the MVP scope.
+- **Affects**: Coupon display, redemption code generation, merchant verification flow, and mobile account management features
+
 ---
 **Last Updated**: 2025-01-25
