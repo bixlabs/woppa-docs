@@ -23,6 +23,7 @@ Main flows and interactions included in this epic:
 - Handle payment verification and status within offer code display
 - Handle payment cancellation with redirection to offer details
 - Generate and display unique redemption codes with integrated status verification
+- Send redemption code via email as backup access method
 - Navigate to directions or explore more offers
 
 ---
@@ -313,6 +314,7 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Mercado Pago webhook system
 - Backend payment status API and verification system
 - Backend code generation system
+- Email service integration for code delivery
 - Business information for the offer
 - Real-time status polling mechanism
 
@@ -321,6 +323,8 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Poll backend for payment status at appropriate intervals
 - Handle webhook delays gracefully with timeout mechanisms
 - Generate unique redemption code upon payment confirmation
+- Send redemption code automatically via email upon payment confirmation
+- Include offer details, business information, and usage instructions in email
 - Display code prominently in large, readable format with business info
 - Show business name and offer type (1+1)
 - Include usage instructions in friendly language
@@ -329,6 +333,7 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Display error message for payment failures (non-cancellation)
 - Include close/dismiss button
 - Handle code generation failures gracefully
+- Handle email delivery failures gracefully (log but don't block code display)
 - Prevent multiple polling requests
 
 **🧰 Technical Tasks**:
@@ -336,6 +341,9 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Create payment verification loading UI state
 - Add timeout handling with configurable limits
 - Implement code generation algorithm and linking system
+- Integrate email service for automatic code delivery
+- Create email template with offer details and business information
+- Implement email delivery error handling and logging
 - Create code display screen layout with multiple states (loading, success, error)
 - Add code status indicator system
 - Create celebration UI elements for successful payments
@@ -349,6 +357,8 @@ Verify payment status with backend, display appropriate loading states, and pres
 
 **⚙️ External Setup / Config Required**
 - Backend webhook handling setup
+- Email service configuration (SMTP or transactional email provider)
+- Email template design and content localization
 - Polling interval configuration
 - Timeout threshold configuration
 - Code generation service configuration
@@ -360,6 +370,8 @@ Verify payment status with backend, display appropriate loading states, and pres
 **❗ Pending Confirmations**
 - Polling frequency and timeout duration
 - Code format and length requirements
+- Email template design and content structure
+- Email delivery failure retry policy
 - Final celebration message wording
 - Brand mascot integration requirements
 - Code copying/sharing functionality
@@ -373,6 +385,8 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Need to handle edge cases like app backgrounding during verification
 - Requirements mention potential brand mascot integration
 - Must ensure atomic transaction between payment and code generation
+- Email serves as backup access method when user has no app access or internet connectivity
+- Email should be branded and include clear instructions for business presentation
 
 **🖼 Wireframe Reference**
 - Exists: Yes
