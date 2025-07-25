@@ -31,5 +31,10 @@ This document contains confirmed business decisions for the Woppa MVP project. T
 - **Decision**: In offer details screens, the map will be static and not dynamic. The static map serves only as a visual reference of the business location and includes a "Get Directions" button/link that opens the device's native maps application for navigation. This approach prioritizes performance, reduces complexity, and aligns with the MVP's core functionality focus.
 - **Affects**: Offer details screen implementation and map integration requirements
 
+### User registration simplification decision:
+- **Date**: 2025-01-25
+- **Decision**: Phone number will NOT be requested during registration in this first phase. Registration will be simplified to only require email, password, and names (first name, last name). Google Sign-In will also be supported and will obtain the same basic information (email, names, and potentially profile image) without requiring additional phone verification.
+- **Affects**: Registration flow, user data model, authentication implementation, and all registration-related wireframes and user stories
+
 ---
 **Last Updated**: 2025-01-25
