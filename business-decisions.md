@@ -26,5 +26,10 @@ This document contains confirmed business decisions for the Woppa MVP project. T
 - **Decision**: Use Mercado Pago Checkout Pro for payment processing. This provides an embedded controlled experience that includes the complete purchase detail display, multiple payment methods, and control over the checkout content. Webhook notifications will inform our backend when payment is confirmed, and we maintain redirection control. Mercado Pago Link is discarded because it doesn't provide payment confirmation to the app, lacks redirection control, and doesn't allow checkout content customization.
 - **Affects**: Payment flow implementation, webhook handling, and checkout experience
 
+### Map implementation decision for offer details:
+- **Date**: 2025-01-25
+- **Decision**: In offer details screens, the map will be static and not dynamic. The static map serves only as a visual reference of the business location and includes a "Get Directions" button/link that opens the device's native maps application for navigation. This approach prioritizes performance, reduces complexity, and aligns with the MVP's core functionality focus.
+- **Affects**: Offer details screen implementation and map integration requirements
+
 ---
 **Last Updated**: 2025-01-25
