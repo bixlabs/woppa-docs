@@ -131,12 +131,16 @@ Email service provider, backend user creation API, password validation system.
 - Note: Shows email/password fields but missing name fields mentioned in business decisions
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 10hours
+- **Realistic**: 12 hours
+  - Comments: Assumes that AI tools will accelerate development, that the UI is simple, that the project scaffolding is complete (toasts). That register happens after entering name and last in a separate pre register onboarding.  That we use firebase for user registration.
+    - Frontend UI: ~4h (register + names)
+    - Frontend Logic: ~3h
+    - Integration: ~ 1.5h
+    - Backend: ~2h (firebase do the core, and we sync the user in our db)
+    - Manual Testing: ~1.5h
+- **Pessimistic**: 16 hours
+- **Final PERT Estimate: 13 hours**
 
 ---
 
@@ -266,12 +270,16 @@ User authentication backend, session management, Google OAuth configuration.
 - Filename: `woppa-wireframe-4-register.png`
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 3 hours
+- **Realistic**: 4 hours
+  - Comments: Assumes that AI tools will accelerate development, that the UI is simple, that register UI is already implemented. That we use firebase and Google OAuth is already implemented because of AUTH-MOB-002.
+    - Frontend UI: ~45m
+    - Frontend Logic: ~1h
+    - Integration: ~ 1h
+    - Backend: ~0h (firebase do all the work)
+    - Manual Testing: ~1h
+- **Pessimistic**: 8 hours
+- **Final PERT Estimate: 5 hours**
 
 ---
 
