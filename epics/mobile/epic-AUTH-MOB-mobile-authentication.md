@@ -41,10 +41,10 @@ Explicitly excluded elements:
 ## 🖼 Wireframes Referenced in Epic
 List of wireframes that apply to this epic and the stories that use them.
 
-- `woppa-wireframe-4-register.png` → used in: AUTH-MOB-001, AUTH-MOB-002, AUTH-MOB-003, AUTH-MOB-004
-- `woppa-wireframe-1-mapa.png` → shows "Registrarse" button → used in: AUTH-MOB-001, AUTH-MOB-007
-- `woppa-wireframe-2-listado-ofertas.png` → shows "Registrarse" button → used in: AUTH-MOB-001, AUTH-MOB-007
-- (none for AUTH-MOB-005, AUTH-MOB-006, AUTH-MOB-008 - missing wireframes)
+- `woppa-wireframe-4-register.png` → used in: AUTH-MOB-001, AUTH-MOB-002, AUTH-MOB-003
+- `woppa-wireframe-1-mapa.png` → shows "Registrarse" button → used in: AUTH-MOB-006
+- `woppa-wireframe-2-listado-ofertas.png` → shows "Registrarse" button → used in: AUTH-MOB-006
+- (none for AUTH-MOB-004, AUTH-MOB-005, AUTH-MOB-007 - missing wireframes)
 
 ---
 
@@ -67,65 +67,7 @@ List of wireframes that apply to this epic and the stories that use them.
 
 ---
 
-### 🔹 `AUTH-MOB-001` – Registration Flow Entry Points
-
-**Summary**:  
-Users can access the registration flow from multiple entry points throughout the app.
-
-**Justification**:  
-Provides multiple opportunities for user conversion by making registration accessible from key screens.
-
-**User Story**:  
-"As a potential user, I want to easily find and access the registration flow from various screens, so that I can create an account when I'm ready to redeem offers."
-
-**🎯 Objective**:  
-All "Registrarse" buttons lead to the unified registration/login screen with proper context preservation.
-
-**⛓ Dependencies**:  
-Navigation system, screen routing, session state management.
-
-**✅ Acceptance Criteria**:
-- "Registrarse" button is visible and accessible on map view (wireframe 1)
-- "Registrarse" button is visible and accessible on offer list view (wireframe 2) 
-- "Registrarse" button is visible and accessible on offer details view (wireframe 3)
-- Clicking any "Registrarse" button navigates to the registration/login screen
-- User context is preserved (e.g., which offer they were viewing) for post-registration redirect
-- Button text changes to "Mi cuenta" or similar when user is already logged in
-
-**🧰 Technical Tasks**:
-- Implement navigation routing to registration screen from all entry points
-- Create shared authentication button component with context-aware text
-- Implement context preservation for post-auth redirects
-- Add authentication state detection to modify button behavior
-- Create navigation flow mapping for all auth entry points
-
-**⚙️ External Setup / Config Required**
-- Deep linking configuration for post-registration redirects
-- Navigation library setup and route definitions
-
-**❗ Pending Confirmations**
-- Exact wording for logged-in state button ("Mi cuenta" vs other options)
-- Whether "Registrarse" button should be visible when user is logged in
-
-**📝 Notes & Observations**
-- Current wireframes show "Registrarse" consistently, but need to clarify logged-in state
-- Context preservation is critical for user experience after authentication
-
-**🖼 Wireframe Reference**
-- Exists: Yes
-- Filenames: `woppa-wireframe-1-mapa.png`, `woppa-wireframe-2-listado-ofertas.png`, `woppa-wireframe-3-detalle-oferta.png`, `woppa-wireframe-4-register.png`
-
-**📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
-
----
-
-### 🔹 `AUTH-MOB-002` – Email and Password Registration
+### 🔹 `AUTH-MOB-001` – Email and Password Registration
 
 **Summary**:  
 Users can create a new account using email, password, and basic personal information.
@@ -206,7 +148,7 @@ Justification: Missing wireframe details for name fields and uncertain email ver
 
 ---
 
-### 🔹 `AUTH-MOB-003` – Google OAuth Registration
+### 🔹 `AUTH-MOB-002` – Google OAuth Registration
 
 **Summary**:  
 Users can create accounts using their Google credentials for faster onboarding.
@@ -285,7 +227,7 @@ Justification: Uncertainty around Firebase Auth vs direct OAuth implementation a
 
 ---
 
-### 🔹 `AUTH-MOB-004` – User Login
+### 🔹 `AUTH-MOB-003` – User Login
 
 **Summary**:  
 Existing users can log into their accounts using email/password or Google OAuth.
@@ -349,7 +291,7 @@ User authentication backend, session management, Google OAuth configuration.
 
 ---
 
-### 🔹 `AUTH-MOB-005` – Email Verification
+### 🔹 `AUTH-MOB-004` – Email Verification
 
 **Summary**:  
 Users who register with email/password must verify their email address to activate their account.
@@ -424,7 +366,7 @@ Justification: No wireframe and uncertainty about verification requirements in M
 
 ---
 
-### 🔹 `AUTH-MOB-006` – Password Reset Flow
+### 🔹 `AUTH-MOB-005` – Password Reset Flow
 
 **Summary**:  
 Users can reset their forgotten passwords through a secure email-based recovery process.
@@ -498,7 +440,7 @@ Justification: No wireframes and uncertainty about Firebase Auth vs custom imple
 
 ---
 
-### 🔹 `AUTH-MOB-007` – Session Management and Logout
+### 🔹 `AUTH-MOB-006` – Session Management and Logout
 
 **Summary**:  
 Authenticated users can manage their session state and securely log out of the application.
@@ -563,7 +505,7 @@ Session storage system, authentication state management, secure token handling.
 
 ---
 
-### 🔹 `AUTH-MOB-008` – Authentication Integration with Offer Flow
+### 🔹 `AUTH-MOB-007` – Authentication Integration with Offer Flow
 
 **Summary**:  
 Authentication system integrates seamlessly with the offer redemption flow to gate premium features.
@@ -630,10 +572,10 @@ Offer redemption flow, payment system integration, session state management.
 After analyzing all stories, I've identified the following optimizations and observations:
 
 **Overlaps and Dependencies:**
-- AUTH-MOB-002 and AUTH-MOB-003 share backend user creation logic and can reuse validation components
-- AUTH-MOB-004 reuses OAuth setup from AUTH-MOB-003 for Google login
-- AUTH-MOB-007 (session management) is a dependency for all other authentication stories
-- AUTH-MOB-008 integrates with stories from other epics (Offer Redemption)
+- AUTH-MOB-001 and AUTH-MOB-002 share backend user creation logic and can reuse validation components
+- AUTH-MOB-003 reuses OAuth setup from AUTH-MOB-002 for Google login
+- AUTH-MOB-006 (session management) is a dependency for all other authentication stories
+- AUTH-MOB-007 integrates with stories from other epics (Offer Redemption)
 
 **Consistency Improvements:**
 - All stories maintain consistent error handling patterns
@@ -641,9 +583,9 @@ After analyzing all stories, I've identified the following optimizations and obs
 - OAuth implementation is shared between registration and login stories
 
 **Scope Clarifications:**
-- Email verification (AUTH-MOB-005) may be optional for MVP based on requirements analysis
-- Password reset flow (AUTH-MOB-006) could use Firebase Auth default implementation to reduce scope
-- Authentication integration (AUTH-MOB-008) bridges with payment system which has pending decisions
+- Email verification (AUTH-MOB-004) may be optional for MVP based on requirements analysis
+- Password reset flow (AUTH-MOB-005) could use Firebase Auth default implementation to reduce scope
+- Authentication integration (AUTH-MOB-007) bridges with payment system which has pending decisions
 
 **No conflicts or duplications were identified.** Stories are properly scoped and complementary.
 
@@ -651,12 +593,12 @@ After analyzing all stories, I've identified the following optimizations and obs
 
 ## 📌 Stories with High Risk or Pending Decisions
 
-- **AUTH-MOB-002**: Missing wireframe details for name fields, uncertain email verification requirements
-- **AUTH-MOB-003**: Uncertainty around Firebase Auth vs direct OAuth implementation 
-- **AUTH-MOB-005**: No wireframe, unclear if email verification required for MVP
-- **AUTH-MOB-006**: No wireframes, Firebase Auth vs custom implementation pending
-- **AUTH-MOB-007**: Session timeout policy undefined, logout UI location unclear
-- **AUTH-MOB-008**: Integration with payment system has pending architectural decisions
+- **AUTH-MOB-001**: Missing wireframe details for name fields, uncertain email verification requirements
+- **AUTH-MOB-002**: Uncertainty around Firebase Auth vs direct OAuth implementation 
+- **AUTH-MOB-004**: No wireframe, unclear if email verification required for MVP
+- **AUTH-MOB-005**: No wireframes, Firebase Auth vs custom implementation pending
+- **AUTH-MOB-006**: Session timeout policy undefined, logout UI location unclear
+- **AUTH-MOB-007**: Integration with payment system has pending architectural decisions
 
 ---
 
@@ -664,8 +606,8 @@ After analyzing all stories, I've identified the following optimizations and obs
 
 To be completed manually:
 
-- Total user stories: **8**
-- Stories with high uncertainty: **4** (AUTH-MOB-002, AUTH-MOB-003, AUTH-MOB-005, AUTH-MOB-006)
+- Total user stories: **7**
+- Stories with high uncertainty: **4** (AUTH-MOB-001, AUTH-MOB-002, AUTH-MOB-004, AUTH-MOB-005)
 - Stories pending confirmation: **6**
 
 ### Manual 3-point Estimation for Epic (PERT)
