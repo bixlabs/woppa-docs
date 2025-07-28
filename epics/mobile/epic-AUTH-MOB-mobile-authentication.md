@@ -124,14 +124,6 @@ Email service provider, backend user creation API, password validation system.
 - Wireframe doesn't show first name/last name fields - needs clarification against business decision
 - Form should match simplified registration requirements (no phone number)
 
-**📉 PERT Estimation Candidate**
-```
-PERT:
-- Optimistic: 16h
-- Realistic: 24h
-- Pessimistic: 32h
-Justification: Missing wireframe details for name fields and uncertain email verification requirements add complexity
-```
 
 **🖼 Wireframe Reference**
 - Exists: Partial
@@ -204,14 +196,6 @@ Google OAuth 2.0 configuration, Google Cloud Console setup, backend OAuth handli
 - Tech stack shows Google OAuth 2.0 confirmed but Firebase Auth vs direct OAuth is pending decision
 - Need to handle cases where Google account doesn't provide all required profile data
 
-**📉 PERT Estimation Candidate**
-```
-PERT:
-- Optimistic: 20h
-- Realistic: 32h
-- Pessimistic: 48h
-Justification: Uncertainty around Firebase Auth vs direct OAuth implementation and complex OAuth flow setup
-```
 
 **🖼 Wireframe Reference**
 - Exists: Yes
@@ -343,14 +327,6 @@ Email service provider, verification token generation, deep linking setup.
 - Existing epic notes suggest email verification might be skipped initially since Mercado Pago payment provides user validation
 - No wireframe exists for verification flow
 
-**📉 PERT Estimation Candidate**
-```
-PERT:
-- Optimistic: 12h
-- Realistic: 20h
-- Pessimistic: 32h
-Justification: No wireframe and uncertainty about verification requirements in MVP scope
-```
 
 **🖼 Wireframe Reference**
 - Exists: No
@@ -417,14 +393,6 @@ Email service, password reset token system, deep linking configuration.
 - Existing epic suggests Firebase Auth default reset flow might be used, which would reduce custom UI needs
 - No wireframes exist for password reset screens
 
-**📉 PERT Estimation Candidate**
-```
-PERT:
-- Optimistic: 10h
-- Realistic: 18h
-- Pessimistic: 28h
-Justification: No wireframes and uncertainty about Firebase Auth vs custom implementation
-```
 
 **🖼 Wireframe Reference**
 - Exists: No
