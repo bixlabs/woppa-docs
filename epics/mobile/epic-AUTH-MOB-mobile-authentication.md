@@ -42,10 +42,10 @@ Explicitly excluded elements:
 ## 🖼 Wireframes Referenced in Epic
 List of wireframes that apply to this epic and the stories that use them.
 
-- `woppa-wireframe-4-register.png` → used in: AUTH-MOB-001, AUTH-MOB-002, AUTH-MOB-003
+- `woppa-wireframe-4-register.png` → used in: AUTH-MOB-001, AUTH-MOB-002, AUTH-MOB-003, AUTH-MOB-007
 - `woppa-wireframe-1-mapa.png` → shows "Registrarse" button → used in: AUTH-MOB-006
 - `woppa-wireframe-2-listado-ofertas.png` → shows "Registrarse" button → used in: AUTH-MOB-006
-- (none for AUTH-MOB-004, AUTH-MOB-005 - missing wireframes)
+- (none for AUTH-MOB-004, AUTH-MOB-005, AUTH-MOB-007 - missing wireframes for Apple button)
 
 ---
 
@@ -62,6 +62,7 @@ List of wireframes that apply to this epic and the stories that use them.
 - ⚠️ **Uncovered edge case**: Handling of existing Google accounts that don't have required profile information
 - 🧩 **Cross-authentication conflict**: Only email/password accounts conflict with Google registration (same email with different auth method)
 - ⚠️ **Apple Store Requirement**: Sign in with Apple must be implemented alongside Google Sign-In per App Store Review Guidelines 4.8 (ASR & NR Login Services)
+- 🔗 **Account Linking Gap**: Apple's "Hide My Email" relay addresses can create duplicate accounts for same user until account linking feature is implemented
 
 ---
 
@@ -500,20 +501,100 @@ Authentication state management, secure token handling.
 
 ---
 
+### 🔹 `AUTH-MOB-007` – Sign in with Apple
+
+**Summary**:  
+Users can create accounts and log in using their Apple ID credentials to comply with App Store Review Guidelines.
+
+**Justification**:  
+Required by Apple Store Review Guidelines 4.8 when offering third-party login services like Google. Provides equivalent privacy-focused authentication option.
+
+**User Story**:  
+"As a user, I want to register and log in using my Apple ID, so that I can quickly access the app while keeping my email private if desired."
+
+**🎯 Objective**:  
+Seamless Apple Sign-In integration that creates user accounts with Apple profile data and complies with App Store requirements.
+
+**⛓ Dependencies**:  
+Apple Developer account, Expo Apple Authentication, Firebase Auth Apple provider configuration.
+
+**✅ Acceptance Criteria**:
+- "Continuar con Apple" button is prominently displayed alongside Google registration/login
+- Clicking Apple button opens native Apple Sign-In flow via expo-apple-authentication
+- Successful authentication returns user to app with account created or logged in
+- User profile populated with Apple data: name, email (or hidden email), user identifier
+- If Apple account already exists in system, authenticate user automatically
+- OAuth flow validates email is not already registered with email/password method
+- Clear error message for email/password conflicts: "Este email ya está registrado con contraseña. Inicia sesión con email y contraseña."
+- Error handling for Apple Sign-In cancellation or failures
+- Firebase Auth handles Apple account creation and linking
+- Support for "Hide My Email" Apple privacy feature
+
+**🧰 Technical Tasks**:
+- Install and configure expo-apple-authentication
+- Set up Firebase Auth Apple Sign-In provider
+- Configure Apple Developer account Sign in with Apple capability
+- Implement Apple Sign-In button and authentication flow
+- Handle Apple-specific user data (including hidden emails)
+- Implement email/password conflict detection for Apple accounts
+- **Handle Apple email relay/alias duplicates**: Document that relay emails may create separate accounts until account linking is implemented
+- Add error handling for Apple authentication failures
+- Create user profile mapping from Apple data to Firestore
+- Sync Apple-authenticated users with custom backend database
+- Test Apple Sign-In on physical iOS devices
+
+**⚙️ External Setup / Config Required**
+- Enable Sign in with Apple capability in existing Apple Developer account
+- Firebase Console Apple provider setup and service configuration
+- Expo app.json configuration for Apple authentication
+- Note: Assumes Apple Developer account and iOS app identifier already exist
+
+**❗ Pending Confirmations**
+- Handling of Apple's "Hide My Email" feature in user profiles
+- **Account Linking Strategy**: Apple's email relay/alias can create duplicate accounts for same user until account linking is implemented
+- App Store submission requirements and testing procedures
+
+**📝 Notes & Observations**
+- Required for App Store approval when using Google Sign-In
+- Apple Sign-In only works on iOS devices and simulators
+- Expo provides expo-apple-authentication for simplified integration
+- Firebase Auth supports Apple as authentication provider
+- Must handle Apple's privacy features like email hiding
+- **Email Duplication Risk**: Apple's "Hide My Email" creates relay emails (e.g., abc123@privaterelay.appleid.com) that differ from user's real email, potentially creating duplicate accounts until account linking is implemented
+
+**🖼 Wireframe Reference**
+- Exists: No
+- Note: Apple button should be added alongside Google button in existing wireframes
+
+**📊 PERT Estimation**:
+- **Optimistic**: 5 hours
+- **Realistic**: 10 hours
+  - Comments: Using Expo + Firebase Auth reduces complexity. Assumes Apple Developer account is already configured for the project.
+  - Expo Apple Auth Configuration: 2-3 hours
+  - Firebase Apple Provider Setup: 1-2 hours
+  - UI Component (Apple Sign-In Button): 1-2 hours
+  - Authentication Logic Integration: 2-3 hours
+  - Testing & Debugging (iOS device required): 2-3 hours
+- **Pessimistic**: 16 hours
+- **Final PERT Estimate: 10.2 hours**
+
+---
+
 
 ## 🧪 Post-analysis: Story Set Review
 
 After analyzing all stories, I've identified the following optimizations and observations:
 
 **Overlaps and Dependencies:**
-- AUTH-MOB-001 and AUTH-MOB-002 share backend user creation logic and can reuse validation components
-- AUTH-MOB-003 reuses OAuth setup from AUTH-MOB-002 for Google login
+- AUTH-MOB-001, AUTH-MOB-002, and AUTH-MOB-007 share backend user creation logic and can reuse validation components
+- AUTH-MOB-003 reuses OAuth setup from AUTH-MOB-002 and AUTH-MOB-007 for social login
 - AUTH-MOB-006 (session management) is a dependency for all other authentication stories
+- AUTH-MOB-002 and AUTH-MOB-007 share similar OAuth integration patterns with Firebase Auth
 
 **Consistency Improvements:**
 - All stories maintain consistent error handling patterns
 - Session management approach is unified across registration, login, and logout flows
-- OAuth implementation is shared between registration and login stories
+- OAuth implementation is shared between Google and Apple registration and login stories
 
 **Scope Clarifications:**
 - Email verification (AUTH-MOB-004) may be optional for MVP based on requirements analysis
@@ -526,10 +607,11 @@ After analyzing all stories, I've identified the following optimizations and obs
 ## 📌 Stories with High Risk or Pending Decisions
 
 - **AUTH-MOB-001**: Missing wireframe details for name fields, uncertain email verification requirements
-- **AUTH-MOB-002**: Uncertainty around Firebase Auth vs direct OAuth implementation 
+- **AUTH-MOB-002**: Google OAuth configuration complexity with Expo + Firebase
 - **AUTH-MOB-004**: No wireframe, unclear if email verification required for MVP
 - **AUTH-MOB-005**: No wireframes, Firebase Auth vs custom implementation pending
 - **AUTH-MOB-006**: Session timeout policy undefined, logout UI location unclear
+- **AUTH-MOB-007**: Apple Sign-In requires iOS device testing, Apple Developer account setup, privacy feature handling
 
 ---
 
@@ -537,14 +619,15 @@ After analyzing all stories, I've identified the following optimizations and obs
 
 To be completed manually:
 
-- Total user stories: **6**
-- Stories with high uncertainty: **4** (AUTH-MOB-001, AUTH-MOB-002, AUTH-MOB-004, AUTH-MOB-005)
-- Stories pending confirmation: **5**
+- Total user stories: **7**
+- Stories with high uncertainty: **5** (AUTH-MOB-001, AUTH-MOB-002, AUTH-MOB-004, AUTH-MOB-005, AUTH-MOB-007)
+- Stories pending confirmation: **6**
 
 ### Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 
-- Realistic:
-- Pessimistic:
+- Optimistic: 33.5 hours
+- Realistic: 57 hours  
+- Pessimistic: 94 hours
+- Final PERT Estimate: 59.25 hours
 ```
