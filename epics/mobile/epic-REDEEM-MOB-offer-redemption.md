@@ -42,8 +42,8 @@ Explicitly excluded elements:
 List of wireframes that apply to this epic and the stories that use them.
 
 - `woppa-wireframe-3-detalle-oferta.png` → used in: REDEEM-MOB-001
-- `woppa-wireframe-5-obtained-cupon.png` → used in: REDEEM-MOB-007
-- (no wireframes available for REDEEM-MOB-003, REDEEM-MOB-006 - payment processing and cancellation handling screens)
+- `woppa-wireframe-5-obtained-cupon.png` → used in: REDEEM-MOB-006
+- (no wireframes available for REDEEM-MOB-003, REDEEM-MOB-004, REDEEM-MOB-005 - context preservation, payment processing and cancellation handling screens)
 
 ---
 
@@ -132,34 +132,41 @@ Display all relevant offer information with prominent redemption button.
 ### 🔹 `REDEEM-MOB-002` – Initiate Offer Redemption
 
 **Summary**:  
-Handle the redemption initiation with authentication check and validation.
+Handle the redemption initiation with authentication validation and offer availability checks, delegating context preservation to REDEEM-MOB-003.
 
 **Justification**:  
-Users need a smooth transition from viewing offers to starting the redemption process.
+Users need a clear decision point that validates prerequisites (authentication, offer availability) before proceeding to payment or redirecting to authentication flows.
 
 **User Story**:  
-"As a consumer, I want to start redeeming an offer by clicking the redemption button, so that I can proceed to purchase the offer if I'm authenticated."
+"As a consumer, I want to start redeeming an offer by clicking the redemption button, so that the system can validate my eligibility and guide me to the appropriate next step."
 
 **🎯 Objective**:  
-Seamlessly transition from offer details to payment process with proper authentication validation.
+Clean validation and routing logic that determines the next step in the redemption flow based on user authentication status and offer availability.
 
 **⛓ Dependencies**:  
 - Authentication system status check
 - Offer availability validation
 - Navigation system to registration/login flows
+- Centralized payment function (proceedToPayment)
 
 **✅ Acceptance Criteria**:
-- Validate user authentication status
+- Users can browse offers and view details without authentication
+- Authentication is required specifically when clicking "Obtener oferta" button
+- Validate user authentication status before redemption initiation
 - Check offer availability and expiration
-- Redirect to login/registration if user not authenticated
-- Proceed to payment flow if user is authenticated
+- If user not authenticated: delegate to REDEEM-MOB-003 for context preservation and auth flow
+- If user authenticated but email not verified: delegate to REDEEM-MOB-003 for email verification flow
+- If user fully authenticated: call centralized proceedToPayment function directly
 - Handle offer unavailability with appropriate messaging
 - Prevent multiple simultaneous redemptions
+- Clear loading states during validation
 
 **🧰 Technical Tasks**:
 - Implement authentication status check
 - Add offer availability validation
-- Create navigation logic to auth flows
+- Create decision logic for routing (auth needed, email verification needed, or proceed to payment)
+- Integrate with centralized proceedToPayment function
+- Add delegation to REDEEM-MOB-003 when context preservation needed
 - Implement loading states during validation
 - Add error handling for unavailable offers
 - Create offer reservation mechanism (if needed)
@@ -173,8 +180,9 @@ Seamlessly transition from offer details to payment process with proper authenti
 - Maximum redemptions per user per offer?
 
 **📝 Notes & Observations**
-- Clear handoff point to Authentication epic if user not logged in
-- Need to preserve offer context through authentication flow
+- Clean separation: this story focuses on validation and routing decisions
+- Context preservation complexity handled by REDEEM-MOB-003
+- Uses centralized proceedToPayment function to avoid logic duplication
 
 **🖼 Wireframe Reference**
 - Exists: No (logic/flow step)
@@ -189,7 +197,77 @@ Seamlessly transition from offer details to payment process with proper authenti
 
 ---
 
-### 🔹 `REDEEM-MOB-003` – Process Payment via Mercado Pago
+### 🔹 `REDEEM-MOB-003` – Cross-Authentication Context Preservation
+
+**Summary**:  
+Handle context preservation and navigation redirection when users need authentication or email verification during redemption flow, using a centralized payment function approach.
+
+**Justification**:  
+Users should seamlessly return to their intended redemption after completing required authentication steps without losing progress or creating duplicate payment logic.
+
+**User Story**:  
+"As a user who gets interrupted by authentication during offer redemption, I want to automatically return to my payment flow after completing auth, so that I don't lose my progress and can complete my purchase smoothly."
+
+**🎯 Objective**:  
+Seamless context preservation and restoration across authentication boundaries using simple navigation patterns and centralized payment logic.
+
+**⛓ Dependencies**:  
+- Authentication flows (AUTH-MOB epic)
+- Email verification flow (AUTH-MOB-004)
+- Navigation system
+- Centralized payment function (proceedToPayment)
+
+**✅ Acceptance Criteria**:
+- Preserve offer context when redirecting to authentication flows
+- Preserve offer context when redirecting to email verification
+- Use navigation params for context preservation (MVP approach)
+- After successful authentication, call centralized proceedToPayment function
+- After successful email verification, call centralized proceedToPayment function
+- Handle context loss gracefully with fallback navigation to offer details
+- Avoid duplicating payment preparation logic across multiple components
+- Support timeout/expiration of context preservation
+- Clear context after successful payment completion or explicit cancellation
+
+**🧰 Technical Tasks**:
+- Implement navigation parameter passing for offer context
+- Create centralized proceedToPayment function shared with REDEEM-MOB-002
+- Add context restoration logic in authentication success flows
+- Add context restoration logic in email verification success flows
+- Implement graceful fallbacks for lost context scenarios
+- Create context validation before restoration
+- Add context cleanup after payment completion
+- Handle navigation edge cases (app backgrounding, network issues)
+
+**⚙️ External Setup / Config Required**
+- Navigation parameter structure definition
+- Context timeout configuration
+- Error handling strategies for context loss
+
+**❗ Pending Confirmations**
+- Context preservation timeout duration (suggested: 30 minutes)
+- Fallback behavior when context is lost or expired
+- Error messaging for failed context restoration
+
+**📝 Notes & Observations**
+- Uses simple navigation params approach suitable for MVP
+- Centralizes payment logic to avoid duplication between REDEEM-MOB-002 and this story
+- Graceful degradation ensures users aren't completely blocked
+- Context loss is rare but handled appropriately
+
+**🖼 Wireframe Reference**
+- Exists: No (cross-flow integration logic)
+
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
+---
+
+### 🔹 `REDEEM-MOB-004` – Process Payment via Mercado Pago
 
 **Summary**:  
 Generate payment preference and redirect user to Mercado Pago Checkout Pro.
@@ -264,7 +342,7 @@ Justification: Missing wireframe and external payment system integration complex
 
 ---
 
-### 🔹 `REDEEM-MOB-006` – Handle Payment Cancellation
+### 🔹 `REDEEM-MOB-005` – Handle Payment Cancellation
 
 **Summary**:  
 Handle user-initiated payment cancellations with redirection to offer details and error messaging.
@@ -312,7 +390,7 @@ Redirect cancelled payments to offer details screen with appropriate error messa
 **📝 Notes & Observations**
 - Simpler flow focusing on user-initiated cancellations only
 - Integrates with RED-001 for error display
-- Other payment failures handled in RED-007 (offer code screen)
+- Other payment failures handled in REDEEM-MOB-006 (offer code screen)
 
 **🖼 Wireframe Reference**
 - Exists: Yes (uses offer details wireframe with error state)
@@ -328,7 +406,7 @@ Redirect cancelled payments to offer details screen with appropriate error messa
 
 ---
 
-### 🔹 `REDEEM-MOB-007` – Display Redemption Code with Payment Verification
+### 🔹 `REDEEM-MOB-006` – Display Redemption Code with Payment Verification
 
 **Summary**:  
 Handle payment verification, display loading states, and show redemption code or error messages based on payment status.
@@ -434,7 +512,7 @@ Verify payment status with backend, display appropriate loading states, and pres
 
 ---
 
-### 🔹 `REDEEM-MOB-008` – Navigate from Coupon Screen
+### 🔹 `REDEEM-MOB-007` – Navigate from Coupon Screen
 
 **Summary**:  
 Provide navigation options from the coupon screen to enhance user experience.
@@ -502,15 +580,15 @@ Enable smooth navigation to business directions or offer discovery.
 After analyzing all stories systematically, the story set shows excellent cohesion with simplified, clear sequential flow:
 
 **Flow Analysis:**
-- REDEEM-MOB-001 → REDEEM-MOB-002 → REDEEM-MOB-003 → (REDEEM-MOB-006 if cancellation OR REDEEM-MOB-007 if payment processing) → REDEEM-MOB-008
+- REDEEM-MOB-001 → REDEEM-MOB-002 → (REDEEM-MOB-003 if auth needed OR REDEEM-MOB-004 if authenticated) → (REDEEM-MOB-005 if cancellation OR REDEEM-MOB-006 if payment processing) → REDEEM-MOB-007
 - Stories represent a complete user journey from offer viewing to code usage
 - Clear decision points (authentication, payment cancellation vs processing)
 
 **Consistency Check:**
 - All stories reference the same offer redemption context
 - Authentication handling is consistently treated as external dependency
-- Payment processing consolidated into unified approach in REDEEM-MOB-007
-- Error handling patterns differentiate between cancellation (REDEEM-MOB-006) and other failures (REDEEM-MOB-007)
+- Payment processing consolidated into unified approach in REDEEM-MOB-006
+- Error handling patterns differentiate between cancellation (REDEEM-MOB-005) and other failures (REDEEM-MOB-006)
 
 **Story Boundaries:**
 - Each story has distinct, non-overlapping responsibilities
@@ -519,7 +597,7 @@ After analyzing all stories systematically, the story set shows excellent cohesi
 - Navigation endpoints connect properly to other epics
 
 **Architecture Improvements Made:**
-- Eliminated RED-004 and RED-005 by consolidating payment verification into RED-007
+- Eliminated RED-004 and RED-005 by consolidating payment verification into REDEEM-MOB-006
 - Simplified payment flow by handling verification within offer code display
 - Reduced complexity while maintaining comprehensive coverage
 - Clearer separation of concerns between cancellation and other payment failures
@@ -531,9 +609,9 @@ The simplified story set provides more efficient implementation while maintainin
 ## 📌 Stories with High Risk or Pending Decisions
 
 List all stories in this epic that include:
-- RED-003: Process Payment via Mercado Pago (missing wireframe, external API integration)
-- RED-006: Handle Payment Cancellation (simple redirection flow but cancellation detection logic needs clarification)
-- RED-007: Display Redemption Code with Payment Verification (complex integrated functionality, missing verification state wireframes, critical payment and code generation logic)
+- REDEEM-MOB-004: Process Payment via Mercado Pago (missing wireframe, external API integration)
+- REDEEM-MOB-005: Handle Payment Cancellation (simple redirection flow but cancellation detection logic needs clarification) 
+- REDEEM-MOB-006: Display Redemption Code with Payment Verification (complex integrated functionality, missing verification state wireframes, critical payment and code generation logic)
 
 ---
 
@@ -541,8 +619,8 @@ List all stories in this epic that include:
 
 To be completed manually:
 
-- Total user stories: 6
-- Stories with high uncertainty: 3 (RED-003, RED-006, RED-007)
+- Total user stories: 7
+- Stories with high uncertainty: 3 (REDEEM-MOB-004, REDEEM-MOB-005, REDEEM-MOB-006)
 - Stories pending confirmation: 4
 
 ### Manual 3-point Estimation for Epic (PERT)
