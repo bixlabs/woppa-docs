@@ -1,6 +1,6 @@
 # 🧩 Epic: Explore Nearby Offers
 
-**KEY**: `EXP`
+**KEY**: `EXP-MOB`
 
 ---
 
@@ -41,8 +41,8 @@ Explicitly excluded elements:
 ## 🖼 Wireframes Referenced in Epic
 List of wireframes that apply to this epic and the stories that use them.
 
-- `woppa-wireframe-1-mapa.png` → used in: EXP-001, EXP-002, EXP-004, EXP-005
-- `woppa-wireframe-2-listado-ofertas.png` → used in: EXP-003, EXP-006
+- `woppa-wireframe-1-mapa.png` → used in: EXP-MOB-001, EXP-MOB-002, EXP-MOB-004, EXP-MOB-005
+- `woppa-wireframe-2-listado-ofertas.png` → used in: EXP-MOB-003, EXP-MOB-006
 - Both wireframes show registration button (handled by Authentication epic, not user story in this epic)
 
 ---
@@ -65,7 +65,7 @@ List any unclear, undefined, or mismatched areas affecting the epic as a whole.
 
 ---
 
-### 🔹 `EXP-001` – Map View with Geolocation
+### 🔹 `EXP-MOB-001` – Map View with Geolocation
 
 **Summary**:  
 Display an interactive map centered on user's location with fallback to São Paulo when location access is denied.
@@ -119,7 +119,7 @@ Google Maps API integration, device location services
 
 ---
 
-### 🔹 `EXP-002` – Display Offers as Map Markers
+### 🔹 `EXP-MOB-002` – Display Offers as Map Markers
 
 **Summary**:  
 Show promotional offers as categorized markers on the map with clustering support for locations with multiple offers.
@@ -134,7 +134,7 @@ Visual representation of offers allows users to quickly identify opportunities i
 All active offers are visible as categorized markers with clear visual distinction and clustering when needed.
 
 **⛓ Dependencies**:  
-Backend API for offer data, map implementation from EXP-001
+Backend API for offer data, map implementation from EXP-MOB-001
 
 **✅ Acceptance Criteria**:
 - Offers display as circular icons with category-specific colors
@@ -186,7 +186,7 @@ Justification: Clustering behavior and performance requirements have uncertainti
 
 ---
 
-### 🔹 `EXP-003` – Offer List View
+### 🔹 `EXP-MOB-003` – Offer List View
 
 **Summary**:  
 Display offers in a vertical list format as an alternative to map view, showing key offer information in easily scannable cards.
@@ -243,7 +243,7 @@ Backend API for offer data, offer detail navigation
 
 ---
 
-### 🔹 `EXP-004` – Category Filtering
+### 🔹 `EXP-MOB-004` – Category Filtering
 
 **Summary**:  
 Enable users to filter offers by category (Gastronomía and Farmacia) across both map and list views.
@@ -258,7 +258,7 @@ Allows users to focus on specific types of offers they're interested in, improvi
 Functional filter system that works consistently across map and list views with clear visual feedback.
 
 **⛓ Dependencies**:  
-Map markers (EXP-002), list view (EXP-003)
+Map markers (EXP-MOB-002), list view (EXP-MOB-003)
 
 **✅ Acceptance Criteria**:
 - Filter buttons appear at top of both map and list views
@@ -297,7 +297,7 @@ Map markers (EXP-002), list view (EXP-003)
 
 ---
 
-### 🔹 `EXP-005` – Offer Marker Interaction
+### 🔹 `EXP-MOB-005` – Offer Marker Interaction
 
 **Summary**:  
 Enable users to tap map markers to view basic offer information and navigate to full offer details.
@@ -312,7 +312,7 @@ Provides quick offer preview without leaving map context while offering path to 
 Smooth interaction flow from marker tap to offer preview to optional detailed view.
 
 **⛓ Dependencies**:  
-Map markers (EXP-002), offer details screen (from Offer Redemption epic)
+Map markers (EXP-MOB-002), offer details screen (from Offer Redemption epic)
 
 **✅ Acceptance Criteria**:
 - Tapping marker opens preview showing business name and offer type
@@ -362,7 +362,7 @@ Justification: Preview format and clustered marker behavior not clearly defined,
 
 ---
 
-### 🔹 `EXP-006` – Navigation Between Map and List Views
+### 🔹 `EXP-MOB-006` – Navigation Between Map and List Views
 
 **Summary**:  
 Provide seamless navigation between map and list views while maintaining filter state and user context.
@@ -377,7 +377,7 @@ Offers users flexibility to choose their preferred browsing method without losin
 Smooth view switching with preserved state and consistent user experience across both views.
 
 **⛓ Dependencies**:  
-Map view (EXP-001), list view (EXP-003), category filtering (EXP-004)
+Map view (EXP-MOB-001), list view (EXP-MOB-003), category filtering (EXP-MOB-004)
 
 **✅ Acceptance Criteria**:
 - Clear navigation options to switch between map and list views
@@ -415,7 +415,7 @@ Map view (EXP-001), list view (EXP-003), category filtering (EXP-004)
 
 ---
 
-### 🔹 `EXP-007` – Location Services Management
+### 🔹 `EXP-MOB-007` – Location Services Management
 
 **Summary**:  
 Handle various location permission states and provide user controls for location access and updates.
@@ -430,7 +430,7 @@ Ensures robust handling of location services across different user preferences a
 Comprehensive location handling that respects user preferences and provides clear options for location management.
 
 **⛓ Dependencies**:  
-Map view (EXP-001)
+Map view (EXP-MOB-001)
 
 **✅ Acceptance Criteria**:
 - Handle location permission denied gracefully with clear fallback
@@ -498,9 +498,9 @@ After analyzing all stories, I've identified the following:
 **No overlapping stories detected** - Each story has a distinct functional scope.
 
 **Logical grouping confirmed**:
-- Foundation stories (EXP-001, EXP-002, EXP-003) establish core functionality
-- Interactive stories (EXP-004, EXP-005, EXP-006) build on foundation with user interactions  
-- Supporting story (EXP-007) enhances the experience
+- Foundation stories (EXP-MOB-001, EXP-MOB-002, EXP-MOB-003) establish core functionality
+- Interactive stories (EXP-MOB-004, EXP-MOB-005, EXP-MOB-006) build on foundation with user interactions  
+- Supporting story (EXP-MOB-007) enhances the experience
 
 **Dependencies are well-defined** and create a logical implementation sequence.
 
@@ -517,15 +517,15 @@ This ensures a clear user journey: Explore → Review Details → Obtain Offer.
 ## 📌 Stories with High Risk or Pending Decisions
 
 Stories in this epic that include pending confirmations or PERT estimation:
-- **EXP-002** (Display Offers as Map Markers) - PERT candidate due to clustering behavior uncertainty
-- **EXP-005** (Offer Marker Interaction) - PERT candidate due to undefined preview format
-- **EXP-007** (Location Services Management) - PERT candidate due to complex permission handling
+- **EXP-MOB-002** (Display Offers as Map Markers) - PERT candidate due to clustering behavior uncertainty
+- **EXP-MOB-005** (Offer Marker Interaction) - PERT candidate due to undefined preview format
+- **EXP-MOB-007** (Location Services Management) - PERT candidate due to complex permission handling
 
 Stories with multiple pending confirmations:
-- **EXP-001** (Map View with Geolocation) - Default coordinates and performance requirements
-- **EXP-002** (Display Offers as Map Markers) - Clustering behavior and performance thresholds
-- **EXP-003** (Offer List View) - Sorting algorithm and image handling
-- **EXP-005** (Offer Marker Interaction) - Preview format and clustered marker behavior
+- **EXP-MOB-001** (Map View with Geolocation) - Default coordinates and performance requirements
+- **EXP-MOB-002** (Display Offers as Map Markers) - Clustering behavior and performance thresholds
+- **EXP-MOB-003** (Offer List View) - Sorting algorithm and image handling
+- **EXP-MOB-005** (Offer Marker Interaction) - Preview format and clustered marker behavior
 
 ---
 
