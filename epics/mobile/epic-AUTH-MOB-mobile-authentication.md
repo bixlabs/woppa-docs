@@ -21,7 +21,7 @@ Main flows and interactions included in this epic:
 - User login with existing credentials or Google OAuth
 - Email verification and account activation
 - Password reset and recovery flows
-- Session management and logout functionality
+- User logout functionality
 - Integration with offer redemption flow (authentication gating)
 
 ---
@@ -44,7 +44,7 @@ List of wireframes that apply to this epic and the stories that use them.
 - `woppa-wireframe-4-register.png` → used in: AUTH-MOB-001, AUTH-MOB-002, AUTH-MOB-003
 - `woppa-wireframe-1-mapa.png` → shows "Registrarse" button → used in: AUTH-MOB-006
 - `woppa-wireframe-2-listado-ofertas.png` → shows "Registrarse" button → used in: AUTH-MOB-006
-- (none for AUTH-MOB-004, AUTH-MOB-005, AUTH-MOB-007 - missing wireframes)
+- (none for AUTH-MOB-004, AUTH-MOB-005 - missing wireframes)
 
 ---
 
@@ -132,10 +132,10 @@ Email service provider, backend user creation API, password validation system.
 
 **📊 PERT Estimation**:
 - **Optimistic**: 10hours
-- **Realistic**: 12 hours
+- **Realistic**: 13 hours
   - Comments: Assumes that AI tools will accelerate development, that the UI is simple, that the project scaffolding is complete (toasts). That register happens after entering name and last in a separate pre register onboarding.  That we use firebase for user registration.
     - Frontend UI: ~4h (register + names)
-    - Frontend Logic: ~3h
+    - Frontend Logic: ~4h (includes auth store and showing login vs AppStack depending on the user)
     - Integration: ~ 1.5h
     - Backend: ~2h (firebase do the core, and we sync the user in our db)
     - Manual Testing: ~1.5h
@@ -279,81 +279,86 @@ User authentication backend, session management, Google OAuth configuration.
     - Backend: ~0h (firebase do all the work)
     - Manual Testing: ~1h
 - **Pessimistic**: 8 hours
-- **Final PERT Estimate: 5 hours**
+- **Final PERT Estimate: 4.2 hours**
 
 ---
 
-### 🔹 `AUTH-MOB-004` – Email Verification
+### 🔹 `AUTH-MOB-004` – Email Verification Screen
 
 **Summary**:  
-Users who register with email/password must verify their email address to activate their account.
+Single verification screen that handles both post-registration and login-blocked scenarios when email verification is required.
 
 **Justification**:  
-Prevents abuse and ensures users have access to their registered email for future communications.
+Provides unified UX for email verification needs while authentication service handles the actual verification process.
 
 **User Story**:  
-"As a newly registered user, I want to verify my email address through a verification link, so that my account is fully activated and secure."
+"As a user needing email verification, I want a clear screen that explains the process and allows me to resend or check verification status, so that I can complete account activation."
 
 **🎯 Objective**:  
-Reliable email verification process that activates user accounts upon confirmation.
+Simple, reusable verification screen that works with the chosen authentication system's email verification.
 
 **⛓ Dependencies**:  
-Email service provider, verification token generation, deep linking setup.
+Authentication service email verification.
 
 **✅ Acceptance Criteria**:
-- Verification email is sent immediately after registration
-- Email contains clear instructions and verification link
-- Clicking verification link opens app and confirms account
-- Verified users can access all authenticated features
-- Unverified users see appropriate messaging about verification status
-- Resend verification email option available if needed
-- Verification links expire after reasonable time period
-- Account activation is reflected in backend user status
+- Single screen handles two contexts: post-registration and login-blocked
+- **Post-registration context**: User informed that verification email was sent
+- **Login-blocked context**: User informed that email verification is required to continue
+- "Reenviar email" button triggers resend verification email
+- "Ya verifiqué, continuar" button checks emailVerified status
+- Authentication service handles verification link and email template
+- Screen shows loading state while checking verification status
+- Success navigation: verified users proceed to main app
 
 **🧰 Technical Tasks**:
-- Create email verification token generation system
-- Design and implement verification email template
-- Set up deep linking for verification link handling
-- Create verification confirmation screen/flow
-- Implement resend verification email functionality
-- Add verification status checking throughout app
-- Create backend verification endpoint
-- Add verification status to user profile data
+- Create single EmailVerificationScreen component
+- Add context parameter: 'post-register' | 'login-blocked'
+- Implement dynamic messaging based on context
+- Add resend verification email integration
+- Add email verification status checking
+- Implement "Reenviar email" functionality with rate limiting
+- Add loading states and error handling
+- User manually returns to app after clicking email verification link
+- Add navigation logic after successful verification
 
 **⚙️ External Setup / Config Required**
-- Deep linking configuration for verification URLs
-- Email template design and approval
-- Verification token security and expiration policies
+- Authentication service email verification configuration
+- Email template customization (if needed)
 
 **❗ Pending Confirmations**
-- Whether email verification is required or optional for MVP
-- Verification link expiration time
-- Behavior for users who don't verify within time limit
-- Whether unverified users can redeem offers (since payment through Mercado Pago provides some validation)
+- Rate limiting for resend verification email (e.g., max 3 per hour)
+- Error handling for email verification failures
+- Final UI design and messaging will be defined with UX/UI team
 
 **📝 Notes & Observations**
-- Existing epic notes suggest email verification might be skipped initially since Mercado Pago payment provides user validation
-- No wireframe exists for verification flow
+- Authentication service handles email sending, verification tokens, and web-based verification
+- App only needs to show verification screen and check status
+- Significantly reduces development complexity compared to custom implementation
 
 
 **🖼 Wireframe Reference**
 - Exists: No
-- Note: Verification screen wireframe not defined
+- Note: UI design to be defined with UX/UI team
+
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 2 hours
+- **Realistic**: 3 hours
+  - Comments: Authentication service handles verification logic. Simple UI with context-based messaging and service integration. No deep linking.
+    - Frontend UI: ~0.5h
+    - Frontend Logic: ~1h
+    - Integration: ~0.5h (resend email, status check)
+    - Backend: ~0h (firebase do all the work)
+    - Manual Testing: ~0.75h
+- **Pessimistic**: 6 hours
+- **Final PERT Estimate: 3.5 hours**
 
 ---
 
 ### 🔹 `AUTH-MOB-005` – Password Reset Flow
 
 **Summary**:  
-Users can reset their forgotten passwords through a secure email-based recovery process.
+Simple password reset flow using Firebase Auth that allows users to reset forgotten passwords via email.
 
 **Justification**:  
 Essential functionality for users who forget their passwords and need account recovery.
@@ -362,44 +367,46 @@ Essential functionality for users who forget their passwords and need account re
 "As a user who forgot my password, I want to reset it using my email address, so that I can regain access to my account."
 
 **🎯 Objective**:  
-Secure password reset process that allows users to regain account access safely.
+Minimal password reset flow that leverages Firebase Auth for secure email-based password recovery.
 
 **⛓ Dependencies**:  
-Email service, password reset token system, deep linking configuration.
+Firebase Auth sendPasswordResetEmail functionality.
 
 **✅ Acceptance Criteria**:
 - "Forgot password" link is available on login screen
-- Password reset request form accepts email address
-- Reset email is sent to valid email addresses
-- Reset link opens app and allows new password entry
-- New password must meet same complexity requirements as registration
-- Password reset tokens expire after reasonable time
-- Account is accessible with new password after reset
-- Old password is invalidated after successful reset
+- Clicking link navigates to password reset screen
+- Password reset screen has email input field and "Enviar reset" button
+- Firebase sendPasswordResetEmail() is called with entered email
+- After successful email send, user is navigated back to login screen
+- Toast message "Email de recuperación enviado" is displayed on login screen
+- Firebase handles reset email sending and web-based password reset process
+- User manually returns to app and can login with new password
+- Error handling for invalid email addresses and Firebase failures
 
 **🧰 Technical Tasks**:
-- Add "forgot password" link to login form
-- Create password reset request screen and form
-- Implement password reset token generation and validation
-- Create password reset email template
-- Build new password entry screen with validation
-- Set up deep linking for password reset URLs
-- Implement backend password reset endpoints
-- Add password reset confirmation and success messaging
+- Add "Forgot password" link to login screen
+- Create password reset screen with email input and submit button
+- Integrate Firebase Auth sendPasswordResetEmail() function
+- Add navigation from reset screen back to login after email send
+- Implement toast notification for successful email send
+- Add email validation on reset screen
+- Add error handling for Firebase sendPasswordResetEmail failures
+- Add loading state while sending reset email
 
 **⚙️ External Setup / Config Required**
-- Password reset email template design
-- Deep linking configuration for reset URLs
-- Password reset token security policies
+- Firebase Auth configuration for password reset emails
+- Firebase email template customization (optional)
 
 **❗ Pending Confirmations**
-- Password reset link expiration time
-- Whether Firebase Auth reset flow will be used (which handles UI automatically)
-- Error handling for invalid or expired reset tokens
+- Error handling strategy for invalid emails or Firebase failures
+- Toast message duration and styling
+- Email validation requirements (same as registration)
 
 **📝 Notes & Observations**
-- Existing epic suggests Firebase Auth default reset flow might be used, which would reduce custom UI needs
-- No wireframes exist for password reset screens
+- Firebase Auth handles all password reset logic and web-based UI
+- App only needs to trigger email send and provide user feedback
+- No deep linking needed - user manually returns after web-based reset
+- Significantly reduces development complexity
 
 
 **🖼 Wireframe Reference**
@@ -407,19 +414,23 @@ Email service, password reset token system, deep linking configuration.
 - Note: Password reset screens wireframes not defined
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 2 hours
+- **Realistic**: 3 hours
+  - Comments: Firebase handles reset logic. Simple screen with email input, Firebase integration, and toast notification. No deep linking for MVP.
+    - Frontend UI: ~0.75h
+    - Frontend Logic: ~0.75h
+    - Integration: ~0.5h (sendPasswordResetEmail + error handling)
+    - Backend: 0h
+    - Manual Testing: ~0.75h
+- **Pessimistic**: 6 hours
+- **Final PERT Estimate: 3.5 hours**
 
 ---
 
-### 🔹 `AUTH-MOB-006` – Session Management and Logout
+### 🔹 `AUTH-MOB-006` – User Logout
 
 **Summary**:  
-Authenticated users can manage their session state and securely log out of the application.
+Authenticated users can securely log out of the application.
 
 **Justification**:  
 Essential for security and multi-user device scenarios where users need to log out.
@@ -428,120 +439,57 @@ Essential for security and multi-user device scenarios where users need to log o
 "As a logged-in user, I want to securely log out of my account, so that my personal information is protected on shared devices."
 
 **🎯 Objective**:  
-Reliable session management with secure logout functionality and appropriate session timeout.
+Secure logout functionality that properly clears user session and updates app state.
 
 **⛓ Dependencies**:  
-Session storage system, authentication state management, secure token handling.
+Authentication state management, secure token handling.
 
 **✅ Acceptance Criteria**:
 - Logout option is available in user profile or account settings
 - Logout clears all stored authentication tokens and session data
-- User is redirected to appropriate screen after logout
+- User is redirected to appropriate screen after logout (home/offers screen)
 - Authentication state is updated throughout app after logout
-- Sessions persist across app restarts until explicit logout
-- Automatic logout occurs after defined timeout period
-- Authentication state is properly restored on app launch
 - "Mi cuenta" button changes back to "Registrarse" after logout
+- Firebase Auth session is properly signed out
+- All cached user data is cleared from app
+- Logout happens immediately without confirmation dialog
 
 **🧰 Technical Tasks**:
-- Implement secure session storage and management
 - Create logout functionality that clears all auth data
-- Add session timeout handling with user notification
-- Implement authentication state management across app
-- Create session restoration logic for app launches
-- Add logout confirmation dialog (if required)
+- Implement Firebase Auth signOut() integration
 - Update navigation and UI state after logout
-- Implement automatic session cleanup
+- Clear all user-related cached data
+- Update authentication context/store state
+- Add logout button/option to profile/account screen
 
 **⚙️ External Setup / Config Required**
-- Secure storage configuration for tokens
-- Session timeout policy definition
-- Logout confirmation UI requirements
+- Profile screen design for logout option placement
 
 **❗ Pending Confirmations**
-- Session timeout duration before automatic logout
-- Whether logout requires confirmation dialog
 - Location of logout option in app (profile screen, settings, etc.)
 
 **📝 Notes & Observations**
 - Need to determine where logout functionality will be located since profile screen wireframe doesn't exist yet
-- Session management affects all other authentication stories
+- Session persistence and timeout are handled by Firebase Auth automatically
 
 **🖼 Wireframe Reference**
 - Exists: Partial
 - Note: Entry points visible in wireframes 1-3, but logout/profile screen not defined
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 0.5 hours
+- **Realistic**: 1 hours
+  - Comments: Simple logout functionality with Firebase Auth integration and UI state updates. No confirmation dialog for simplicity.
+    - Frontend UI: ~0.25h (logout button)
+    - Frontend Logic: ~0.25h (state management already implemented in login)
+    - Integration: ~0.25h (Firebase signOut)
+    - Backend: 0h (Firebase handles everything)
+    - Manual Testing: ~0.25h
+- **Pessimistic**: 2 hours
+- **Final PERT Estimate: 1 hours**
 
 ---
 
-### 🔹 `AUTH-MOB-007` – Authentication Integration with Offer Flow
-
-**Summary**:  
-Authentication system integrates seamlessly with the offer redemption flow to gate premium features.
-
-**Justification**:  
-Ensures only authenticated users can redeem offers while maintaining smooth user experience.
-
-**User Story**:  
-"As a user viewing offers, I want to be prompted to authenticate only when needed for redemption, so that I can browse freely but complete purchases securely."
-
-**🎯 Objective**:  
-Smooth authentication integration that doesn't interrupt browsing but secures purchase flow.
-
-**⛓ Dependencies**:  
-Offer redemption flow, payment system integration, session state management.
-
-**✅ Acceptance Criteria**:
-- Users can browse offers and view details without authentication
-- Authentication is required when clicking "Obtener oferta" or similar purchase buttons
-- Unauthenticated users are redirected to login/register with context preserved
-- After successful authentication, users continue to payment/redemption flow
-- Authentication state is checked before allowing payment process
-- Error handling for authentication failures during purchase flow
-- Context preservation ensures users return to correct offer after auth
-
-**🧰 Technical Tasks**:
-- Implement authentication guards for offer redemption endpoints
-- Create context preservation for post-auth redirects
-- Add authentication state checking in purchase flow
-- Implement seamless redirect to auth from offer details
-- Create error handling for auth failures during purchases
-- Add authentication status validation before payment processing
-- Implement conditional UI based on authentication state
-
-**⚙️ External Setup / Config Required**
-- Integration points with payment system
-- Error handling strategies for auth failures
-
-**❗ Pending Confirmations**
-- Exact flow after authentication (payment screen, confirmation, etc.)
-- Error messaging when authentication fails during purchase
-- Whether guest checkout will be supported in future
-
-**📝 Notes & Observations**
-- Critical integration point between authentication and core business functionality
-- Must ensure smooth user experience for both authenticated and unauthenticated browsing
-
-**🖼 Wireframe Reference**
-- Exists: Partial
-- Note: Integration points visible in offer flow wireframes but authentication transitions not explicitly shown
-
-**📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
-
----
 
 ## 🧪 Post-analysis: Story Set Review
 
@@ -551,7 +499,6 @@ After analyzing all stories, I've identified the following optimizations and obs
 - AUTH-MOB-001 and AUTH-MOB-002 share backend user creation logic and can reuse validation components
 - AUTH-MOB-003 reuses OAuth setup from AUTH-MOB-002 for Google login
 - AUTH-MOB-006 (session management) is a dependency for all other authentication stories
-- AUTH-MOB-007 integrates with stories from other epics (Offer Redemption)
 
 **Consistency Improvements:**
 - All stories maintain consistent error handling patterns
@@ -561,7 +508,6 @@ After analyzing all stories, I've identified the following optimizations and obs
 **Scope Clarifications:**
 - Email verification (AUTH-MOB-004) may be optional for MVP based on requirements analysis
 - Password reset flow (AUTH-MOB-005) could use Firebase Auth default implementation to reduce scope
-- Authentication integration (AUTH-MOB-007) bridges with payment system which has pending decisions
 
 **No conflicts or duplications were identified.** Stories are properly scoped and complementary.
 
@@ -574,7 +520,6 @@ After analyzing all stories, I've identified the following optimizations and obs
 - **AUTH-MOB-004**: No wireframe, unclear if email verification required for MVP
 - **AUTH-MOB-005**: No wireframes, Firebase Auth vs custom implementation pending
 - **AUTH-MOB-006**: Session timeout policy undefined, logout UI location unclear
-- **AUTH-MOB-007**: Integration with payment system has pending architectural decisions
 
 ---
 
@@ -582,9 +527,9 @@ After analyzing all stories, I've identified the following optimizations and obs
 
 To be completed manually:
 
-- Total user stories: **7**
+- Total user stories: **6**
 - Stories with high uncertainty: **4** (AUTH-MOB-001, AUTH-MOB-002, AUTH-MOB-004, AUTH-MOB-005)
-- Stories pending confirmation: **6**
+- Stories pending confirmation: **5**
 
 ### Manual 3-point Estimation for Epic (PERT)
 
