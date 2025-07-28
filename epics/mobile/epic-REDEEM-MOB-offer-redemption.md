@@ -95,16 +95,16 @@ Display all relevant offer information with prominent redemption button.
 **🧰 Technical Tasks**:
 - Implement offer details screen layout
 - Integrate with offers API endpoint
-- Add image loading with error handling
+- Add image loading (images come from backend URLs)
 - Implement Google Maps integration for location (static map)
 - Add responsive design for different screen sizes
 - Implement share functionality (if required)
 - Add error message display component for payment failures
 - Implement error state management and clearing logic
+- Add clipboard functionality for copying offer details
 
 **⚙️ External Setup / Config Required**
 - Google Maps API key configuration
-- Image CDN access for offer photos
 
 **❗ Pending Confirmations**
 - Final button text ("Obtener oferta" vs "Quiero la oferta")
