@@ -1,6 +1,6 @@
 # 🧩 Epic: Mobile Account Management
 
-**KEY**: `MOB-ACC`
+**KEY**: `ACC-MOB`
 
 ---
 
@@ -39,9 +39,9 @@ Explicitly excluded elements:
 ## 🖼 Wireframes Referenced in Epic
 List of wireframes that apply to this epic and the stories that use them.
 
-- Profile screen: _Not defined_ → used in: MOB-ACC-001, MOB-ACC-004
-- Purchase history list screen: _Not defined_ → used in: MOB-ACC-002
-- Purchase detail screen: _Not defined_ → used in: MOB-ACC-003
+- Profile screen: _Not defined_ → used in: ACC-MOB-001, ACC-MOB-004
+- Purchase history list screen: _Not defined_ → used in: ACC-MOB-002
+- Purchase detail screen: _Not defined_ → used in: ACC-MOB-003
 
 ---
 
@@ -58,7 +58,7 @@ List of wireframes that apply to this epic and the stories that use them.
 
 ---
 
-### 🔹 `MOB-ACC-001` – User Profile Display
+### 🔹 `ACC-MOB-001` – User Profile Display
 
 **Summary**:  
 Display user's personal information in a read-only profile view with basic account details stored in our database.
@@ -114,7 +114,7 @@ User can access and view their complete profile information in a clear, organize
 
 ---
 
-### 🔹 `MOB-ACC-002` – Purchase History List
+### 🔹 `ACC-MOB-002` – Purchase History List
 
 **Summary**:  
 Display a simple list of user's purchased offers with basic status tabs for easy access to active vs completed purchases.
@@ -139,7 +139,7 @@ User can browse their purchases through simple tabs (Active/Completed) and easil
 - Display simple card with: offer/business name (TBD), purchase date, avatar image (TBD: offer or business image)
 - Show coupon status indicator on card
 - Include purchase date clearly visible
-- Tap any purchase card to navigate to detailed view (MOB-ACC-003)
+- Tap any purchase card to navigate to detailed view (ACC-MOB-003)
 - Handle empty state when user has no purchases in each tab
 - Simple pull-to-refresh for updates
 
@@ -179,7 +179,7 @@ User can browse their purchases through simple tabs (Active/Completed) and easil
 
 ---
 
-### 🔹 `MOB-ACC-003` – Purchase Detail View
+### 🔹 `ACC-MOB-003` – Purchase Detail View
 
 **Summary**:  
 Display detailed information for a specific purchase, including business details, coupon code, and redemption options.
@@ -194,7 +194,7 @@ Users need to access detailed information about their purchases, view and copy c
 User can view comprehensive purchase details with easy access to coupon codes and business information for successful redemption.
 
 **⛓ Dependencies**:  
-- Purchase history system (MOB-ACC-002)
+- Purchase history system (ACC-MOB-002)
 - Coupon code generation and storage system
 - Business/offer data systems
 - Google Maps integration
@@ -246,7 +246,7 @@ User can view comprehensive purchase details with easy access to coupon codes an
 
 ---
 
-### 🔹 `MOB-ACC-004` – Support Access for Account Deletion
+### 🔹 `ACC-MOB-004` – Support Access for Account Deletion
 
 **Summary**:  
 Provide users with access to support channel for account deletion requests to comply with LGPD regulations.
@@ -307,22 +307,22 @@ After analyzing all stories in this epic, I've identified the following consider
 
 **Story Dependencies:**
 - All stories depend on user authentication system - this should be implemented first
-- MOB-ACC-003 (Purchase Detail) depends on MOB-ACC-002 (Purchase History List) for navigation
-- MOB-ACC-002 and MOB-ACC-003 form a cohesive purchase management flow
-- MOB-ACC-004 provides minimal support integration needed for LGPD compliance
+- ACC-MOB-003 (Purchase Detail) depends on ACC-MOB-002 (Purchase History List) for navigation
+- ACC-MOB-002 and ACC-MOB-003 form a cohesive purchase management flow
+- ACC-MOB-004 provides minimal support integration needed for LGPD compliance
 
 **Missing Integration Points:**
-- Profile display (MOB-ACC-001) needs coordination with registration/authentication epic
-- Purchase detail (MOB-ACC-003) needs integration with business/offer data systems and Google Maps
+- Profile display (ACC-MOB-001) needs coordination with registration/authentication epic
+- Purchase detail (ACC-MOB-003) needs integration with business/offer data systems and Google Maps
 - Support system integration needs WhatsApp Business API setup
 - Backend needs to implement offer snapshot storage at time of purchase (immutable data)
 
 **User Flow Optimization:**
 - Separated purchase list from purchase detail for better UX and maintainability
-- MOB-ACC-002 simplified to basic tabs (Active/Completed) for MVP
-- MOB-ACC-002 → MOB-ACC-003 creates logical navigation flow
-- Profile (MOB-ACC-001) serves as entry point to account management features
-- Support access (MOB-ACC-004) provides LGPD compliance without complexity
+- ACC-MOB-002 simplified to basic tabs (Active/Completed) for MVP
+- ACC-MOB-002 → ACC-MOB-003 creates logical navigation flow
+- Profile (ACC-MOB-001) serves as entry point to account management features
+- Support access (ACC-MOB-004) provides LGPD compliance without complexity
 
 **Consistency Improvements:**
 - All stories need consistent error handling and loading states
@@ -345,19 +345,19 @@ After analyzing all stories in this epic, I've identified the following consider
 ## 📌 Stories with High Risk or Pending Decisions
 
 List all stories in this epic that include:
-- ❗ Confirmations pending: MOB-ACC-001, MOB-ACC-002, MOB-ACC-003, MOB-ACC-004
+- ❗ Confirmations pending: ACC-MOB-001, ACC-MOB-002, ACC-MOB-003, ACC-MOB-004
 - 📉 PERT estimation block: None (all stories now have standard complexity)
 - Any ambiguity label: All stories (missing wireframes)
 
 **High-risk stories requiring immediate attention:**
-1. **MOB-ACC-003** - Purchase Detail View: Complex integration with business data, Google Maps, and coupon systems
+1. **ACC-MOB-003** - Purchase Detail View: Complex integration with business data, Google Maps, and coupon systems
 
 **Medium risk:**
-1. **MOB-ACC-004** - Support Access: LGPD compliance requirements and WhatsApp integration setup
+1. **ACC-MOB-004** - Support Access: LGPD compliance requirements and WhatsApp integration setup
 
 **Lower risk:**
-1. **MOB-ACC-001** - Profile Display: Simplified with user data stored in our database, no external API dependencies
-2. **MOB-ACC-002** - Purchase History List: Simplified to basic tabs and list, no complex integrations needed
+1. **ACC-MOB-001** - Profile Display: Simplified with user data stored in our database, no external API dependencies
+2. **ACC-MOB-002** - Purchase History List: Simplified to basic tabs and list, no complex integrations needed
 
 ---
 
