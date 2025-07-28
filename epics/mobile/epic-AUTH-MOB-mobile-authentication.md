@@ -23,13 +23,14 @@ Main flows and interactions included in this epic:
 - Password reset and recovery flows
 - User logout functionality
 - Integration with offer redemption flow (authentication gating)
+- **Apple Store Compliance**: Sign in with Apple implementation required alongside Google Sign-In
 
 ---
 
 ## 🚫 Out of Scope
 Explicitly excluded elements:
 - Phone number verification (removed per business decision 2025-01-25)
-- Social media authentication beyond Google (Facebook, Instagram, Apple ID)
+- Social media authentication beyond Google and Apple (Facebook, Instagram)
 - Two-factor authentication (2FA)
 - Profile information management (covered in Account Management epic)
 - Purchase history (covered in Account Management epic)
@@ -54,12 +55,13 @@ List of wireframes that apply to this epic and the stories that use them.
 - 📐 **Missing wireframe**: Password reset request screen not defined  
 - 📐 **Missing wireframe**: Password reset confirmation screen not defined
 - 📐 **Missing wireframe**: Post-registration success/onboarding screen not defined
-- 🧩 **External dependency unclear**: Firebase Auth vs direct Google OAuth implementation decision pending
+- 🧩 **Tech stack confirmed**: Using Expo + Firebase Auth for authentication implementation
 - 📋 **Missing validation rules**: Specific email verification requirements and timing
 - 🧭 **Mismatch between document and wireframe**: Wireframe 4 doesn't show name fields (first name, last name) mentioned in business decisions
 - 📊 **Business decision pending**: Session timeout duration and automatic logout policy
 - ⚠️ **Uncovered edge case**: Handling of existing Google accounts that don't have required profile information
-- 🧩 **Cross-authentication conflict**: Handling of same email across different auth methods (email/password vs Google) needs resolution strategy
+- 🧩 **Cross-authentication conflict**: Only email/password accounts conflict with Google registration (same email with different auth method)
+- ⚠️ **Apple Store Requirement**: Sign in with Apple must be implemented alongside Google Sign-In per App Store Review Guidelines 4.8 (ASR & NR Login Services)
 
 ---
 
@@ -159,46 +161,51 @@ Reduces friction in registration process and leverages existing user credentials
 Seamless Google OAuth integration that creates user accounts with Google profile data.
 
 **⛓ Dependencies**:  
-Google OAuth 2.0 configuration, Google Cloud Console setup, backend OAuth handling.
+Firebase Auth configuration, Expo Firebase integration, Google Sign-In provider setup.
 
 **✅ Acceptance Criteria**:
 - "Registro con Google" button is prominently displayed on registration screen
-- Clicking Google button opens native Google OAuth flow
-- Successful OAuth returns user to app with account created
+- Clicking Google button opens native Google OAuth flow via Firebase Auth
+- Successful OAuth returns user to app with account created or authenticated
 - User profile is populated with Google data: name, email, profile picture (if available)
-- If Google account already exists in system, redirect to login instead of duplicate creation
-- OAuth flow validates email is not already registered with email/password
-- Clear error message for email-registered accounts: "Este email ya está registrado. Inicia sesión con email y contraseña."
-- User is redirected to login tab after Google conflict error
+- If Google account already exists in system, authenticate user automatically (expected behavior)
+- OAuth flow validates email is not already registered with email/password method
+- Clear error message for email/password conflicts: "Este email ya está registrado con contraseña. Inicia sesión con email y contraseña."
+- User is redirected to login tab after email/password conflict error
 - Error handling for OAuth cancellation or failures
-- Backend creates user record with Google account linking
+- Firebase Auth handles user record creation and Google account linking
 
 **🧰 Technical Tasks**:
-- Integrate Google OAuth 2.0 SDK for React Native
-- Configure Google Sign-In for iOS and Android
-- Create backend OAuth verification and user creation flow
-- Implement Google account duplicate detection
-- Implement cross-authentication email conflict detection
-- Add backend API for checking existing registration methods by email
-- Create consistent error messaging for authentication conflicts
+- Integrate Firebase Auth with Google Sign-In provider in Expo
+- Configure Google Sign-In using Expo's AuthSession or Firebase SDK
+- Set up Firebase Auth Google provider configuration
+- Implement email/password conflict detection (not Google account duplicates)
+- Handle existing Google account authentication automatically
+- Create error messaging for email/password auth conflicts only
 - Add error handling for OAuth flow failures
-- Create user profile mapping from Google data
-- Add Google account linking to user records
-- Implement OAuth token refresh mechanisms
+- Create user profile mapping from Google data to Firestore
+- Sync authenticated users with custom backend database
+- Configure Firebase Auth token handling and refresh
 
 **⚙️ External Setup / Config Required**
-- Google Cloud Console project setup
-- OAuth 2.0 client credentials for iOS and Android
-- Google Services configuration files (GoogleService-Info.plist, google-services.json)
-- Backend OAuth verification endpoint
+- Firebase project setup with Authentication enabled
+- Google Sign-In provider configuration in Firebase Console
+- Expo app.json configuration for Google Sign-In
+- Firebase config files integration with Expo (using expo install firebase)
+- Google Cloud Console OAuth 2.0 client credentials (if needed beyond Firebase)
 
 **❗ Pending Confirmations**
-- Whether Firebase Auth or direct Google OAuth will be used
 - Handling of edge cases where Google profile lacks required information
+- Expo-specific configuration details for Firebase Auth Google Sign-In
+- **Apple Store Requirement**: Sign in with Apple must be implemented alongside Google Sign-In per App Store Review Guidelines 4.8
 
 **📝 Notes & Observations**
-- Tech stack shows Google OAuth 2.0 confirmed but Firebase Auth vs direct OAuth is pending decision
-- Need to handle cases where Google account doesn't provide all required profile data
+- Using Expo + Firebase Auth for Google Sign-In integration simplifies configuration and token management
+- Existing Google accounts should authenticate automatically, not show as duplicates
+- Only email/password registrations conflict with Google registration attempts for same email
+- Expo provides built-in support for Firebase Auth through expo-firebase-auth or direct Firebase SDK
+- **Apple Store Compliance**: Per App Store Review Guidelines 4.8, apps using third-party login (Google) must also offer Sign in with Apple as equivalent option
+- Reference: https://developer.apple.com/app-store/review/guidelines/ (Section 4.8 ASR & NR Login Services)
 
 
 **🖼 Wireframe Reference**
@@ -206,13 +213,16 @@ Google OAuth 2.0 configuration, Google Cloud Console setup, backend OAuth handli
 - Filename: `woppa-wireframe-4-register.png`
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 11 hours
+- **Realistic**: 23 hours
+  - Cloud Setup (Firebase/GCP): 2 - 4 hours
+  - Library Installation & Configuration: 2 - 5 hours
+  - UI Component (Button/States): 1 - 2 hours
+  - Authentication Logic (Sign-in/Sign-out): 2 - 4 hours
+  - Initial Configuration Debugging (SHA-1, etc.): 4 - 8 hours
 
+- **Pessimistic**: 40 hours
+- **Final PERT Estimate: 24 hours**
 ---
 
 ### 🔹 `AUTH-MOB-003` – User Login
