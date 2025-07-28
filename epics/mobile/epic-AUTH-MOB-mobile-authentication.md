@@ -115,6 +115,14 @@ Navigation system, screen routing, session state management.
 - Exists: Yes
 - Filenames: `woppa-wireframe-1-mapa.png`, `woppa-wireframe-2-listado-ofertas.png`, `woppa-wireframe-3-detalle-oferta.png`, `woppa-wireframe-4-register.png`
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `AUTH-MOB-002` – Email and Password Registration
@@ -188,6 +196,14 @@ Justification: Missing wireframe details for name fields and uncertain email ver
 - Filename: `woppa-wireframe-4-register.png`
 - Note: Shows email/password fields but missing name fields mentioned in business decisions
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `AUTH-MOB-003` – Google OAuth Registration
@@ -259,6 +275,14 @@ Justification: Uncertainty around Firebase Auth vs direct OAuth implementation a
 - Exists: Yes
 - Filename: `woppa-wireframe-4-register.png`
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `AUTH-MOB-004` – User Login
@@ -314,6 +338,14 @@ User authentication backend, session management, Google OAuth configuration.
 **🖼 Wireframe Reference**
 - Exists: Yes
 - Filename: `woppa-wireframe-4-register.png`
+
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
 
 ---
 
@@ -382,6 +414,14 @@ Justification: No wireframe and uncertainty about verification requirements in M
 - Exists: No
 - Note: Verification screen wireframe not defined
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `AUTH-MOB-006` – Password Reset Flow
@@ -448,6 +488,14 @@ Justification: No wireframes and uncertainty about Firebase Auth vs custom imple
 - Exists: No
 - Note: Password reset screens wireframes not defined
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `AUTH-MOB-007` – Session Management and Logout
@@ -505,6 +553,14 @@ Session storage system, authentication state management, secure token handling.
 - Exists: Partial
 - Note: Entry points visible in wireframes 1-3, but logout/profile screen not defined
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `AUTH-MOB-008` – Authentication Integration with Offer Flow
@@ -558,6 +614,14 @@ Offer redemption flow, payment system integration, session state management.
 **🖼 Wireframe Reference**
 - Exists: Partial
 - Note: Integration points visible in offer flow wireframes but authentication transitions not explicitly shown
+
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
 
 ---
 

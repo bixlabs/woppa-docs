@@ -112,6 +112,14 @@ User can access and view their complete profile information in a clear, organize
 - Exists: No
 - Filename or page: _Not defined_
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `ACC-MOB-002` – Purchase History List
@@ -176,6 +184,14 @@ User can browse their purchases through simple tabs (Active/Completed) and easil
 **🖼 Wireframe Reference**
 - Exists: No
 - Filename or page: _Not defined_
+
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
 
 ---
 
@@ -244,6 +260,14 @@ User can view comprehensive purchase details with easy access to coupon codes an
 - Exists: No
 - Filename or page: _Not defined_
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `ACC-MOB-004` – Support Access for Account Deletion
@@ -298,6 +322,14 @@ User can easily contact support to request account deletion and data removal fro
 **🖼 Wireframe Reference**
 - Exists: No
 - Filename or page: _Not defined_
+
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
 
 ---
 

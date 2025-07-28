@@ -117,6 +117,14 @@ Google Maps API integration, device location services
 - Exists: Yes
 - Filename: woppa-wireframe-1-mapa.png
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `EXP-MOB-002` – Display Offers as Map Markers
@@ -184,6 +192,14 @@ Justification: Clustering behavior and performance requirements have uncertainti
 - Exists: Yes
 - Filename: woppa-wireframe-1-mapa.png
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `EXP-MOB-003` – Offer List View
@@ -241,6 +257,14 @@ Backend API for offer data, offer detail navigation
 - Exists: Yes
 - Filename: woppa-wireframe-2-listado-ofertas.png
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `EXP-MOB-004` – Category Filtering
@@ -294,6 +318,14 @@ Map markers (EXP-MOB-002), list view (EXP-MOB-003)
 **🖼 Wireframe Reference**
 - Exists: Yes
 - Filename: woppa-wireframe-1-mapa.png
+
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
 
 ---
 
@@ -360,6 +392,14 @@ Justification: Preview format and clustered marker behavior not clearly defined,
 - Exists: Yes
 - Filename: woppa-wireframe-1-mapa.png
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `EXP-MOB-006` – Navigation Between Map and List Views
@@ -412,6 +452,14 @@ Map view (EXP-MOB-001), list view (EXP-MOB-003), category filtering (EXP-MOB-004
 **🖼 Wireframe Reference**
 - Exists: Partially (shows both views separately)
 - Filename: woppa-wireframe-1-mapa.png and woppa-wireframe-2-listado-ofertas.png
+
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
 
 ---
 
@@ -477,6 +525,14 @@ Justification: Location permission handling can be complex with many edge cases 
 **🖼 Wireframe Reference**
 - Exists: Partially (shows location icon but not detailed states)
 - Filename: woppa-wireframe-1-mapa.png
+
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
 
 ---
 

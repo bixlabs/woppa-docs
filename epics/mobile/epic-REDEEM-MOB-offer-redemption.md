@@ -119,6 +119,14 @@ Display all relevant offer information with prominent redemption button.
 - Exists: Yes
 - Filename: `woppa-wireframe-3-detalle-oferta.png`
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `REDEEM-MOB-002` – Initiate Offer Redemption
@@ -170,6 +178,14 @@ Seamlessly transition from offer details to payment process with proper authenti
 
 **🖼 Wireframe Reference**
 - Exists: No (logic/flow step)
+
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
 
 ---
 
@@ -238,6 +254,14 @@ Justification: Missing wireframe and external payment system integration complex
 - Exists: No
 - Note: UI flow simplification decision means no specific payment wireframes
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `REDEEM-MOB-006` – Handle Payment Cancellation
@@ -293,6 +317,14 @@ Redirect cancelled payments to offer details screen with appropriate error messa
 **🖼 Wireframe Reference**
 - Exists: Yes (uses offer details wireframe with error state)
 - Filename: `woppa-wireframe-3-detalle-oferta.png`
+
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
 
 ---
 
@@ -392,6 +424,14 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Exists: Yes
 - Filename: `woppa-wireframe-5-obtained-cupon.png`
 
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
+
 ---
 
 ### 🔹 `REDEEM-MOB-008` – Navigate from Coupon Screen
@@ -446,6 +486,14 @@ Enable smooth navigation to business directions or offer discovery.
 **🖼 Wireframe Reference**
 - Exists: Yes
 - Filename: `woppa-wireframe-5-obtained-cupon.png`
+
+**📊 PERT Estimation**:
+- **Optimistic**: ___ hours
+  - _Comments: [Space for optimistic scenario assumptions]_
+- **Realistic**: ___ hours
+  - _Comments: [Space for realistic scenario assumptions]_
+- **Pessimistic**: ___ hours
+  - _Comments: [Space for pessimistic scenario assumptions]_
 
 ---
 
