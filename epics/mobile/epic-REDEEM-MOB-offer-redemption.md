@@ -97,8 +97,6 @@ Display all relevant offer information with prominent redemption button.
 - Integrate with offers API endpoint
 - Add image loading (images come from backend URLs)
 - Implement Google Maps integration for location (static map)
-- Add responsive design for different screen sizes
-- Implement share functionality (if required)
 - Add error message display component for payment failures
 - Implement error state management and clearing logic
 - Add clipboard functionality for copying offer details
