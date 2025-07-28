@@ -113,12 +113,16 @@ User can access and view their complete profile information in a clear, organize
 - Filename or page: _Not defined_
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 2.5 hours
+- **Realistic**: 4 hours
+  - Comments: Assumes that AI tools will accelerate development, that the UI is simple (even for loading and error states), and that the project scaffolding is complete.
+    - Frontend UI: ~1h
+    - Frontend Logic: ~30m
+    - Integration: ~30m
+    - Backend: ~45m
+    - Manual Testing: ~45m
+- **Pessimistic**: 8 hours
+- **Final PERT Estimate: 5 hours**
 
 ---
 
@@ -186,12 +190,16 @@ User can browse their purchases through simple tabs (Active/Completed) and easil
 - Filename or page: _Not defined_
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 3 hours
+- **Realistic**: 6 hours
+  - Comments: Assumes that AI tools will accelerate development, that the UI is simple (even for loading and error states), and that the project scaffolding is complete.
+    - Frontend UI: ~2h
+    - Frontend Logic: ~45m
+    - Integration: ~45m
+    - Backend: ~1.25h
+    - Manual Testing: ~1.5h
+- **Pessimistic**: 10 hours
+- **Final PERT Estimate: 6 hours**
 
 ---
 
@@ -261,12 +269,16 @@ User can view comprehensive purchase details with easy access to coupon codes an
 - Filename or page: _Not defined_
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 6 hours
+- **Realistic**: 9 hours
+  - Comments: Assumes that AI tools will accelerate development, that the UI is simple (even for loading and error states), that the project scaffolding is complete, and that maps are integrated in the app.
+    - Frontend UI: ~3.5h
+    - Frontend Logic: ~45m
+    - Integration: ~45m
+    - Backend: ~2h
+    - Manual Testing: ~1.5h
+- **Pessimistic**: 16 hours
+- **Final PERT Estimate: 10 hours**
 
 ---
 
@@ -324,12 +336,11 @@ User can easily contact support to request account deletion and data removal fro
 - Filename or page: _Not defined_
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 0.5 hours
+- **Realistic**: 1 hours
+  - Assumes a explanatory text and just a link to email/whatsapp.
+- **Pessimistic**: 3 hours
+- **Final PERT Estimate: 1 hours**
 
 ---
 
@@ -404,17 +415,18 @@ To be completed manually:
 ### Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 36h
-- Realistic: 60h
-- Pessimistic: 88h
+- Optimistic: 12h
+- Realistic: 20h
+- Pessimistic: 35.25h
+- **Final PERT Estimate: 22 hours**
+
+Note: I think we should add an extra buffer of 8hs because of the lack of UI designs.
+
+- Optimistic: 20h
+- Realistic: 28h
+- Pessimistic: 43.25h
+- **Final PERT Estimate: 30 hours**
 ```
 
 **Estimation factors:**
-- All screens lack wireframes requiring additional design time
-- Purchase detail view requires complex integration with business data and Google Maps
-- LGPD compliance requirements for Brazilian market
-- Copy-to-clipboard functionality
-- Navigation flow between purchase list and detail views
-- Simplified purchase list with basic tabs reduces complexity significantly
-- User data stored in our database eliminates external API dependencies for profile display
-- No payment status integration needed for purchase list (purchases assumed confirmed)
+- All screens lack wireframes/UI design
