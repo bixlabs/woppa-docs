@@ -137,15 +137,17 @@ Each task must:
 - Mention if wireframe is missing or insufficient
 - Add internal recommendations if helpful
 
-**📉 PERT Estimation Candidate**
-If the story has high uncertainty (e.g., missing wireframe and multiple open questions), then:
+**📊 PERT Estimation**
+*(Mandatory for every story, placed at the end of the story after Wireframe Reference)*
 
 ```
-PERT:
-- Optimistic: 
-- Realistic:
-- Pessimistic:
-Justification:
+📊 PERT Estimation:
+- Optimistic: ___ hours
+  - Comments: [Assumption for optimistic scenario in English]
+- Realistic: ___ hours
+  - Comments: [Assumption for realistic scenario in English]
+- Pessimistic: ___ hours
+  - Comments: [Assumption for pessimistic scenario in English]
 ```
 
 This block **must** appear in any story with one or more of the following:
@@ -195,9 +197,9 @@ To be completed manually:
 ### Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 
-- Realistic:
-- Pessimistic:
+- Optimistic: [Value not provided]
+- Realistic: [Value not provided]
+- Pessimistic: [Value not provided]
 ```
 
 ---
