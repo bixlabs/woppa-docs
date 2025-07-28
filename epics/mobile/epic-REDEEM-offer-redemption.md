@@ -1,6 +1,6 @@
 # 🧩 Epic: Offer Redemption
 
-**KEY**: `REDEEM`
+**KEY**: `REDEEM-MOB`
 
 ---
 
@@ -41,9 +41,9 @@ Explicitly excluded elements:
 ## 🖼 Wireframes Referenced in Epic
 List of wireframes that apply to this epic and the stories that use them.
 
-- `woppa-wireframe-3-detalle-oferta.png` → used in: REDEEM-001
-- `woppa-wireframe-5-obtained-cupon.png` → used in: REDEEM-007
-- (no wireframes available for REDEEM-003, REDEEM-006 - payment processing and cancellation handling screens)
+- `woppa-wireframe-3-detalle-oferta.png` → used in: REDEEM-MOB-001
+- `woppa-wireframe-5-obtained-cupon.png` → used in: REDEEM-MOB-007
+- (no wireframes available for REDEEM-MOB-003, REDEEM-MOB-006 - payment processing and cancellation handling screens)
 
 ---
 
@@ -63,7 +63,7 @@ List of wireframes that apply to this epic and the stories that use them.
 
 ---
 
-### 🔹 `REDEEM-001` – Display Offer Details
+### 🔹 `REDEEM-MOB-001` – Display Offer Details
 
 **Summary**:  
 Present comprehensive offer information with clear redemption call-to-action.
@@ -121,7 +121,7 @@ Display all relevant offer information with prominent redemption button.
 
 ---
 
-### 🔹 `REDEEM-002` – Initiate Offer Redemption
+### 🔹 `REDEEM-MOB-002` – Initiate Offer Redemption
 
 **Summary**:  
 Handle the redemption initiation with authentication check and validation.
@@ -173,7 +173,7 @@ Seamlessly transition from offer details to payment process with proper authenti
 
 ---
 
-### 🔹 `REDEEM-003` – Process Payment via Mercado Pago
+### 🔹 `REDEEM-MOB-003` – Process Payment via Mercado Pago
 
 **Summary**:  
 Generate payment preference and redirect user to Mercado Pago Checkout Pro.
@@ -240,7 +240,7 @@ Justification: Missing wireframe and external payment system integration complex
 
 ---
 
-### 🔹 `REDEEM-006` – Handle Payment Cancellation
+### 🔹 `REDEEM-MOB-006` – Handle Payment Cancellation
 
 **Summary**:  
 Handle user-initiated payment cancellations with redirection to offer details and error messaging.
@@ -296,7 +296,7 @@ Redirect cancelled payments to offer details screen with appropriate error messa
 
 ---
 
-### 🔹 `REDEEM-007` – Display Redemption Code with Payment Verification
+### 🔹 `REDEEM-MOB-007` – Display Redemption Code with Payment Verification
 
 **Summary**:  
 Handle payment verification, display loading states, and show redemption code or error messages based on payment status.
@@ -394,7 +394,7 @@ Verify payment status with backend, display appropriate loading states, and pres
 
 ---
 
-### 🔹 `REDEEM-008` – Navigate from Coupon Screen
+### 🔹 `REDEEM-MOB-008` – Navigate from Coupon Screen
 
 **Summary**:  
 Provide navigation options from the coupon screen to enhance user experience.
@@ -454,15 +454,15 @@ Enable smooth navigation to business directions or offer discovery.
 After analyzing all stories systematically, the story set shows excellent cohesion with simplified, clear sequential flow:
 
 **Flow Analysis:**
-- REDEEM-001 → REDEEM-002 → REDEEM-003 → (REDEEM-006 if cancellation OR REDEEM-007 if payment processing) → REDEEM-008
+- REDEEM-MOB-001 → REDEEM-MOB-002 → REDEEM-MOB-003 → (REDEEM-MOB-006 if cancellation OR REDEEM-MOB-007 if payment processing) → REDEEM-MOB-008
 - Stories represent a complete user journey from offer viewing to code usage
 - Clear decision points (authentication, payment cancellation vs processing)
 
 **Consistency Check:**
 - All stories reference the same offer redemption context
 - Authentication handling is consistently treated as external dependency
-- Payment processing consolidated into unified approach in REDEEM-007
-- Error handling patterns differentiate between cancellation (REDEEM-006) and other failures (REDEEM-007)
+- Payment processing consolidated into unified approach in REDEEM-MOB-007
+- Error handling patterns differentiate between cancellation (REDEEM-MOB-006) and other failures (REDEEM-MOB-007)
 
 **Story Boundaries:**
 - Each story has distinct, non-overlapping responsibilities
