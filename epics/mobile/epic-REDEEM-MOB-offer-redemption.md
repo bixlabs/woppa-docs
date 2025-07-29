@@ -77,60 +77,76 @@ Users need complete offer details to make informed redemption decisions.
 Display all relevant offer information with prominent redemption button.
 
 **⛓ Dependencies**:  
-- Offer data from backend API
+- Offer data from backend API (including available stock information)
 - User location for distance calculation
 - Category and subcategory mapping
+- **Real-time stock availability endpoint for pre-checkout validation**
 
 **✅ Acceptance Criteria**:
 - Display offer image, business name, and category
 - Show offer conditions (timing, restrictions, validity)
 - Display "1+1" benefit badge clearly
 - Include business address and map integration
+- **Add quantity selector dropdown (1-10 units) for multiple unit purchase**
+- **Display available stock and adjust quantity selector maximum to available stock**
+- **Show total price calculation (quantity × unit price) in real-time**
+- **Auto-adjust quantity to available stock with "Solo quedan X disponibles" message when needed**
+- **Quantity selector maximum = min(system_limit=10, available_stock) - dynamic adjustment**
 - Show "Obtener oferta" button prominently
 - Handle missing images with appropriate placeholders
 - Display error message when user returns from cancelled/failed payment
 - Clear error state when user navigates away or retries
-- **Handle out-of-stock offers with disabled "Obtener oferta" button and "Agotado" messaging (Cross-epic dependency: EXP-MOB)**
-- **Display grayed-out styling for out-of-stock offers while maintaining full offer details visibility**
+- **Handle out-of-stock offers with disabled "Obtener oferta" button and "Agotado" messaging when stock = 0 OR manually disabled by staff (Cross-epic dependency: EXP-MOB)**
+- **Display grayed-out styling for unavailable offers while maintaining full offer details visibility**
 
 **🧰 Technical Tasks**:
 - Implement offer details screen layout
 - Integrate with offers API endpoint
 - Add image loading (images come from backend URLs)
 - Implement Google Maps integration for location (static map)
+- **Add quantity selector dropdown component (1-10, dynamic max based on stock)**
+- **Implement real-time price calculation (quantity × unit price)**
+- **Use stock from offer details API for initial display**
+- **Add real-time stock validation API for pre-checkout verification**
+- **Implement quantity auto-adjustment logic when stock is limited**
 - Add error message display component for payment failures
 - Implement error state management and clearing logic
 - Add clipboard functionality for copying offer details
-- **Implement conditional "Obtener oferta" button logic for out-of-stock offers**
-- **Add grayed-out styling and "Agotado" messaging for out-of-stock offers**
+- **Implement conditional "Obtener oferta" button logic for unavailable offers (stock = 0 OR manually disabled)**
+- **Add grayed-out styling and "Agotado" messaging for unavailable offers**
 
 **⚙️ External Setup / Config Required**
 - Google Maps API key configuration
+- **Offer details API updated to include available_stock field and offer_status (active/disabled)**
+- **Real-time stock validation endpoint configuration**
 
 **❗ Pending Confirmations**
 - Final button text ("Obtener oferta" vs "Quiero la oferta")
 - Social media links display requirements
+- **Maximum quantity limit configuration (system default: 10 units, business-configurable in future)**
+- **Stock availability refresh frequency and caching strategy**
 
 **📝 Notes & Observations**
 - Wireframe shows static map but requirements mention Google Maps integration
 - Instagram link mentioned in requirements but not visible in wireframe
 - Category tags design needs clarification
+- **Dual stock approach: offer details API for initial display, real-time endpoint for pre-checkout validation**
 
 **🖼 Wireframe Reference**
 - Exists: Yes
 - Filename: `woppa-wireframe-3-detalle-oferta.png`
 
 **📊 PERT Estimation**:
-- **Optimistic**: 6 hours
-- **Realistic**: 8.25 hours
-  - Comments: Assumes that AI tools will accelerate development, that the UI is simple, that we already have the offer schema in the backend.
-    - Frontend UI: ~3.5h
-    - Frontend Logic: ~1h
-    - Integration: ~ 45m
-    - Backend: ~2h
+- **Optimistic**: 8 hours
+- **Realistic**: 11.5 hours
+  - Comments: Added complexity for quantity selector, stock validation, and real-time price calculation. Assumes AI tools acceleration.
+    - Frontend UI: ~4.5h (added quantity selector and stock display)
+    - Frontend Logic: ~2h (stock validation, price calculation, quantity limits)
+    - Integration: ~1.5h (stock API, price calculation)
+    - Backend: ~2.5h (stock availability endpoint, quantity validation)
     - Manual Testing: ~1h
-- **Pessimistic**: 13 hours
-- **Final PERT Estimate: 9 hours**
+- **Pessimistic**: 16 hours
+- **Final PERT Estimate: 12 hours**
 
 ---
 
@@ -158,8 +174,12 @@ Clean validation and routing logic that determines the next step in the redempti
 - Users can browse offers and view details without authentication
 - Authentication is required specifically when clicking "Obtener oferta" button
 - Validate user authentication status before redemption initiation
+- **Validate selected quantity against current available stock before proceeding**
+- **Pass selected quantity to subsequent redemption flow (REDEEM-MOB-003/004)**
 - Check offer availability and current stock before proceeding
-- Display "Oferta agotada" message when no stock available
+- **Display "Oferta agotada" message when stock = 0 OR offer is manually disabled by Woppa staff (indefinite stock status)**
+- **Display confirmation modal when selected quantity exceeds available stock: "Querías X, solo quedan Y disponibles. ¿Continuar con Y unidades?"**
+- **Handle user confirmation: proceed with adjusted quantity or cancel to retry**
 - Check offer expiration status
 - If user not authenticated: delegate to REDEEM-MOB-003 for context preservation and auth flow
 - If user authenticated but email not verified: delegate to REDEEM-MOB-003 for email verification flow
@@ -171,6 +191,11 @@ Clean validation and routing logic that determines the next step in the redempti
 **🧰 Technical Tasks**:
 - Implement authentication status check
 - Add offer availability and stock validation
+- **Add quantity validation logic (selected quantity vs available stock)**
+- **Implement quantity parameter passing to subsequent flows**
+- **Add quantity-aware stock checking with confirmation modal logic**
+- **Implement stock insufficient confirmation modal component**
+- **Add user decision handling (accept adjusted quantity or cancel)**
 - Create decision logic for routing (auth needed, email verification needed, or proceed to payment)
 - Integrate with centralized proceedToPayment function
 - Add delegation to REDEEM-MOB-003 when context preservation needed
@@ -181,31 +206,36 @@ Clean validation and routing logic that determines the next step in the redempti
 **⚙️ External Setup / Config Required**
 - Authentication service integration
 - Session management configuration
+- **Real-time stock validation API endpoint for pre-checkout verification**
 
 **❗ Pending Confirmations**
 - Stock checking frequency and real-time validation approach
 - Maximum redemptions per user per offer?
-- Out-of-stock messaging and user communication strategy
+- **Offer unavailability criteria: stock = 0 vs manually disabled by staff**
+- **"Agotado" messaging strategy for different unavailability reasons**
+- **Stock insufficient confirmation modal design and messaging**
+- **User decision flow: accept adjusted quantity vs cancel and retry behavior**
 
 **📝 Notes & Observations**
 - Clean separation: this story focuses on validation and routing decisions
 - Context preservation complexity handled by REDEEM-MOB-003
 - Uses centralized proceedToPayment function to avoid logic duplication
+- **Two-tier stock validation: offer details API (initial) + real-time API (pre-checkout)**
 
 **🖼 Wireframe Reference**
 - Exists: No (logic/flow step)
 
 **📊 PERT Estimation**:
-- **Optimistic**: 5 hours
-- **Realistic**: 6 hours
-  - Comments: Assumes that AI tools will accelerate development, includes stock validation logic.
-    - Frontend UI: ~30m (spinner, and disabled because no)
-    - Frontend Logic: ~1.75h (includes stock checking)
-    - Integration: ~ 1.25h
-    - Backend: ~45m (stock checking)
+- **Optimistic**: 7 hours
+- **Realistic**: 9 hours
+  - Comments: Added complexity for stock insufficient confirmation modal and user decision handling.
+    - Frontend UI: ~1.5h (spinner, and disabled because no stock, confirmation modal component)
+    - Frontend Logic: ~2.75h (stock validation + modal logic + user decisions)
+    - Integration: ~1.5h (quantity parameter handling)
+    - Backend: ~1.5h (quantity validation logic)
     - Manual Testing: ~1.75h
-- **Pessimistic**: 9 hours
-- **Final PERT Estimate: 6.33 hours**
+- **Pessimistic**: 13 hours
+- **Final PERT Estimate: 9.5 hours**
 
 ---
 
@@ -231,8 +261,10 @@ Seamless context preservation and restoration across authentication boundaries u
 
 **✅ Acceptance Criteria**:
 - Preserve offer context when redirecting to authentication flows
+- **Preserve selected quantity in context during authentication flows**
 - Preserve offer context when redirecting to email verification
 - Use navigation params for context preservation (MVP approach)
+- **Pass quantity parameter (original or user-confirmed adjusted quantity) to centralized proceedToPayment function**
 - After successful authentication, call centralized proceedToPayment function
 - After successful email verification, call centralized proceedToPayment function
 - Handle context loss gracefully with fallback navigation to offer details
@@ -242,7 +274,9 @@ Seamless context preservation and restoration across authentication boundaries u
 
 **🧰 Technical Tasks**:
 - Implement navigation parameter passing for offer context
+- **Add quantity parameter to navigation context preservation**
 - Create centralized proceedToPayment function shared with REDEEM-MOB-002
+- **Update proceedToPayment function to accept and handle quantity parameter (may be adjusted from stock confirmation)**
 - Add context restoration logic in authentication success flows
 - Add context restoration logic in email verification success flows
 - Implement graceful fallbacks for lost context scenarios
@@ -270,15 +304,15 @@ Seamless context preservation and restoration across authentication boundaries u
 - Exists: No (cross-flow integration logic)
 
 **📊 PERT Estimation**:
-- **Optimistic**: 3 hours
-- **Realistic**: 5 hours
+- **Optimistic**: 3.5 hours
+- **Realistic**: 5.5 hours
   - Frontend UI: ~0
-  - Frontend Logic: ~2h (refactor and restore context)
-  - Integration: ~ 1.5h (centralize function payment and navigate)
+  - Frontend Logic: ~2.25h (refactor and restore context including quantity)
+  - Integration: ~1.75h (centralize function payment with quantity and navigate)
   - Backend: ~0hs
   - Manual Testing: ~1.5
-- **Pessimistic**: 8 hours
-- **Final PERT Estimate: 5.25 hours**
+- **Pessimistic**: 8.5 hours
+- **Final PERT Estimate: 5.67 hours**
 
 ---
 
@@ -302,26 +336,34 @@ Successfully redirect user to Mercado Pago with proper payment preference and ha
 - User account information for payment
 
 **✅ Acceptance Criteria**:
-- Reserve offer stock temporarily (15-20 minutes TTL) before payment processing
+- **Reserve stock for selected quantity temporarily (15-20 minutes TTL) before payment processing**
+- **Calculate total amount (quantity × unit price) for payment preference**
 - Generate Mercado Pago payment preference with offer details and reservation ID
+- **Include quantity and total amount in payment preference**
+- **Include quantity in payment description and item details**
 - Include reservation ID in payment metadata for tracking
 - Redirect user to Mercado Pago Checkout Pro
 - Include proper success/failure return URLs
 - Handle user cancellation of payment
 - Preserve offer context and reservation ID throughout payment flow
 - Display loading state during preference generation
-- Handle reservation failures gracefully (show stock unavailable message)
+- **Handle reservation failures gracefully (should be rare since quantity already confirmed in REDEEM-MOB-002)**
+- **Support adjusted quantity reservation from stock confirmation flow**
 - Auto-release reservation on payment preference generation failure
 
 **🧰 Technical Tasks**:
 - Implement stock reservation system with TTL (15-20 minutes)
+- **Add quantity-based stock reservation (reserve N units of offer)**
+- **Implement total amount calculation (quantity × unit price)**
 - Create reservation ID generation and tracking
 - Integrate Mercado Pago SDK
 - Implement payment preference creation API with reservation metadata
+- **Add quantity and calculated total to payment preference structure**
+- **Update payment description to include quantity information**
 - Create redirect mechanism to Mercado Pago
 - Implement return URL handling
 - Add error handling for preference generation failures
-- Add error handling for stock reservation failures
+- **Add error handling for rare insufficient stock during reservation (fallback for edge cases)**
 - Create payment session tracking with reservation linking
 - Implement automatic reservation cleanup on failures
 
@@ -340,11 +382,14 @@ Successfully redirect user to Mercado Pago with proper payment preference and ha
 - User data requirements for payment processing
 - Handling of multiple payment methods within Mercado Pago
 - Stock unavailable messaging strategy
+- **Total amount calculation formula validation (quantity × unit_price)**
+- **Payment description format with quantity (e.g., "Pizza 2x1 - Cantidad: 3 unidades")**
 
 **📝 Notes & Observations**
 - No wireframe available - UI design needed for payment initiation screen
 - Business decision specifies Mercado Pago Checkout Pro specifically
 - Need to handle network failures during preference generation
+- **Reservation failures should be rare since quantity is pre-validated and confirmed in REDEEM-MOB-002**
 
 **📉 PERT Estimation Candidate**
 
@@ -361,22 +406,23 @@ Justification: Missing wireframe and external payment system integration complex
 - Note: UI flow simplification decision means no specific payment wireframes
 
 **📊 PERT Estimation**:
-- **Optimistic**: 14 hours
-- **Realistic**: 22 hours
-  - Comments: Stock reservation, integrate with mercado pago, manage reservation lifecycle.
+- **Optimistic**: 16 hours
+- **Realistic**: 25 hours
+  - Comments: Added complexity for quantity-based stock reservation, total calculation, and enhanced payment preference creation.
 
     - Frontend UI: ~1h (spinner and webview) 
-    - Frontend Logic: ~3.5h (call orchestration + logic deep link)
-    - Integration: ~3h (api call + config deep link)
-    - Backend: ~10hs
-      - endpoint to reserve with TTL
-      - endpoint to create-preference
+    - Frontend Logic: ~4h (call orchestration + quantity logic + deep link)
+    - Integration: ~3.5h (api call + quantity parameters + config deep link)
+    - Backend: ~12.5hs
+      - quantity-based stock reservation with TTL
+      - total amount calculation endpoint
+      - enhanced payment preference creation with quantity
       - mechanism to clean up expired reservations
       - job to clean expired 
       - webhook handling
     - Manual Testing: ~4h
-- **Pessimistic**: 30 hours
-- **Final PERT Estimate: 22.3 hours**
+- **Pessimistic**: 34 hours
+- **Final PERT Estimate: 25 hours**
 
 
 ---
@@ -402,7 +448,7 @@ Redirect cancelled payments to offer details screen with appropriate error messa
 
 **✅ Acceptance Criteria**:
 - Detect user-initiated payment cancellation from Mercado Pago
-- Automatically release stock reservation upon cancellation detection
+- **Automatically release quantity-based stock reservation upon cancellation detection**
 - Redirect user to offer details screen (RED-001)
 - Display cancellation error message on offer details
 - Preserve offer context and allow retry
@@ -412,7 +458,7 @@ Redirect cancelled payments to offer details screen with appropriate error messa
 
 **🧰 Technical Tasks**:
 - Implement cancellation detection from Mercado Pago return URLs
-- Add automatic stock reservation release on cancellation
+- **Add automatic quantity-based stock reservation release on cancellation**
 - Create navigation logic back to offer details
 - Integrate error messaging with offer details screen
 - Add cancellation event logging
@@ -442,15 +488,15 @@ Redirect cancelled payments to offer details screen with appropriate error messa
 - Filename: `woppa-wireframe-3-detalle-oferta.png`
 
 **📊 PERT Estimation**:
-- **Optimistic**: 4 hours
-- **Realistic**: 6 hours
+- **Optimistic**: 4.5 hours
+- **Realistic**: 6.5 hours
   - Frontend UI: ~0h
   - Frontend Logic: ~1.5h
   - Integration: ~30m
-  - Backend: ~2.5h (endpoint to cancel reservation and revert stock)
+  - Backend: ~3h (endpoint to cancel quantity-based reservation and revert stock)
   - Manual Testing: ~1.5h
-- **Pessimistic**: 10 hours
-- **Final PERT Estimate: 7 hours**
+- **Pessimistic**: 10.5 hours
+- **Final PERT Estimate: 6.83 hours**
 
 ---
 
@@ -479,9 +525,12 @@ Verify payment status directly using payment ID from redirect query parameters a
 - Extract payment ID from Mercado Pago redirect query parameters
 - Verify payment status directly with backend using payment ID
 - Display loading state while verifying payment status
-- Convert stock reservation to definitive redemption code upon payment confirmation
+- **Convert quantity-based stock reservation to definitive redemption code upon payment confirmation**
 - Generate unique redemption code linked to the reservation ID
+- **Display quantity prominently with redemption code (e.g., "Cantidad: 3 unidades")**
+- **Include quantity information in code display screen**
 - Send redemption code automatically via email upon payment confirmation
+- **Include quantity and total amount in email content**
 - Include offer details, business information, and usage instructions in email
 - Display code prominently in large, readable format with business info
 - Show business name and offer type (1+1)
@@ -489,7 +538,7 @@ Verify payment status directly using payment ID from redirect query parameters a
 - Display code status (active, used, expired)
 - Show celebration message for successful purchase
 - Display error message for payment failures (non-cancellation)
-- Release stock reservation automatically on payment failures
+- **Release quantity-based stock reservation automatically on payment failures**
 - Include close/dismiss button
 - Handle code generation failures gracefully
 - Handle email delivery failures gracefully (log but don't block code display)
@@ -500,16 +549,18 @@ Verify payment status directly using payment ID from redirect query parameters a
 - Implement query parameter parsing for payment ID extraction
 - Create direct payment status verification API call
 - Create payment verification loading UI state
-- Implement reservation to code conversion system with atomic transactions
+- **Implement quantity-based reservation to code conversion system with atomic transactions**
 - Create code generation algorithm linked to reservation ID
+- **Add quantity display component to code screen (show purchased quantity)**
 - Integrate email service for automatic code delivery
+- **Update email template to include quantity and total amount information**
 - Create email template with offer details and business information
 - Implement email delivery error handling and logging
 - Create code display screen layout with multiple states (loading, success, error)
 - Add code status indicator system
 - Create celebration UI elements for successful payments
 - Implement error messaging for payment failures with reservation cleanup
-- Add automatic stock reservation release on payment failures
+- **Add automatic quantity-based stock reservation release on payment failures**
 - Add accessibility features for code reading
 - Create screen capture prevention (if required)
 - Implement code copying functionality (if needed)
@@ -531,6 +582,8 @@ Verify payment status directly using payment ID from redirect query parameters a
 **❗ Pending Confirmations**
 - Payment ID parameter name in Mercado Pago redirect
 - Code format and length requirements
+- **Quantity display format in code screen (e.g., "Cantidad: 3 unidades" vs "3x promoción")**
+- **Email template format for quantity and total amount display**
 - Email template design and content structure
 - Email delivery failure retry policy
 - Final celebration message wording
@@ -557,15 +610,15 @@ Verify payment status directly using payment ID from redirect query parameters a
 - Filename: `woppa-wireframe-5-obtained-cupon.png`
 
 **📊 PERT Estimation**:
-- **Optimistic**: 11 hours
-- **Realistic**: 17.5 hours
-  - Frontend UI: ~5h
-  - Frontend Logic: ~2h
-  - Integration: ~1h
-  - Backend: ~7h
+- **Optimistic**: 13 hours
+- **Realistic**: 20.5 hours
+  - Frontend UI: ~6h (added quantity display component)
+  - Frontend Logic: ~2.5h (quantity handling logic)
+  - Integration: ~1.5h (quantity data flow)
+  - Backend: ~8h (quantity-based reservation conversion, email updates)
   - Manual Testing: ~2.5h
-- **Pessimistic**: 22 hours
-- **Final PERT Estimate: 17.2 hours**
+- **Pessimistic**: 26 hours
+- **Final PERT Estimate: 20.17 hours**
 
 ---
 
@@ -681,15 +734,15 @@ To be completed manually:
 
 - Total user stories: 7
 - Stories with high uncertainty: 3 (REDEEM-MOB-004, REDEEM-MOB-005, REDEEM-MOB-006)
-- Stories pending confirmation: 4
+- Stories pending confirmation: 5
 
-### Manual 3-point Estimation for Epic (PERT)
+### Updated Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 44h
-- Realistic: 66.75h
-- Pessimistic: 96h
-- Final PERT Estimate: 80 (67.8 + 10) hours
+- Optimistic: 53
+- Realistic: 80h
+- Pessimistic: 112h
+- Final PERT Estimate: 90.8 (80.8 + 10) hours
 
 Note: I added 10 hours to because I feel backend is underestimated. And just in case I forgot define a schema or a complex logic implementation in backend.
 ```
