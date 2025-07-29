@@ -148,7 +148,7 @@ User can browse their purchases through simple tabs (Active/Completed) and easil
 **✅ Acceptance Criteria**:
 - Display simple tabs: "Active" and "Completed"
 - Show chronological list of purchases within each tab
-- Display simple card with: offer/business name (TBD), purchase date, avatar image (TBD: offer or business image)
+- Display simple card with: offer/business name (TBD), **quantity purchased**, purchase date, avatar image (TBD: offer or business image)
 - Show coupon status indicator on card
 - Include purchase date clearly visible
 - Tap any purchase card to navigate to detailed view (ACC-MOB-003)
@@ -158,7 +158,7 @@ User can browse their purchases through simple tabs (Active/Completed) and easil
 **🧰 Technical Tasks**:
 - Create purchase history list component with tab navigation
 - Implement backend API for purchase data retrieval with offer snapshots
-- Design simple card layout with avatar, name, date, and status
+- Design simple card layout with avatar, name, **quantity display**, date, and status
 - Add tab switching functionality (Active/Completed)
 - Add navigation to purchase detail screen
 - Implement simple pull-to-refresh mechanism
@@ -167,13 +167,14 @@ User can browse their purchases through simple tabs (Active/Completed) and easil
 - Handle circular avatar images with fallback
 
 **⚙️ External Setup / Config Required**
-- Database schema for purchase history with offer snapshots
+- Database schema for purchase history with offer snapshots and quantity information
 - Image storage and CDN setup for offer/business images
 - Default avatar images for fallback
 
 **❗ Pending Confirmations**
 - Whether to show offer name or business name on card
 - Whether avatar shows offer image or business image
+- **Quantity display format on card (e.g., "3x", "Cantidad: 3", badge with number)**
 - Exact status labels to use (Active vs Completed, etc.)
 - Card design and information hierarchy
 
@@ -190,16 +191,16 @@ User can browse their purchases through simple tabs (Active/Completed) and easil
 - Filename or page: _Not defined_
 
 **📊 PERT Estimation**:
-- **Optimistic**: 3 hours
-- **Realistic**: 6 hours
-  - Comments: Assumes that AI tools will accelerate development, that the UI is simple (even for loading and error states), and that the project scaffolding is complete.
-    - Frontend UI: ~2h
+- **Optimistic**: 3.5 hours
+- **Realistic**: 6.5 hours
+  - Comments: Added complexity for quantity display in cards. AI tools acceleration assumed.
+    - Frontend UI: ~2.25h (quantity display component)
     - Frontend Logic: ~45m
     - Integration: ~45m
-    - Backend: ~1.25h
+    - Backend: ~1.5h (quantity field in purchase history API)
     - Manual Testing: ~1.5h
-- **Pessimistic**: 10 hours
-- **Final PERT Estimate: 6 hours**
+- **Pessimistic**: 10.5 hours
+- **Final PERT Estimate: 6.83 hours**
 
 ---
 
@@ -227,7 +228,8 @@ User can view comprehensive purchase details with easy access to coupon codes an
 - Display complete business information: name, address, category, contact details
 - Show detailed offer information: type (1+1), description, terms and conditions
 - Display large, easy-to-read coupon code with copy-to-clipboard functionality
-- Show purchase details: purchase date, price paid, payment method
+- **Show quantity purchased prominently (e.g., "Cantidad: 3 unidades")**
+- Show purchase details: purchase date, **total amount paid, unit price (quantity × unit price)**, payment method
 - Display current status with clear visual indicators: "Active", "Redeemed", "Expired"
 - Include expiration date and time remaining (if active)
 - Show redemption instructions specific to the business
@@ -239,13 +241,14 @@ User can view comprehensive purchase details with easy access to coupon codes an
 **🧰 Technical Tasks**:
 - Create purchase detail screen component
 - Implement coupon code display with large, clear formatting
+- **Add quantity display component showing purchased units prominently**
 - Add copy-to-clipboard functionality for coupon codes
 - Implement Google Maps integration for directions
 - Design status-specific UI (active, expired, used states)
 - Add business information display layout
 - Handle deep linking to specific purchase details
 - Add back navigation to purchase history
-- Create responsive layout for all purchase information
+- Create responsive layout for all purchase information including quantity details
 - Implement image loading for business and offer photos
 
 **⚙️ External Setup / Config Required**
@@ -255,6 +258,8 @@ User can view comprehensive purchase details with easy access to coupon codes an
 
 **❗ Pending Confirmations**
 - Copy-to-clipboard behavior and user feedback
+- **Quantity display format in detail view (similar to redemption code screen)**
+- **Price breakdown display: total vs unit price presentation**
 - Specific redemption instructions format
 - Business contact information to display (phone, Instagram, etc.)
 
@@ -269,16 +274,16 @@ User can view comprehensive purchase details with easy access to coupon codes an
 - Filename or page: _Not defined_
 
 **📊 PERT Estimation**:
-- **Optimistic**: 6 hours
-- **Realistic**: 9 hours
-  - Comments: Assumes that AI tools will accelerate development, that the UI is simple (even for loading and error states), that the project scaffolding is complete, and that maps are integrated in the app.
-    - Frontend UI: ~3.5h
-    - Frontend Logic: ~45m
+- **Optimistic**: 7 hours
+- **Realistic**: 10.5 hours
+  - Comments: Added complexity for quantity display, price breakdown, and enhanced purchase detail presentation.
+    - Frontend UI: ~4.5h (quantity display, price breakdown components)
+    - Frontend Logic: ~1h (quantity and price calculation display)
     - Integration: ~45m
-    - Backend: ~2h
-    - Manual Testing: ~1.5h
-- **Pessimistic**: 16 hours
-- **Final PERT Estimate: 10 hours**
+    - Backend: ~2.5h (quantity and pricing data in purchase detail API)
+    - Manual Testing: ~1.75h
+- **Pessimistic**: 18 hours
+- **Final PERT Estimate: 11.17 hours**
 
 ---
 
@@ -415,17 +420,14 @@ To be completed manually:
 ### Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 12h
-- Realistic: 20h
-- Pessimistic: 35.25h
-- **Final PERT Estimate: 22 hours**
+- Optimistic: 13.5h
+- Realistic: 22h
+- Pessimistic: 39.5h
+- **Final PERT Estimate: 23.5 hours**
 
-Note: I think we should add an extra buffer of 8hs because of the lack of UI designs.
+Note: I think we should add an extra buffer of 9hs because of the lack of UI designs.
 
-- Optimistic: 20h
-- Realistic: 28h
-- Pessimistic: 43.25h
-- **Final PERT Estimate: 30 hours**
+- **Final PERT Estimate: 32.5 hours**
 ```
 
 **Estimation factors:**
