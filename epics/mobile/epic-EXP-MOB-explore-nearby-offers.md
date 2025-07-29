@@ -59,6 +59,17 @@ List any unclear, undefined, or mismatched areas affecting the epic as a whole.
 - 🧭 **Mismatch between document and wireframe**: Requirements mention expansion/contraction of search radius with "barra" (slider) control but wireframes don't show this UI element
 - 🔄 **UX flow clarification needed**: Wireframes show "Obtener oferta" in exploration views but should be "Ver detalle" to avoid confusion with actual purchase action
 - ⚠️ **CRITICAL: Search geometry pending confirmation**: Requirements suggest centro + radius (circular search) but technical implementation could use bounding box (rectangular). **Must confirm approach before backend implementation** as it affects database queries, performance, and API design
+- 🔄 **CRITICAL: Inconsistency in inactive offers display logic**: Contradiction between requirements lines 361-366 vs 503 regarding whether "expired" offers are shown until end of day or hidden immediately. **Must clarify with client if showing only "out-of-stock" or also "expired" offers until end of day**
+- 🔁 **Clarified assumption**: Mixed clusters show total count only - no visual breakdown by offer state (simplicity for MVP)
+- 📊 **Business decision pending**: "End of day" timing definition for out-of-stock offer visibility (midnight São Paulo UTC-3? Business closing time? Other timing?)
+
+**Working assumptions for MVP**:
+- Out-of-stock offers remain clickable and navigable to offer details
+- Only out-of-stock (not expired by date) offers shown until end of day
+- Map markers and previews show out-of-stock offers normally - visual changes only appear in offer details
+- Mixed clusters show total count without state breakdown (simplicity for MVP)
+- "End of day" assumed as midnight São Paulo time (UTC-3) pending confirmation
+- Cross-epic dependency: REDEEM-MOB-001 must handle disabled redemption for out-of-stock offers
 
 ---
 
@@ -158,6 +169,10 @@ Backend API for offer data, map implementation from EXP-MOB-001
 - Map handles up to 100+ markers without performance degradation
 - Markers update based on current map view bounds (shows offers visible in current map area)
 - Offers load within a **fixed default search radius of 5km** around the map center (hardcoded for MVP, final value TBD)
+- **Out-of-stock offers display as normal markers (visual changes only appear in offer details)**
+- **Out-of-stock markers remain clickable and navigate to offer details**
+- **Clusters show total count without breakdown by offer state (simplicity for MVP)**
+- **Out-of-stock offers visible until end of day (midnight São Paulo UTC-3, pending confirmation)**
 
 **🧰 Technical Tasks**:
 - Design and implement custom map marker components
@@ -168,6 +183,7 @@ Backend API for offer data, map implementation from EXP-MOB-001
 - Implement marker clustering for performance
 - Create marker animations for better UX
 - Add map bounds-based offer loading with debounce to prevent excessive offer API calls
+- **Implement end-of-day filtering logic for out-of-stock offers (midnight São Paulo UTC-3)**
 
 **⚙️ External Setup / Config Required**
 - Backend API endpoints for offer data retrieval
@@ -303,6 +319,9 @@ Backend API for offer data, radius control from EXP-MOB-003, offer detail naviga
 - Cards are tappable to access offer details
 - List view maintains filter state from map view
 - Images load efficiently with proper placeholders
+- **Out-of-stock offers display as grayed-out cards with "Agotado" label**
+- **Out-of-stock cards remain tappable and navigate to offer details**
+- **Out-of-stock offers visible until end of day (midnight São Paulo UTC-3, pending confirmation)**
 
 **🧰 Technical Tasks**:
 - Design and implement offer card component
@@ -313,6 +332,8 @@ Backend API for offer data, radius control from EXP-MOB-003, offer detail naviga
 - Implement card interaction and navigation
 - Add loading states and error handling
 - Optimize list performance for large offer sets with image lazy loading
+- **Implement grayed-out styling for out-of-stock cards with "Agotado" label**
+- **Implement end-of-day filtering logic for out-of-stock offers (midnight São Paulo UTC-3)**
 
 **⚙️ External Setup / Config Required**
 - Image CDN configuration for offer photos
@@ -438,6 +459,8 @@ Map markers (EXP-MOB-002), offer details screen (from Offer Redemption epic)
 - Preview loads within 1 second of marker tap
 - Preview works for both single offers and clustered offers
 - Smooth animations for preview appearance/dismissal
+- **Mixed cluster previews show all offers normally (visual changes only appear in offer details)**
+- **All offers in preview remain clickable and navigate to details where state is revealed**
 
 **🧰 Technical Tasks**:
 - Design and implement marker preview component (modal/tooltip/bottom sheet)

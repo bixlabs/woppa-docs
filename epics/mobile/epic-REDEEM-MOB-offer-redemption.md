@@ -90,6 +90,8 @@ Display all relevant offer information with prominent redemption button.
 - Handle missing images with appropriate placeholders
 - Display error message when user returns from cancelled/failed payment
 - Clear error state when user navigates away or retries
+- **Handle out-of-stock offers with disabled "Obtener oferta" button and "Agotado" messaging (Cross-epic dependency: EXP-MOB)**
+- **Display grayed-out styling for out-of-stock offers while maintaining full offer details visibility**
 
 **🧰 Technical Tasks**:
 - Implement offer details screen layout
@@ -99,6 +101,8 @@ Display all relevant offer information with prominent redemption button.
 - Add error message display component for payment failures
 - Implement error state management and clearing logic
 - Add clipboard functionality for copying offer details
+- **Implement conditional "Obtener oferta" button logic for out-of-stock offers**
+- **Add grayed-out styling and "Agotado" messaging for out-of-stock offers**
 
 **⚙️ External Setup / Config Required**
 - Google Maps API key configuration
