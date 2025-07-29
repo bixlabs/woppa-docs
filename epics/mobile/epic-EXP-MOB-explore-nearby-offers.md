@@ -185,6 +185,7 @@ Backend API for offer data, map implementation from EXP-MOB-001
 - Debounced offer fetching prevents excessive backend API calls when user moves map quickly
 - Advanced Google Maps cost optimizations can be addressed in future phases when usage scales
 - **Fixed 5km radius for MVP** (final default value TBD) - dynamic radius control will be implemented in next story (EXP-MOB-003)
+- Cache in the backend like using REDIS and scalability is not a concern for MVP, it will be addressed in future phases when usage scales.
 
 
 **🖼 Wireframe Reference**
