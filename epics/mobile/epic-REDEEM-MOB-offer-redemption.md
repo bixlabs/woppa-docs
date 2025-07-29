@@ -118,12 +118,16 @@ Display all relevant offer information with prominent redemption button.
 - Filename: `woppa-wireframe-3-detalle-oferta.png`
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 6 hours
+- **Realistic**: 8.25 hours
+  - Comments: Assumes that AI tools will accelerate development, that the UI is simple, that we already have the offer schema in the backend.
+    - Frontend UI: ~3.5h
+    - Frontend Logic: ~1h
+    - Integration: ~ 45m
+    - Backend: ~2h
+    - Manual Testing: ~1h
+- **Pessimistic**: 13 hours
+- **Final PERT Estimate: 9 hours**
 
 ---
 
@@ -151,31 +155,34 @@ Clean validation and routing logic that determines the next step in the redempti
 - Users can browse offers and view details without authentication
 - Authentication is required specifically when clicking "Obtener oferta" button
 - Validate user authentication status before redemption initiation
-- Check offer availability and expiration
+- Check offer availability and current stock before proceeding
+- Display "Oferta agotada" message when no stock available
+- Check offer expiration status
 - If user not authenticated: delegate to REDEEM-MOB-003 for context preservation and auth flow
 - If user authenticated but email not verified: delegate to REDEEM-MOB-003 for email verification flow
-- If user fully authenticated: call centralized proceedToPayment function directly
+- If user fully authenticated and stock available: call centralized proceedToPayment function directly
 - Handle offer unavailability with appropriate messaging
 - Prevent multiple simultaneous redemptions
 - Clear loading states during validation
 
 **🧰 Technical Tasks**:
 - Implement authentication status check
-- Add offer availability validation
+- Add offer availability and stock validation
 - Create decision logic for routing (auth needed, email verification needed, or proceed to payment)
 - Integrate with centralized proceedToPayment function
 - Add delegation to REDEEM-MOB-003 when context preservation needed
 - Implement loading states during validation
-- Add error handling for unavailable offers
-- Create offer reservation mechanism (if needed)
+- Add error handling for unavailable offers and out-of-stock scenarios
+- Create stock checking mechanism with real-time validation
 
 **⚙️ External Setup / Config Required**
 - Authentication service integration
 - Session management configuration
 
 **❗ Pending Confirmations**
-- Offer reservation mechanism needed during payment process?
+- Stock checking frequency and real-time validation approach
 - Maximum redemptions per user per offer?
+- Out-of-stock messaging and user communication strategy
 
 **📝 Notes & Observations**
 - Clean separation: this story focuses on validation and routing decisions
@@ -186,12 +193,16 @@ Clean validation and routing logic that determines the next step in the redempti
 - Exists: No (logic/flow step)
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 5 hours
+- **Realistic**: 6 hours
+  - Comments: Assumes that AI tools will accelerate development, includes stock validation logic.
+    - Frontend UI: ~30m (spinner, and disabled because no)
+    - Frontend Logic: ~1.75h (includes stock checking)
+    - Integration: ~ 1.25h
+    - Backend: ~45m (stock checking)
+    - Manual Testing: ~1.75h
+- **Pessimistic**: 9 hours
+- **Final PERT Estimate: 6.33 hours**
 
 ---
 
@@ -256,12 +267,15 @@ Seamless context preservation and restoration across authentication boundaries u
 - Exists: No (cross-flow integration logic)
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 3 hours
+- **Realistic**: 5 hours
+  - Frontend UI: ~0
+  - Frontend Logic: ~2h (refactor and restore context)
+  - Integration: ~ 1.5h (centralize function payment and navigate)
+  - Backend: ~0hs
+  - Manual Testing: ~1.5
+- **Pessimistic**: 8 hours
+- **Final PERT Estimate: 5.25 hours**
 
 ---
 
@@ -285,31 +299,44 @@ Successfully redirect user to Mercado Pago with proper payment preference and ha
 - User account information for payment
 
 **✅ Acceptance Criteria**:
-- Generate Mercado Pago payment preference with offer details
+- Reserve offer stock temporarily (15-20 minutes TTL) before payment processing
+- Generate Mercado Pago payment preference with offer details and reservation ID
+- Include reservation ID in payment metadata for tracking
 - Redirect user to Mercado Pago Checkout Pro
 - Include proper success/failure return URLs
 - Handle user cancellation of payment
-- Preserve offer context throughout payment flow
+- Preserve offer context and reservation ID throughout payment flow
 - Display loading state during preference generation
+- Handle reservation failures gracefully (show stock unavailable message)
+- Auto-release reservation on payment preference generation failure
 
 **🧰 Technical Tasks**:
+- Implement stock reservation system with TTL (15-20 minutes)
+- Create reservation ID generation and tracking
 - Integrate Mercado Pago SDK
-- Implement payment preference creation API
+- Implement payment preference creation API with reservation metadata
 - Create redirect mechanism to Mercado Pago
 - Implement return URL handling
 - Add error handling for preference generation failures
-- Create payment session tracking
+- Add error handling for stock reservation failures
+- Create payment session tracking with reservation linking
+- Implement automatic reservation cleanup on failures
 
 **⚙️ External Setup / Config Required**
+- Stock reservation database schema and TTL configuration
+- Reservation cleanup job/service configuration
 - Mercado Pago developer account setup
 - API credentials configuration (public/private keys)
 - Webhook URLs configuration in Mercado Pago dashboard
 - Return URLs configuration
 
 **❗ Pending Confirmations**
+- Stock reservation TTL duration (suggested: 15-20 minutes)
+- Reservation cleanup frequency and mechanism
 - Payment preference item description format
 - User data requirements for payment processing
 - Handling of multiple payment methods within Mercado Pago
+- Stock unavailable messaging strategy
 
 **📝 Notes & Observations**
 - No wireframe available - UI design needed for payment initiation screen
@@ -331,12 +358,23 @@ Justification: Missing wireframe and external payment system integration complex
 - Note: UI flow simplification decision means no specific payment wireframes
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 14 hours
+- **Realistic**: 22 hours
+  - Comments: Stock reservation, integrate with mercado pago, manage reservation lifecycle.
+
+    - Frontend UI: ~1h (spinner and webview) 
+    - Frontend Logic: ~3.5h (call orchestration + logic deep link)
+    - Integration: ~3h (api call + config deep link)
+    - Backend: ~10hs
+      - endpoint to reserve with TTL
+      - endpoint to create-preference
+      - mechanism to clean up expired reservations
+      - job to clean expired 
+      - webhook handling
+    - Manual Testing: ~4h
+- **Pessimistic**: 30 hours
+- **Final PERT Estimate: 22.3 hours**
+
 
 ---
 
@@ -361,21 +399,26 @@ Redirect cancelled payments to offer details screen with appropriate error messa
 
 **✅ Acceptance Criteria**:
 - Detect user-initiated payment cancellation from Mercado Pago
+- Automatically release stock reservation upon cancellation detection
 - Redirect user to offer details screen (RED-001)
 - Display cancellation error message on offer details
 - Preserve offer context and allow retry
 - Clear error state on subsequent redemption attempts
 - Log cancellation events for analytics
+- Handle reservation release failures gracefully
 
 **🧰 Technical Tasks**:
 - Implement cancellation detection from Mercado Pago return URLs
+- Add automatic stock reservation release on cancellation
 - Create navigation logic back to offer details
 - Integrate error messaging with offer details screen
 - Add cancellation event logging
 - Implement error state clearing mechanism
 - Create retry flow preservation
+- Handle reservation release failures and logging
 
 **⚙️ External Setup / Config Required**
+- Stock reservation system integration for cleanup
 - Mercado Pago cancellation URL configuration
 - Error message localization for cancellations
 - Analytics event tracking setup
@@ -384,6 +427,7 @@ Redirect cancelled payments to offer details screen with appropriate error messa
 - Specific cancellation error message content
 - Cancellation detection criteria vs other payment failures
 - Analytics tracking requirements for cancellations
+- Reservation release retry policy on failures
 
 **📝 Notes & Observations**
 - Simpler flow focusing on user-initiated cancellations only
@@ -395,12 +439,15 @@ Redirect cancelled payments to offer details screen with appropriate error messa
 - Filename: `woppa-wireframe-3-detalle-oferta.png`
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 4 hours
+- **Realistic**: 6 hours
+  - Frontend UI: ~0h
+  - Frontend Logic: ~1.5h
+  - Integration: ~30m
+  - Backend: ~2.5h (endpoint to cancel reservation and revert stock)
+  - Manual Testing: ~1.5h
+- **Pessimistic**: 10 hours
+- **Final PERT Estimate: 7 hours**
 
 ---
 
@@ -430,7 +477,8 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Display loading state immediately when arriving from Mercado Pago
 - Poll backend for payment status at appropriate intervals
 - Handle webhook delays gracefully with timeout mechanisms
-- Generate unique redemption code upon payment confirmation
+- Convert stock reservation to definitive redemption code upon payment confirmation
+- Generate unique redemption code linked to the reservation ID
 - Send redemption code automatically via email upon payment confirmation
 - Include offer details, business information, and usage instructions in email
 - Display code prominently in large, readable format with business info
@@ -439,15 +487,19 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Display code status (active, used, expired)
 - Show celebration message for successful purchase
 - Display error message for payment failures (non-cancellation)
+- Release stock reservation automatically on payment failures
 - Include close/dismiss button
 - Handle code generation failures gracefully
 - Handle email delivery failures gracefully (log but don't block code display)
 - Prevent multiple polling requests
+- Ensure atomic transaction between payment confirmation and reservation conversion
 
 **🧰 Technical Tasks**:
 - Implement payment status polling mechanism with exponential backoff
 - Create payment verification loading UI state
 - Add timeout handling with configurable limits
+- Implement reservation to code conversion system with atomic transactions
+- Create code generation algorithm linked to reservation ID
 - Implement code generation algorithm and linking system
 - Integrate email service for automatic code delivery
 - Create email template with offer details and business information
@@ -455,6 +507,9 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Create code display screen layout with multiple states (loading, success, error)
 - Add code status indicator system
 - Create celebration UI elements for successful payments
+- Implement error messaging for payment failures with reservation cleanup
+- Add automatic stock reservation release on payment failures
+
 - Implement error messaging for payment failures
 - Add accessibility features for code reading
 - Create screen capture prevention (if required)
@@ -464,16 +519,18 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Implement error logging and tracking
 
 **⚙️ External Setup / Config Required**
+- Stock reservation to code conversion system setup
 - Backend webhook handling setup
 - Email service configuration (SMTP or transactional email provider)
 - Email template design and content localization
 - Polling interval configuration
 - Timeout threshold configuration
 - Code generation service configuration
-- Database schema for code storage
+- Database schema for code storage and reservation linking
 - Code display formatting rules
 - Status checking API integration
 - Error tracking system integration
+- Atomic transaction configuration for reservation conversion
 
 **❗ Pending Confirmations**
 - Polling frequency and timeout duration
@@ -485,6 +542,7 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Code copying/sharing functionality
 - Error message content for payment failures
 - Code generation failure handling approach
+- Reservation to code conversion failure recovery strategy
 
 **📝 Notes & Observations**
 - Wireframe shows code display pattern but not verification loading states
@@ -492,21 +550,28 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Important emotional touchpoint for user satisfaction
 - Need to handle edge cases like app backgrounding during verification
 - Requirements mention potential brand mascot integration
+- Must ensure atomic transaction between payment confirmation and reservation-to-code conversion
+- Stock reservation system prevents overselling during payment processing
+
 - Must ensure atomic transaction between payment and code generation
 - Email serves as backup access method when user has no app access or internet connectivity
 - Email should be branded and include clear instructions for business presentation
+- Reservation cleanup essential for stock accuracy and user experience
 
 **🖼 Wireframe Reference**
 - Exists: Yes
 - Filename: `woppa-wireframe-5-obtained-cupon.png`
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 11 hours
+- **Realistic**: 17.5 hours
+  - Frontend UI: ~5h
+  - Frontend Logic: ~2h
+  - Integration: ~1h
+  - Backend: ~7h
+  - Manual Testing: ~2.5h
+- **Pessimistic**: 22 hours
+- **Final PERT Estimate: 17.2 hours**
 
 ---
 
@@ -564,12 +629,15 @@ Enable smooth navigation to business directions or offer discovery.
 - Filename: `woppa-wireframe-5-obtained-cupon.png`
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 1 hours
+- **Realistic**: 2 hours
+  - Frontend UI: ~0h
+  - Frontend Logic: ~45m
+  - Integration: ~45m (linking, navigation and analytics)
+  - Backend: ~0h
+  - Manual Testing: ~30m
+- **Pessimistic**: 4 hours
+- **Final PERT Estimate: 2.25 hours**
 
 ---
 
@@ -624,7 +692,8 @@ To be completed manually:
 ### Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 
-- Realistic:
-- Pessimistic:
+- Optimistic: 44h
+- Realistic: 66.75h
+- Pessimistic: 96h
+- Final PERT Estimate: 67.8 hours
 ```
