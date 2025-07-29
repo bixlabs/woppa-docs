@@ -685,5 +685,7 @@ To be completed manually:
 - Optimistic: 44h
 - Realistic: 66.75h
 - Pessimistic: 96h
-- Final PERT Estimate: 67.8 hours
+- Final PERT Estimate: 80 (67.8 + 10) hours
+
+Note: I added 10 hours to because I feel backend is underestimated. And just in case I forgot define a schema or a complex logic implementation in backend.
 ```
