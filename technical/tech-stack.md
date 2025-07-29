@@ -11,6 +11,12 @@ Confirmed technology decisions for Woppa MVP development.
   - Zustand for client state management
 - **Reasoning**: Hybrid development to reduce time and costs while maintaining native performance
 
+## Mobile Development Enhancements
+- **Navigation**: Expo Router (file-based routing)
+- **Image Handling**: Expo Image (optimized image component with caching)
+- **Styling**: NativeWind (Tailwind CSS for React Native)
+- **Reasoning**: Specialized tools that enhance developer experience, improve app performance, and provide modern development patterns while maintaining Expo ecosystem compatibility
+
 ## Web Panel
 - **Framework**: React 19+ with TypeScript
 - **UI Components**: shadcn/ui
