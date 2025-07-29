@@ -20,9 +20,9 @@ Main flows and interactions included in this epic:
 - Display detailed offer information with redemption option and error messaging
 - Initiate offer redemption with authentication validation
 - Process payment through Mercado Pago Checkout Pro
-- Handle payment verification and status within offer code display
+- Handle payment verification through direct status check using payment ID from redirect
 - Handle payment cancellation with redirection to offer details
-- Generate and display unique redemption codes with integrated status verification
+- Generate and display unique redemption codes upon payment confirmation
 - Send redemption code via email as backup access method
 - Navigate to directions or explore more offers
 
@@ -49,11 +49,10 @@ List of wireframes that apply to this epic and the stories that use them.
 
 ## 🔍 Epic-level Ambiguities
 
-- 📐 Missing wireframe: Payment verification loading states within offer code screen
-- 🔁 Undefined logic: Payment timeout handling and retry mechanisms during verification
+- 📐 Missing wireframe: Payment processing states within offer code screen
 - 📋 Missing validation rules: Maximum redemptions per user per offer
 - 🧩 External dependency unclear: Mercado Pago webhook reliability and error scenarios
-- ⚠️ Uncovered edge case: User closes app during payment verification process
+- ⚠️ Uncovered edge case: User closes app during payment processing
 - 📊 Business decision pending: Criteria for redirecting to offer details vs showing error in offer code screen
 - 🔀 Navigation ambiguity: Handling of user cancellation vs payment failure routing
 
@@ -451,32 +450,31 @@ Redirect cancelled payments to offer details screen with appropriate error messa
 
 ---
 
-### 🔹 `REDEEM-MOB-006` – Display Redemption Code with Payment Verification
+### 🔹 `REDEEM-MOB-006` – Display Redemption Code with Direct Payment Verification
 
 **Summary**:  
-Handle payment verification, display loading states, and show redemption code or error messages based on payment status.
+Handle direct payment verification using payment ID from Mercado Pago redirect and display redemption code or error messages based on payment status.
 
 **Justification**:  
 Users need immediate feedback on payment status with seamless transition to code display or error handling.
 
 **User Story**:  
-"As a consumer, I want to see my payment being processed and receive my redemption code immediately when confirmed, or clear error messaging if payment fails, so that I know the status of my purchase."
+"As a consumer, I want to see my payment status verified immediately when I return from Mercado Pago and receive my redemption code when confirmed, or clear error messaging if payment fails, so that I know the status of my purchase."
 
 **🎯 Objective**:  
-Verify payment status with backend, display appropriate loading states, and present redemption code or error messages.
+Verify payment status directly using payment ID from redirect query parameters and present redemption code or error messages.
 
 **⛓ Dependencies**:  
-- Mercado Pago webhook system
+- Mercado Pago payment ID from redirect query parameters
 - Backend payment status API and verification system
 - Backend code generation system
 - Email service integration for code delivery
 - Business information for the offer
-- Real-time status polling mechanism
 
 **✅ Acceptance Criteria**:
-- Display loading state immediately when arriving from Mercado Pago
-- Poll backend for payment status at appropriate intervals
-- Handle webhook delays gracefully with timeout mechanisms
+- Extract payment ID from Mercado Pago redirect query parameters
+- Verify payment status directly with backend using payment ID
+- Display loading state while verifying payment status
 - Convert stock reservation to definitive redemption code upon payment confirmation
 - Generate unique redemption code linked to the reservation ID
 - Send redemption code automatically via email upon payment confirmation
@@ -491,16 +489,15 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Include close/dismiss button
 - Handle code generation failures gracefully
 - Handle email delivery failures gracefully (log but don't block code display)
-- Prevent multiple polling requests
+- Handle missing or invalid payment ID in query parameters
 - Ensure atomic transaction between payment confirmation and reservation conversion
 
 **🧰 Technical Tasks**:
-- Implement payment status polling mechanism with exponential backoff
+- Implement query parameter parsing for payment ID extraction
+- Create direct payment status verification API call
 - Create payment verification loading UI state
-- Add timeout handling with configurable limits
 - Implement reservation to code conversion system with atomic transactions
 - Create code generation algorithm linked to reservation ID
-- Implement code generation algorithm and linking system
 - Integrate email service for automatic code delivery
 - Create email template with offer details and business information
 - Implement email delivery error handling and logging
@@ -509,8 +506,6 @@ Verify payment status with backend, display appropriate loading states, and pres
 - Create celebration UI elements for successful payments
 - Implement error messaging for payment failures with reservation cleanup
 - Add automatic stock reservation release on payment failures
-
-- Implement error messaging for payment failures
 - Add accessibility features for code reading
 - Create screen capture prevention (if required)
 - Implement code copying functionality (if needed)
@@ -520,20 +515,17 @@ Verify payment status with backend, display appropriate loading states, and pres
 
 **⚙️ External Setup / Config Required**
 - Stock reservation to code conversion system setup
-- Backend webhook handling setup
+- Backend payment verification endpoint
 - Email service configuration (SMTP or transactional email provider)
 - Email template design and content localization
-- Polling interval configuration
-- Timeout threshold configuration
 - Code generation service configuration
 - Database schema for code storage and reservation linking
 - Code display formatting rules
-- Status checking API integration
 - Error tracking system integration
 - Atomic transaction configuration for reservation conversion
 
 **❗ Pending Confirmations**
-- Polling frequency and timeout duration
+- Payment ID parameter name in Mercado Pago redirect
 - Code format and length requirements
 - Email template design and content structure
 - Email delivery failure retry policy
@@ -546,14 +538,12 @@ Verify payment status with backend, display appropriate loading states, and pres
 
 **📝 Notes & Observations**
 - Wireframe shows code display pattern but not verification loading states
-- Critical for user experience during webhook processing delays
+- Direct verification approach eliminates need for polling and timeouts
 - Important emotional touchpoint for user satisfaction
 - Need to handle edge cases like app backgrounding during verification
 - Requirements mention potential brand mascot integration
 - Must ensure atomic transaction between payment confirmation and reservation-to-code conversion
 - Stock reservation system prevents overselling during payment processing
-
-- Must ensure atomic transaction between payment and code generation
 - Email serves as backup access method when user has no app access or internet connectivity
 - Email should be branded and include clear instructions for business presentation
 - Reservation cleanup essential for stock accuracy and user experience
