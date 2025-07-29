@@ -41,8 +41,8 @@ Explicitly excluded elements:
 ## 🖼 Wireframes Referenced in Epic
 List of wireframes that apply to this epic and the stories that use them.
 
-- `woppa-wireframe-1-mapa.png` → used in: EXP-MOB-001, EXP-MOB-002, EXP-MOB-004, EXP-MOB-005
-- `woppa-wireframe-2-listado-ofertas.png` → used in: EXP-MOB-003, EXP-MOB-006
+- `woppa-wireframe-1-mapa.png` → used in: EXP-MOB-001, EXP-MOB-002, EXP-MOB-005, EXP-MOB-006
+- `woppa-wireframe-2-listado-ofertas.png` → used in: EXP-MOB-004, EXP-MOB-007
 - Both wireframes show registration button (handled by Authentication epic, not user story in this epic)
 
 ---
@@ -56,8 +56,9 @@ List any unclear, undefined, or mismatched areas affecting the epic as a whole.
 - 📋 **Missing validation rules**: Specific coordinates for São Paulo default location
 - 🧩 **External dependency unclear**: Google Maps API integration specifics and rate limits
 - ⚠️ **Uncovered edge case**: Behavior when location services are disabled system-wide vs app-level
-- 🧭 **Mismatch between document and wireframe**: Requirements mention expansion/contraction of search radius but wireframe doesn't show this control
+- 🧭 **Mismatch between document and wireframe**: Requirements mention expansion/contraction of search radius with "barra" (slider) control but wireframes don't show this UI element
 - 🔄 **UX flow clarification needed**: Wireframes show "Obtener oferta" in exploration views but should be "Ver detalle" to avoid confusion with actual purchase action
+- ⚠️ **CRITICAL: Search geometry pending confirmation**: Requirements suggest centro + radius (circular search) but technical implementation could use bounding box (rectangular). **Must confirm approach before backend implementation** as it affects database queries, performance, and API design
 
 ---
 
@@ -118,12 +119,16 @@ Google Maps API integration, device location services
 - Filename: woppa-wireframe-1-mapa.png
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 10 hours
+- **Realistic**: 15 hours
+  - Comments: Assumes that AI tools will accelerate development.
+    - Frontend UI: ~1.5h (render map and style it)
+    - Frontend Logic: ~3h (request permissions, get permission status and get location)
+    - Integration: ~ 8h (google maps integration)
+    - Backend: ~0h (no backend needed)
+    - Manual Testing: ~2.5h (test on multiple devices)
+- **Pessimistic**: 24 hours
+- **Final PERT Estimate: 16 hours**
 
 ---
 
@@ -151,13 +156,14 @@ Backend API for offer data, map implementation from EXP-MOB-001
 - Markers show number when multiple offers exist at same location
 - Markers are clickable and responsive to user interaction
 - Map handles up to 100+ markers without performance degradation
-- Markers update when moving map to new areas
+- Markers update based on current map view bounds (shows offers visible in current map area)
+- Offers load within a **fixed default search radius of 5km** around the map center (hardcoded for MVP, final value TBD)
 
 **🧰 Technical Tasks**:
 - Design and implement custom map marker components
 - Create clustering logic for multiple offers at same location
 - Implement category-specific marker styling
-- Set up real-time offer data fetching from backend API
+- Set up real-time offer data fetching from backend API with **5km fixed radius parameter** (final default TBD)
 - Add marker interaction handling
 - Implement marker clustering for performance
 - Create marker animations for better UX
@@ -178,31 +184,100 @@ Backend API for offer data, map implementation from EXP-MOB-001
 - Icon design should be accessible and recognizable at small sizes
 - Debounced offer fetching prevents excessive backend API calls when user moves map quickly
 - Advanced Google Maps cost optimizations can be addressed in future phases when usage scales
+- **Fixed 5km radius for MVP** (final default value TBD) - dynamic radius control will be implemented in next story (EXP-MOB-003)
 
-**📉 PERT Estimation Candidate**
-```
-PERT:
-- Optimistic: Clustering behavior well-defined, standard marker implementation
-- Realistic: Some custom clustering requirements, performance optimization needed
-- Pessimistic: Complex clustering requirements, significant performance challenges
-Justification: Clustering behavior and performance requirements have uncertainties that could significantly impact implementation complexity.
-```
 
 **🖼 Wireframe Reference**
 - Exists: Yes
 - Filename: woppa-wireframe-1-mapa.png
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 10 hours
+- **Realistic**: 15 hours
+  - Comments: Assumes that AI tools will accelerate development.
+    - Frontend UI: ~3.5h (custom marker and clusters)
+    - Frontend Logic: ~3h (events, debouncing, clustering)
+    - Integration: ~ 1h (api call)
+    - Backend: ~4h (schema of offers, endpoint and postgis)
+    - Manual Testing: ~2.5h (test on multiple devices)
+- **Pessimistic**: 24 hours
+- **Final PERT Estimate: 16 hours**
 
 ---
 
-### 🔹 `EXP-MOB-003` – Offer List View
+### 🔹 `EXP-MOB-003` – Search Radius Control
+
+**Summary**:  
+Enable users to adjust the search radius for discovering offers through an intuitive slider control that affects both map and list views.
+
+**Justification**:  
+Allows users to customize their search area based on personal preferences, travel willingness, and local offer density, improving discovery relevance.
+
+**User Story**:  
+"As a user, I want to control how far from my location I want to search for offers, so that I can find the right balance between offer variety and proximity."
+
+**🎯 Objective**:  
+Functional radius control that dynamically updates offer results in both map and list views with clear visual feedback.
+
+**⛓ Dependencies**:  
+Map markers implementation (EXP-MOB-002), backend API supporting variable radius
+
+**✅ Acceptance Criteria**:
+- Slider control allows radius adjustment from 1km to 10km in 0.5km increments
+- Current radius value displayed next to slider (e.g., "3.5 km")
+- Changes update offers in real-time (debounced to prevent excessive API calls)
+- Radius setting persists during session but resets to default (5km, final value TBD) between app launches
+- Works consistently across map and list views
+- Visual loading indicator during radius change
+- Smooth slider interaction with haptic feedback (mobile)
+
+**🧰 Technical Tasks**:
+- Design and implement radius slider UI component
+- Create radius state management system
+- Implement debounced API calls for radius changes (300-500ms delay)
+- Update map markers based on new radius
+- Update list view results based on new radius  
+- Add visual loading states during radius updates
+- Implement haptic feedback for slider interaction
+- Add radius persistence for session duration
+- Handle edge cases (no offers in radius, network errors)
+
+**⚙️ External Setup / Config Required**
+- Backend API modification to accept radius parameter
+- Database query optimization for variable radius searches
+
+**❗ Pending Confirmations**
+- **Search geometry**: Centro + radius (circular) vs bounding box (rectangular) - requires confirmation before backend implementation
+- Exact radius range limits (1-10km proposed)
+- Default radius value confirmation (5km currently used, final value TBD)
+- Slider interaction pattern preferences
+
+**📝 Notes & Observations**
+- Requirements mention "barra" (slider) for radius control based on competitor analysis
+- Debounced API calls essential to prevent excessive backend load
+- Circular vs rectangular search area affects database query performance and complexity
+- Session persistence balances user convenience with fresh discovery on app relaunch
+- Default 5km radius used for MVP but final value requires business confirmation
+
+**🖼 Wireframe Reference**
+- Exists: No (UI element not shown in current wireframes)
+- Additional design needed for slider placement and styling
+
+**📊 PERT Estimation**:
+- **Optimistic**: 5 hours
+- **Realistic**: 6.5 hours
+  - Comments: Complete implementation with edge cases and optimization
+    - Frontend UI: ~3h (polished slider with feedback)
+    - Frontend Logic: ~2h (store value, state management, debounce, and update map)
+    - Integration: ~0h (parameter already sent in previous story)
+    - Backend: ~0h (backend already implemented)
+    - Manual Testing: ~1.5h
+- **Pessimistic**: 12 hours
+- **Final PERT Estimate: 7.16 hours**
+
+---
+
+### 🔹 `EXP-MOB-004` – Offer List View
 
 **Summary**:  
 Display offers in a vertical list format as an alternative to map view, showing key offer information in easily scannable cards.
@@ -217,7 +292,7 @@ Provides alternative interface for users who prefer list browsing or have map pe
 Complete list view with offer cards showing all essential information and clear call-to-action.
 
 **⛓ Dependencies**:  
-Backend API for offer data, offer detail navigation
+Backend API for offer data, radius control from EXP-MOB-003, offer detail navigation
 
 **✅ Acceptance Criteria**:
 - List displays offers in vertical card format
@@ -258,16 +333,20 @@ Backend API for offer data, offer detail navigation
 - Filename: woppa-wireframe-2-listado-ofertas.png
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 10 hours
+- **Realistic**: 12.5 hours
+  - Comments: Assumes that AI tools will accelerate development and that proximity algorithm is simple.
+    - Frontend UI: ~4h (card and list)
+    - Frontend Logic: ~2.5h (infinite scroll and images)
+    - Integration: ~ 1h (api call)
+    - Backend: ~4h (endpoint paginated of offers, simple proximity + highlight algorithm)
+    - Manual Testing: ~1h
+- **Pessimistic**: 16 hours
+- **Final PERT Estimate: 12.7 hours**
 
 ---
 
-### 🔹 `EXP-MOB-004` – Category Filtering
+### 🔹 `EXP-MOB-005` – Category Filtering
 
 **Summary**:  
 Enable users to filter offers by category (Gastronomía and Farmacia) across both map and list views.
@@ -282,7 +361,7 @@ Allows users to focus on specific types of offers they're interested in, improvi
 Functional filter system that works consistently across map and list views with clear visual feedback.
 
 **⛓ Dependencies**:  
-Map markers (EXP-MOB-002), list view (EXP-MOB-003)
+Map markers (EXP-MOB-002), radius control (EXP-MOB-003), list view (EXP-MOB-004)
 
 **✅ Acceptance Criteria**:
 - Filter buttons appear at top of both map and list views
@@ -320,16 +399,20 @@ Map markers (EXP-MOB-002), list view (EXP-MOB-003)
 - Filename: woppa-wireframe-1-mapa.png
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 4 hours
+- **Realistic**: 6 hours
+  - Comments: Assumes that AI tools will accelerate development.
+    - Frontend UI: ~1h (chips filter)
+    - Frontend Logic: ~3h (handle filters in the two components and remember state)
+    - Integration: ~ 0.5h (same api calls but adding query params)
+    - Backend: ~1h (filter two endpionts, the nearby and list)
+    - Manual Testing: ~1h 
+- **Pessimistic**: 10 hours
+- **Final PERT Estimate: 6.5 hours**
 
 ---
 
-### 🔹 `EXP-MOB-005` – Offer Marker Interaction
+### 🔹 `EXP-MOB-006` – Offer Marker Interaction
 
 **Summary**:  
 Enable users to tap map markers to view basic offer information and navigate to full offer details.
@@ -379,30 +462,26 @@ Map markers (EXP-MOB-002), offer details screen (from Offer Redemption epic)
 - Need to balance information shown vs maintaining map context
 - Clustered marker interaction may need special handling
 
-**📉 PERT Estimation Candidate**
-```
-PERT:
-- Optimistic: Simple modal implementation with basic preview
-- Realistic: Need to handle clustering and choose optimal preview format
-- Pessimistic: Complex clustered marker interactions and multiple preview formats
-Justification: Preview format and clustered marker behavior not clearly defined, affecting implementation complexity.
-```
 
 **🖼 Wireframe Reference**
 - Exists: Yes
 - Filename: woppa-wireframe-1-mapa.png
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 6 hours
+- **Realistic**: 8 hours
+  - Comments: Assumes that AI tools will accelerate development. That the UI will be similar to the list but inside a modal/bottom sheet.
+    - Frontend UI: ~3h (preview component reusing list)
+    - Frontend Logic: ~3h (handle logic of tap on markers, clusters and populate)
+    - Integration: ~ 0.5h (use existing data)
+    - Backend: ~0h
+    - Manual Testing: ~1.5h 
+- **Pessimistic**: 13 hours
+- **Final PERT Estimate: 8.33 hours**
 
 ---
 
-### 🔹 `EXP-MOB-006` – Navigation Between Map and List Views
+### 🔹 `EXP-MOB-007` – Navigation Between Map and List Views
 
 **Summary**:  
 Provide seamless navigation between map and list views while maintaining filter state and user context.
@@ -417,7 +496,7 @@ Offers users flexibility to choose their preferred browsing method without losin
 Smooth view switching with preserved state and consistent user experience across both views.
 
 **⛓ Dependencies**:  
-Map view (EXP-MOB-001), list view (EXP-MOB-003), category filtering (EXP-MOB-004)
+Map view (EXP-MOB-001), list view (EXP-MOB-004), category filtering (EXP-MOB-005)
 
 **✅ Acceptance Criteria**:
 - Clear navigation options to switch between map and list views
@@ -454,16 +533,20 @@ Map view (EXP-MOB-001), list view (EXP-MOB-003), category filtering (EXP-MOB-004
 - Filename: woppa-wireframe-1-mapa.png and woppa-wireframe-2-listado-ofertas.png
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 4 hours
+- **Realistic**: 5 hours
+  - Comments: Assumes that AI tools will accelerate development and that switch UI is simple.
+    - Frontend UI: ~2h (tabs/button/navigation)
+    - Frontend Logic: ~2h (handle click, state of showing, persist context)
+    - Integration: ~ 0h (use existing data)
+    - Backend: ~0h
+    - Manual Testing: ~1h 
+- **Pessimistic**: 8 hours
+- **Final PERT Estimate: 5.33 hours**
 
 ---
 
-### 🔹 `EXP-MOB-007` – Location Services Management
+### 🔹 `EXP-MOB-008` – Location Services Management
 
 **Summary**:  
 Handle various location permission states and provide user controls for location access and updates.
@@ -513,26 +596,22 @@ Map view (EXP-MOB-001)
 - Need to balance location accuracy with battery consumption
 - Privacy considerations important for user trust
 
-**📉 PERT Estimation Candidate**
-```
-PERT:
-- Optimistic: Standard location handling with simple state management
-- Realistic: Need comprehensive permission handling and user messaging
-- Pessimistic: Complex permission states and edge cases require extensive handling
-Justification: Location permission handling can be complex with many edge cases and platform-specific behaviors.
-```
 
 **🖼 Wireframe Reference**
 - Exists: Partially (shows location icon but not detailed states)
 - Filename: woppa-wireframe-1-mapa.png
 
 **📊 PERT Estimation**:
-- **Optimistic**: ___ hours
-  - _Comments: [Space for optimistic scenario assumptions]_
-- **Realistic**: ___ hours
-  - _Comments: [Space for realistic scenario assumptions]_
-- **Pessimistic**: ___ hours
-  - _Comments: [Space for pessimistic scenario assumptions]_
+- **Optimistic**: 5 hours
+- **Realistic**: 7 hours
+  - Comments: Assumes that AI tools will accelerate development.
+    - Frontend UI: ~1h (floating button, different styles)
+    - Frontend Logic: ~4h (show style depending on permission, trigger permission ask, center)
+    - Integration: ~0h
+    - Backend: ~0h
+    - Manual Testing: ~2h 
+- **Pessimistic**: 12 hours
+- **Final PERT Estimate: 7.5 hours**
 
 ---
 
@@ -554,9 +633,9 @@ After analyzing all stories, I've identified the following:
 **No overlapping stories detected** - Each story has a distinct functional scope.
 
 **Logical grouping confirmed**:
-- Foundation stories (EXP-MOB-001, EXP-MOB-002, EXP-MOB-003) establish core functionality
-- Interactive stories (EXP-MOB-004, EXP-MOB-005, EXP-MOB-006) build on foundation with user interactions  
-- Supporting story (EXP-MOB-007) enhances the experience
+- Foundation stories (EXP-MOB-001, EXP-MOB-002, EXP-MOB-003, EXP-MOB-004) establish core functionality
+- Interactive stories (EXP-MOB-005, EXP-MOB-006, EXP-MOB-007) build on foundation with user interactions  
+- Supporting story (EXP-MOB-008) enhances the experience
 
 **Dependencies are well-defined** and create a logical implementation sequence.
 
@@ -573,15 +652,16 @@ This ensures a clear user journey: Explore → Review Details → Obtain Offer.
 ## 📌 Stories with High Risk or Pending Decisions
 
 Stories in this epic that include pending confirmations or PERT estimation:
-- **EXP-MOB-002** (Display Offers as Map Markers) - PERT candidate due to clustering behavior uncertainty
-- **EXP-MOB-005** (Offer Marker Interaction) - PERT candidate due to undefined preview format
-- **EXP-MOB-007** (Location Services Management) - PERT candidate due to complex permission handling
+- **EXP-MOB-003** (Search Radius Control) - High uncertainty due to search geometry (circular vs rectangular) pending confirmation
+- **EXP-MOB-006** (Offer Marker Interaction) - PERT candidate due to undefined preview format
+- **EXP-MOB-008** (Location Services Management) - PERT candidate due to complex permission handling
 
 Stories with multiple pending confirmations:
 - **EXP-MOB-001** (Map View with Geolocation) - Default coordinates and performance requirements
 - **EXP-MOB-002** (Display Offers as Map Markers) - Clustering behavior and performance thresholds
-- **EXP-MOB-003** (Offer List View) - Sorting algorithm and image handling
-- **EXP-MOB-005** (Offer Marker Interaction) - Preview format and clustered marker behavior
+- **EXP-MOB-003** (Search Radius Control) - Search geometry, radius range, and slider interaction patterns
+- **EXP-MOB-004** (Offer List View) - Sorting algorithm and image handling
+- **EXP-MOB-006** (Offer Marker Interaction) - Preview format and clustered marker behavior
 
 ---
 
@@ -589,14 +669,14 @@ Stories with multiple pending confirmations:
 
 To be completed manually:
 
-- Total user stories: **7**
-- Stories with high uncertainty: **3**
-- Stories pending confirmation: **6**
+- Total user stories: **8**
+- Stories with high uncertainty: **3**  
+- Stories pending confirmation: **7**
 
 ### Manual 3-point Estimation for Epic (PERT)
-
 ```
-- Optimistic: [To be estimated based on individual story estimates]
-- Realistic: [To be estimated based on individual story estimates]  
-- Pessimistic: [To be estimated based on individual story estimates]
+- Optimistic: 54h
+- Realistic: 75h
+- Pessimistic: 119h
+- Final PERT Estimate: 78.83 hours
 ```
