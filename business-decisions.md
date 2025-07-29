@@ -41,5 +41,11 @@ This document contains confirmed business decisions for the Woppa MVP project. T
 - **Decision**: Redemption codes will be displayed in alphanumeric format (characters and numbers). QR code format will NOT be implemented in the MVP scope.
 - **Affects**: Coupon display, redemption code generation, merchant verification flow, and mobile account management features
 
+### Single-use coupon clarification:
+- **Date**: 2025-01-29
+- **Decision**: Each coupon code is designed for single presentation and single redemption. When a user purchases multiple units (e.g., 3 units), they receive one code that, when presented once at the business, provides all purchased units of the promotion. The coupon cannot be presented multiple times - one presentation = full redemption of all purchased units.
+- **Rationale**: This approach simplifies the redemption process for businesses and users, avoiding complex partial redemption tracking while maintaining the quantity-based purchase system.
+- **Affects**: Epic REDEEM-MOB (offer redemption flow) - confirms current design is correct, Epic ACC-MOB (account management) - coupon displays "Cantidad: X unidades" but redeems all at once, Web panel validation system - single validation marks entire coupon as redeemed, Email templates and user instructions - emphasize single presentation for full benefit
+
 ---
-**Last Updated**: 2025-01-25
+**Last Updated**: 2025-01-29
