@@ -1,5 +1,13 @@
 # 📱 Mobile Epics – Woppa App
 
+## Epic: Mobile App Foundation & UI Scaffolding
+**KEY**: `UI-SCAFFOLD-MOB`  
+**File**: `epic-UI-SCAFFOLD-MOB-mobile-app-foundation.md`  
+**Description:**  
+Foundational UI components and navigation structure including app header, drawer navigation, toast notifications, loading systems, and design system setup. Provides core scaffolding infrastructure for consistent user experience across all screens.
+
+---
+
 ## Epic: Explore Nearby Offers
 
 ### Screen: Map with Offers  
