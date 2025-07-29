@@ -109,6 +109,10 @@ Constrains (Restricciones)
 
 **2.1 Geolocalización**
 
+**De esta pantalla hacemos scrolldown y pasamos al siguiente wireframe, donde se ve la lista detallada de las ofertas que se ven en el mapa, de aquí el usuario puede elegir y acceder a la oferta** 
+
+**Scenario 2: click sobre el comercio que presenta 3 ofertas, se despliega un modal, y se ve una vista previa de esas 3 ofertas, de aquí el usuario puede elegir y acceder a la oferta** 
+
 * La aplicación debe solicitar permiso de ubicación al usuario al acceder a esta pantalla – Sí
 
 * El mapa debe centrarse automáticamente en la ubicación actual del usuario si se concede el permiso  \- R. Hacer una comparación con las aplicaciones similares y ver cuál radio quieren incluir, hacer una opción para expandir o disminuir el radio – puede ser una barra.
@@ -235,8 +239,6 @@ Botón “Registrarse”
 
 
 **3\. Requerimientos del Wiframe 2**
-
-**![Offers List](/woppa-wireframe-2-listado-ofertas.png)**
 
 **Descripción General**
 
@@ -382,7 +384,7 @@ Cada promoción en la lista debe incluir los siguientes elementos:
 
 **4\. Requerimientos del Wiframe 3**
 
-**![Offer Detail](/woppa-wireframe-3-detalle-oferta.png)**
+**![Offer Detail](/woppa-wireframe-2-listado-ofertas.png)**
 
 Esta pantalla permite al usuario consultar la información completa de una promoción específica. Su objetivo es brindar claridad, aumentar la confianza del usuario en la oferta, y facilitar la decisión de redención. Representa un paso clave previo a la conversión.
 
@@ -524,13 +526,13 @@ Esta pantalla permite al usuario consultar la información completa de una promo
 
 **5\. Requerimientos del Wiframe 4**
 
-![Registration](/woppa-wireframe-4-register.png)
+![Register](/woppa-wireframe-3-registro.png)
 
 **Descripción General**
 
 Esta pantalla permite al usuario crear una cuenta para redimir ofertas dentro de la app. Debe ofrecer una experiencia simple, confiable y ágil, con validaciones claras y múltiples métodos de acceso.
 
-Confirmar si quieren validar email \- recomendado para evitar abusos 
+**Confirmar si quieren validar email \- recomendado para evitar abusos \- Sí validar email.**
 
 **4.1 Encabezado y bienvenida**
 
@@ -674,11 +676,15 @@ Redirección tras registro
 
   * ¿Debe mantenerse el contexto anterior (por ejemplo, si venía desde una oferta)? – Referirse al punto anterior para definir esto. 
 
-Política de privacidad y términos
+**Términos y condiciones y Privacidad**
 
-* ¿Debe incluirse un enlace a términos y condiciones y política de privacidad en esta pantalla? Sí, se debe redactar, revisar compliance local. LGPD – Ley de protección de datos en Brazil. 
+El diseño incluye un checkbox obligatorio para aceptar los Términos y Condiciones y la Política de Privacidad durante el registro. Estos documentos deben estar accesibles mediante links a una página web, por ejemplo:
 
-  * ¿Se requiere aceptación activa (checkbox)? – Sí. (considerar que a futuro se pretende incluir otros métodos de pago) 
+* [https://www.woppa.com.br/termos-e-condicoes](https://www.woppa.com.br/termos-e-condicoes)
+
+* [https://www.woppa.com.br/politica-de-privacidade](https://www.woppa.com.br/politica-de-privacidade)
+
+Se recomienda que el contenido legal sea generado por un equipo jurídico o mediante herramientas especializadas.
 
 Supuestos 
 
@@ -694,15 +700,11 @@ Supuestos
 
 * Si el usuario ya estaba navegando una oferta o pantalla específica antes del registro, será dirigido a la pantalla del código de promoción listo para redimir. 
 
-* No se considera por ahora el registro mediante redes sociales adicionales (ej. Facebook, Apple ID) fuera de Google. – Considerar IG & FB. – Consultar con el team el budget de incorporar las redes sociales?????????
-
-  * Toni: Register con IG no existe, podemos estimar Register con FB, aunque comenzaría con Google para simplificar (implementación extra, otra app que gestionar y configurar ahora en facebook, scopes sensibles).
-
-* El diseño actual contempla un checkbox de aceptación de términos y Privacidad. 
+* No se considera por ahora el registro mediante redes sociales adicionales (ej. Facebook, Apple ID) fuera de Google. 
 
 **6.Requerimientos del Wiframe 5**
 
-![Coupon](/woppa-wireframe-5-obtained-cupon.png)
+![Redeem](/woppa-wireframe-4-redimir.png)
 
 **Descripción General**
 
@@ -716,9 +718,9 @@ Esta pantalla confirma al usuario que ha obtenido exitosamente una promoción, m
 
 **6.2 Mensaje principal**
 
-* Incluir mensaje de celebración o refuerzo positivo: "¡Esperamos que disfrutes tu beneficio\!". – Revisa rel mensaje 
+* **Mensaje de celebración y refuerzo de identidad de marca**
 
-* Acompañar con un ícono gráfico alusivo (ej: confeti, fiesta) para reforzar positivamente la experiencia. – Revisar el ícono, se puede incluir una ¨mascota¨ de la marca, para reforzar la identidad de la marca, por ejemplo se ha pensando en cambiar el nombre a un nombre que incluya una ¨U¨ y que el macaquito esté colgando de la ¨U¨, una vez que haces el pago y obtienes el código, el macaquito se vé celebrando la oferta. Todo esto refeurza el rol emocional de esta pantalla, y refuerza la identidad. 
+* Al mostrar el código de redención, incluir un mensaje de celebración como “¡Esperamos que disfrutes tu beneficio\!” acompañado por un ícono o animación gráfica que refuerce una experiencia positiva. Se sugiere incorporar una **mascota animada de la marca**, por ejemplo un mono celebrando sobre una letra “U” del nombre WOPPA (o del nuevo nombre propuesto). Esta animación puede reforzar el vínculo emocional con el usuario y consolidar la identidad visual. Para facilitar su implementación, se recomienda utilizar recursos de [**LottieFiles**](https://lottiefiles.com/), que permiten integrar animaciones ligeras, escalables y compatibles con múltiples plataformas.
 
 **6.3 Código de redención**
 
@@ -813,8 +815,6 @@ Esta pantalla confirma al usuario que ha obtenido exitosamente una promoción, m
 
   1. *Toni: deberíamos tener un estado de redimido que se llega una vez el comercio valida el código en el backoffice.*
 
-  * ¿Debe generarse un ID de redención para seguimiento en backend? – Desarrollo, se acordó con el cliente usar un mismo código, se maneja por status o eqtiquetas. 
-
 **Supuestos**
 
 * El código mostrado es único, generado por backend y no puede reutilizarse por otros usuarios.
@@ -825,375 +825,602 @@ Esta pantalla confirma al usuario que ha obtenido exitosamente una promoción, m
 
 * El código se puede volver a visualizar si el usuario ingresa a mi perfil e ingresa a su historial de compras. 
 
-* El usuario debe estar Log in para ver su historial de compra, o salvar el cupón / código  \- Descargar el código en PDF o enviar un correo con el código consultar con desarrollo. 
+* Al completarse el pago, se envía automáticamente un correo al usuario con el código de redención asociado a la promoción.
 
 **7.Requerimientos del Wireframe del comercio** 
 
-**![Merchant View](/woppa-wireframe-comerciante-1.png)**
+**![Woppa Staff](/woppa-wireframe-5-staff.png)**
 
-**Descripción General**
+**Descripción general de la plataforma web de WOPPA**
 
-Esta pantalla permite a los comercios cargar promociones 1+1 indicando toda la información relevante para que la oferta pueda mostrarse correctamente en la app Woppa. La pantalla está pensada para facilitar la autogestión, con validaciones visuales, campos obligatorios y lógica de clasificación por categorías.
+La web de WOPPA es una plataforma digital diseñada para facilitar la interacción entre comercios afiliados y el equipo interno de WOPPA. Esta herramienta permite a los comercios registrarse, gestionar sus promociones tipo 1+1, y acceder a su historial de ventas y publicaciones. Al mismo tiempo, proporciona al equipo de WOPPA un backoffice funcional para validar registros, aprobar promociones, monitorear métricas clave y administrar estados operativos.
 
-Separar los flujos del comercio: uno para crear el negocio y otro para crear la promoción. 
+Usuarios y funcionalidades
 
-Preguntar si es necesario el form si o sí 
+Comercio
 
-Cuando se paga el cod el status se cambia en el backoffice del comercio  automáticamente
+* Registro a través de un formulario con campos obligatorios y validaciones visuales
 
-Cuando se entrega el prod se cambia el cod a canjeado, pero MANUALMENTE 
+* Acceso mediante login (correo \+ contraseña)
 
- **7.1Encabezado**
+* Edición de perfil comercial
 
-* Título: “Crear publicación”.
+* Carga de promociones con campos estructurados (nombre, imágenes, categoría, precio, vencimiento, etc.)
 
-* Flecha para regresar a la pantalla anterior sin guardar cambios.
+* Consulta del estado de cada promoción: en revisión, necesita ajustes, aprobada
 
-* Enlace a “¿Necesitás ayuda?” ubicado arriba a la derecha, que abre guía o soporte externo. – Link de whatsapp, para el MVP 
+* Visualización de historial de ventas: códigos pagados, redimidos, ganancia acumulada, pagos recibidos de WOPPA
 
-Se crea una web, en esta web el comercio se registra y sube sus ofertas, en esta misma web se crea un espacio de bakcoffice, donde se visualiza información para que el equipo de WOPPA pueda hacer aprobación de las publciaciones y llevar el control de la data (integrar un superadmin) 
+* Confirmación manual de cupones redimidos
 
-* *Toni: me imagino el mismo backoffice con distintos roles (admin?, woppa staff, comercio), ej:*  
-  * *Los woppa staff:*   
-    * *Login básico*  
-    * *Registro de comercios (por si un usuario no tiene friccion a usar el backoffice aún)*  
-      * *Si los comercios son pocos podríamos ingreasarlos directo en la base de datos de manera manual para el MVP*  
-    * *Validación de promociones*  
-    * *Gestión de estado de stock*   
-      * *Marcar como agotadas*  
-    * *Historial de actividad (quizás fuera de MVP si hay confianza?)*  
-      * *Acciones realizadas por el staff*  
-  * *Los comercios:*   
-    * *Login básico*  
-    * *Registro básico*  
-    * *Carga de promociones (si hubiese fricción se podría tener tamb el gform y enviar esa data al db de woppa)*  
-    * *Confirmación de redención de un cupón*  
-    * *Historial de promociones*  
-    * *Historial de ventas*  
-* *El problema con los formularios es que no escalan, ya que tenemos una necesidad de lectura por parte de los comercios como tamb de gestión y lectura por parte del woppa staff. Es mejor concentrar el backoffice ahí directamente, aunque se podría seguir teniendo la carga de promociones con google form si eso fuera una fricción.*   
-* *Quizas para el panel de woppa se podría usar algo como [https://docs.adminjs.co/](https://docs.adminjs.co/) que se conecta directo con la db y ya permite el crud de todas las entidades*
+* Visualización de publicaciones pasadas y su rendimiento
 
-**7.2 Campos y Componentes del Formulario**
+WOPPA Staff / Admin
 
-**Crear nueva pantalla:** 
+* Acceso a un panel privado mediante login con rol diferenciado
 
-**Página inicial: Registro o Log in** 
+* Validación de registros de comercios (todas las cuentas nuevas deben ser aprobadas manualmente)
 
-**Registro:** 
+* Validación de promociones antes de su publicación (QA obligatorio por parte del equipo de WOPPA)
 
-**Nombre del comercio** 
+* Cambios de estado en cupones: de “pagado” a “redimido”
 
-**Nombre y apellido de la persona responsable** 
+* Marcar promociones como “agotadas”
 
-**Teléfono Contacto comercial y contacto financiero** 
+* Visualización de métricas e insights operativos (definición pendiente sobre cuáles se incluirán en el MVP)
 
-**TAX ID: CNPJ en Brazil para el MVP** 
+* Acceso opcional a historial de actividades administrativas (fuera de alcance en el MVP, a definir en fases posteriores)
 
-**Correo eletrónico** 
+**Registro y Login de Comercios**
 
-**Dirección** 
+Este módulo permite a los comercios crear una cuenta en la plataforma web de WOPPA para gestionar sus promociones. El flujo está pensado para ser simple, validado y compatible con una eventual moderación por parte del equipo de WOPPA.
 
-**Contraseña** 
+Registro de comercio
 
-**Log in:** 
+El formulario de registro incluye los siguientes campos obligatorios:
 
-**Correo y contraseña**
+* Nombre del comercio (texto simple)
 
-**Perfil o Usuario**
+* Nombre y apellido de la persona responsable (texto simple)
 
-**Historial de ventas: códigos pagos, códigos redimidos, ganancia del comercio, códigos ya pagos de parte de WOPPA y códigos pendientes.** 
+* Teléfono comercial
 
-**Status de la publicación: en revision, te falta info, aprobada,** 
+* Teléfono financiero (opcional)
 
-**Revisar con el cliente y especificar si quieren algo más para el comercio**
+* Correo electrónico
 
-**1\. Nombre de publicación**\*
+* TAX ID (formato CNPJ para Brasil)
 
-* Campo de texto obligatorio.
+* Dirección del comercio (con autocompletado de Google Maps)
 
-* Solamente con el nombre del Producto (Alimento, producto de farmacia)
+* Contraseña (mínimo 8 caracteres, al menos 1 mayúscula, 1 número, 1 símbolo especial)
 
-**2\. Tipo de descuento**\*
+Validaciones
 
-* Selector de una sola opción entre los siguientes:
+* Todos los campos deben validarse en frontend en tiempo real (formato de email, número válido, contraseña segura, etc.).
 
-  * 1+1
+* El campo de dirección debe integrarse con Google Places API y no aceptar entrada manual.
 
-**3\. Categoría principal**\*
+* El botón "Registrarse" se activa solo cuando todos los campos requeridos están completos y validados.
 
-* Selector obligatorio entre dos verticales:
+Verificación
 
-  * Gastronomía
+* Cada nuevo registro de comercio queda en estado “pendiente de aprobación”.
 
-  * Farmacia 
+* El equipo de WOPPA recibe la solicitud en el backoffice y puede aprobarla o rechazarla.
 
-**4\. Subcategoría**\*
+* Solo los comercios aprobados pueden iniciar sesión y comenzar a cargar promociones.
 
-* Muestra opciones distintas según la categoría elegida.
+Login
 
-* El usuario puede seleccionar solo una subcategoría.
+* Autenticación mediante correo electrónico y contraseña.
 
-**Subcategorías oficiales:** Revisar apps de comidad en Brazil y ajustar la lista  que quede a 10 opciones**,** mostrar un top 5\. Y después ver más.. 
+* Enlace para recuperación de contraseña.
 
-Para más adelante, según el horario del día se muestran subctaegorías distintas tipo: empezando bien tu día – desayunos, almuerzos, cenas, etc. 
+* El sistema debe recordar la sesión del usuario (si no se cierra) hasta que expire el token o se cierre sesión manualmente.
 
-* **Gastronomía**
+Seguridad
 
-  1. Cafetería y Bakery
+* Las contraseñas deben almacenarse encriptadas y nunca enviarse en texto plano.
 
-  2. Heladería
+* Deben implementarse medidas anti-spam y rate limiting básico en el formulario de login.
 
-  3. Sushi & Asiática
+Estado de cuenta
 
-  4. Steak houses
+* El comercio debe poder ver desde su cuenta el estado actual de su registro y sus promociones.
 
-  5. Burgers
+* Si su cuenta está pendiente de aprobación, el sistema debe mostrar un mensaje persistente: “Tu cuenta está en revisión. Te avisaremos cuando esté habilitada para cargar promociones.”
 
-  6. Pizza y Pasta (Italian)
+Preguntas pendientes
 
-  7. Carnicería gourmet
+1. ¿El sistema debe enviar un correo automático de confirmación al comercio al momento del registro?
 
-  8. Boutique de vinos
+2. ¿El comercio debe aceptar términos y condiciones en el registro (checkbox obligatorio)?
 
-  9. Saludable (alimentos naturales)
+3. ¿Quieren incorporar validación de duplicado por CNPJ o correo (para evitar múltiples cuentas del mismo comercio)?
 
-  10. Otros 
+4. ¿El idioma inicial del formulario será en portugués únicamente o se ofrecerá también versión en español?
 
-* **Farmacia y Perfumería – Revisar aplicaciones en Brazil y proponer la lista de subctagoría** 
+**Carga de promociones por parte del comercio**
 
-  1. Beauty
+Este módulo permite a los comercios crear nuevas promociones tipo 1+1 desde su panel, completando un formulario con campos validados y estructurados. Cada promoción enviada pasa por una revisión manual por parte del equipo de WOPPA antes de ser publicada en la app.
 
-  2. Perfumería
+**Estructura general de la pantalla**
 
-  3. Higiene personal
+* Título: “Crear publicación”
 
-  4. Medicamentos de venta libre
+* Botón para regresar a la pantalla anterior sin guardar cambios
 
-  5. Homeopatía
+* Enlace “¿Necesitás ayuda?” en el encabezado (link a WhatsApp durante el MVP)
 
-  6. Suplementos
+**Requerimientos del formulario**
 
-  7. Productos de limpieza
+1. Nombre de la publicación  
+    Campo obligatorio. Solo debe incluir el nombre del producto. Ejemplo: Hamburguesa doble, Ibuprofeno 400mg.
 
-**7.3. Fotos del producto**\*
+2. Tipo de descuento  
+    Selector único: “1+1” (único tipo disponible en esta etapa).
 
-* Obligatorio subir al menos una imagen.
+3. Categoría principal  
+    Selector obligatorio. Permite seleccionar una o más categorías. Opciones actuales: Gastronomía, Farmacia.
 
-* Permite subir hasta 2 imágenes.
+4. Subcategoría  
+    Campo obligatorio.  
+    La lista de subcategorías se ajusta dinámicamente según las categorías seleccionadas.  
+    Solo se permite elegir una subcategoría por cada categoría seleccionada.  
+    Se deben mostrar primero las 5 más usadas y permitir ver las demás (hasta 10 por vertical).  
+    Listado inicial basado en aplicaciones del mercado brasileño (por revisar).
 
-* Deben previsualizarse en miniaturas antes de publicar.
+5. Fotos del producto  
+    Campo obligatorio.  
+    Se debe subir al menos una imagen y máximo dos.  
+    Las imágenes deben previsualizarse como miniaturas.  
+    Instrucción visible: “La foto debe tener buena iluminación y mostrar el producto claramente”.  
+    *Pendiente de definición interna si las fotos serán tomadas por el comercio o por el equipo de WOPPA.*  
+    *La validación por QA es obligatoria antes de la publicación.*
 
-* Incluir instrucciones para las fotos: "debe tener buena iluminación y el producto se debe ver correctamente."
+6. Tiempo para canjear el beneficio  
+    Selector visual con opciones fijas: 6 horas, 12 horas, 1 día, 3 días, 1 semana.
 
-* Incluir imágenes de ejemplo 
+7. Descripción  
+    Campo obligatorio.  
+    Debe permitir detallar condiciones, horarios válidos, restricciones o exclusiones.  
+    Instrucción visible: “Describí la oferta en menos de \[X\] caracteres” (valor por definir con desarrollo).
 
-* Considerar el uso de IA para ayudar a los comercios a validar las fotos \-Desarrollo 
+8. Precio final  
+    Campo numérico con validación regional de moneda.  
+    Representa el valor final visible para el usuario.  
+    Debe incluir decimales. La moneda se ajusta según el país (ej. BRL).
 
-  * *Toni: En un futuro*
+9. Ubicación  
+    Campo obligatorio.  
+    El comercio ingresa manualmente su dirección, pero esta debe ser validada por Google Maps.  
+    El sistema debe restringir entradas no reconocidas o inválidas.  
+    No se permiten múltiples ubicaciones por promoción en esta fase.
 
-* La publicación para por QA, y el equipo de WOPPA aprueba las fotos 
+10. Fecha de vencimiento  
+     Campo obligatorio. Formato DD/MM/AAAA.  
+     Define el último día de vigencia de la promoción.
 
-**7.4. Tiempo para canjear beneficio**\*
+**Acciones de publicación**
 
-* Opciones únicas, visuales tipo botón:
+Botón “Pre-publicar”
 
-  * 6 horas
+* Solo se activa si todos los campos requeridos están completos y válidos.
 
-  * 12 horas
+* Al hacer clic, se muestra una vista previa de cómo se verá la publicación en la app.
 
-  * 1 día
+* Desde esa vista, el comercio puede confirmar y enviar para revisión.
 
-  * 3 días
+* Aparece un mensaje de confirmación: “Gracias por enviar tu publicación. Estamos revisándola y te notificaremos pronto”.
 
-  * 1 semana
+* El comercio recibirá un correo con el estado de la publicación.
 
-  * Si no lo canjeas dentro de los tiempos marcados por el comercio que se acumule como crédito WOPPA 
+Botón “Cancelar y eliminar”
 
-**7.5 Descripción**\*
+* Borra los datos ingresados y regresa a la pantalla anterior.
 
-* Campo obligatorio.
+**Estados posibles de la promoción (visibles para el comercio)**
 
-* Instrucción visible: “Describí la oferta en menos de X caracteres”.
+* En revisión
 
-* Debe permitir indicar condiciones, restricciones y horario de validez (incluyendo fines de semana, o días festivos, horas de alto consumo, etc) 
+* Necesita ajustes
 
-**7.6. Precio final**
+* Aprobada
 
-* Campo numérico con símbolo de moneda.
+* Agotada (manualmente por WOPPA o automáticamente según stock)
 
-* Representa el valor real final que verá el usuario (no el precio base original).
+* Expirada (por fecha de vencimiento)
 
+**Validaciones del formulario**
 
-**7.8. Ubicación**\*
+* Todos los campos obligatorios deben validarse tanto en frontend como en backend.
 
-* Campo obligatorio.
+* El sistema debe prevenir la creación de promociones duplicadas para el mismo comercio (por nombre \+ fecha).
 
-* Debe aceptar texto libre con autocompletado sugerido por integración con Google Maps
+* Validación de imágenes por tipo (jpg, png), peso (máximo 5MB), dimensiones mínimas.
 
-  * *Toni: En otra parte se menciona la opción de agregar un link directo a Google Maps, pero esto parece contradecirse.*
+* Las subcategorías se deben cargar dinámicamente desde el backend.
 
-  * *Además, por qué cada promoción debería tener una ubicación si ya tenemos la del comercio?*
+* La ubicación debe validarse mediante Google Places API; no se permite cargar direcciones no verificables.
 
-  * *Habría que pensar cómo asociar cada promoción al comercio correspondiente. En un Google Form no es sencillo identificar a qué comercio pertenece cada carga (y tener un formulario distinto por comercio no escala a futuro). Esto se resolvería mejor desde el backoffice.*
+**Accesibilidad**
 
-  * *También nos surge la duda de cómo evitar que un comercio cargue promociones que no le corresponden (desde un google form). El QA manual del equipo de Woppa no tendría herramientas para validarlo*
+* Compatible con navegación por teclado.
 
-  * *Por otro lado, es posible que un comercio legítimamente quiera publicar promociones en distintas ubicaciones? Asumo que no hay sucursales por el momento. Se permitirían sucursales en un futuro? Esto influye en el modelo de datos*
+* Todos los campos deben tener etiquetas visibles.
 
-  * *Para el MVP, lo ideal sería que la promoción tome automáticamente la ubicación del comercio asociado, siempre que esta esté validada de alguna manera.*
+* Contraste suficiente en botones, bordes y validaciones.
 
-**7.9. ¿Por qué está en oferta?**\*
+**Preguntas para validar**
 
-* Selector tipo tag múltiple, permite elegir uno o más motivos:
+1. ¿La vista previa que se muestra al comercio antes de publicar debe permitir edición directa o solo revisión?
 
-  * Promoción/Marketing
+2. ¿Qué mensaje exacto debe mostrarse cuando una promoción es rechazada por el QA?
 
-  * Próximo a vencer
+3. ¿Se permitirá duplicar una promoción existente para cargar una nueva similar?
 
-  * Pocas unidades
+4. ¿Desean mostrar al comercio si la promoción fue marcada como "agotada" por el equipo de WOPPA (quién lo hizo y cuándo)?
 
-**7.10. ¿Cuándo vence?**\*
+**Gestión de publicaciones e historial de ventas**
 
-* Campo obligatorio con formato de fecha DD/MM/AAAA.
+Este módulo permite a los comercios visualizar el estado de sus promociones activas e históricas, así como hacer seguimiento de sus ventas y cupones redimidos. La información se presenta en un formato ordenado y filtrable, accesible desde el panel del comercio una vez logueado.
 
-* Representa la fecha final de disponibilidad de la promoción.
+**Vista principal del panel del comercio**
 
-**7 Acciones y Validaciones**
+Se accede desde el menú lateral o principal, una vez el comercio ha iniciado sesión.
 
-**Botón "Pre Publicar"**
+**Secciones visibles**
 
-* Debe permanecer deshabilitado hasta completar todos los campos obligatorios.
+1. Publicaciones activas  
+    Lista de promociones vigentes, ordenadas por fecha de vencimiento.  
+    Cada publicación muestra:
 
-* Al activarse, lleva a una vista previa/resumen antes de publicación. – Vista Previsa de la publicación como se verá en la aplicación de WOPPA
+* Nombre del producto
 
-* Una vez se visualice la vista previa, sale otro botón de publicar, se muestra un mensaje tipo “gracias por enviar tu publicación, estamos revisándola, te daremos más detalles pronto”
+* Estado de aprobación: en revisión, necesita ajustes, aprobada
 
-* Se envía un mensaje o un correo con los status de la publicación: en revisión, “falta algo”, aprobada. 
+* Fecha de vencimiento
 
-**Botón "Cancelar y eliminar"**
+* Categoría y subcategoría
 
-* Elimina los datos ingresados hasta ese momento y retorna a la pantalla anterior.
+* Botón para ver detalles y editar (solo si está en revisión o rechazada)
 
-**3\. Requerimientos de UX**
+* Botón para duplicar (crea una nueva publicación precargada con los mismos datos)
 
-* Diseño claro y segmentado por grupos lógicos.
+2. Publicaciones anteriores  
+    Promociones ya vencidas o agotadas, accesibles solo como referencia.  
+    Incluye filtros por mes y categoría.  
+    No pueden editarse ni reactivarse directamente (para evitar errores en el flujo de stock y QA).
 
-* Visualizaciones limpias, etiquetas visibles y componentes accesibles.
+3. Historial de ventas  
+    Resumen por promoción y rango de fechas seleccionable.  
+    Métricas mínimas por publicación:
 
-* Validaciones visuales inmediatas (ej. campos en rojo si faltan datos).
+* Total de cupones generados
 
-* Para el MVP  \- Optimizado para escritorio y tabletas (prioridad en web de laptops, pero si es necesario que tenga la opción para hacerlo desde el navegador del celular, no mobile first). – Consultar con desarrollo la funcionalidad de la WEB abierta desde el celular. 
+* Cupones redimidos (canjeados por usuarios)
 
-**4\. Consideraciones Técnicas**
+* Ganancia acumulada (precio por cupón × cantidad redimida)
 
-* Las subcategorías deben cargarse dinámicamente según la categoría seleccionada.
+* Códigos ya pagados por WOPPA
 
-* Las imágenes deben ser validadas por tamaño, formato y peso (Aún está pendiente definir internamente si el equipo de WOPPA va a tomar las fotos, o va a poner instrucciones y especificaciones) hacer algún research de cómo se puede empezar con las fotos de manera que sea escalable. – Allan y Stephanie lo definen y confirman 
+* Códigos pendientes de pago
 
-* El sistema debe prevenir duplicaciones de publicaciones idénticas dentro del mismo día.
+4. Redención manual de cupones  
+    El comercio puede ingresar un código recibido por el usuario para marcarlo como redimido.  
+    Campo: ingreso manual del código \+ botón “Marcar como canjeado”  
+    Este cambio se registra en el backend con marca de tiempo.  
+    Solo cupones en estado “pagado” pueden ser marcados como redimidos.  
+    El sistema muestra mensaje de confirmación o error si el código no es válido o ya ha sido canjeado.
 
-* Se debe validar que el campo de ubicación coincida con un punto geográfico reconocido.
+5. Estados visibles de los cupones
 
-**5\. Accesibilidad**
+* Generado
 
-* Navegación fluida con teclado. (ya sea desde laptop o desde el navegador del celular)
+* Pagado (por el usuario)
 
-* Textos descriptivos en todos los campos.
+* Redimido (por el comercio)
 
-* Contraste adecuado en botones, bordes y campos obligatorios.
+* Expirado (por tiempo vencido)
 
-**Dudas**
+**Visualizaciones y filtros**
 
-1. **Precio final y forma de pago**
+* Filtro por rango de fechas
 
-   * ¿Debe indicarse alguna forma de pago específica en la publicación (efectivo, QR, tarjeta)? – WOPPA le paga al comercio. – WOPPA quiere pagar cada dos semanas al inicio para motivar al comercio, más adelante puede ser una vez al mes. 
+* Filtro por categoría y subcategoría
 
-   * ¿El precio debe estar expresado con decimales? Sí. ¿Se requiere validación regional de moneda (ej. SR, ARS, USD)? Sí, en cada país moneda local. 
+* Filtro por estado del cupón
 
-   
+**Validaciones y control**
 
-2. **Caracteres de la descripción**
+* Los comercios solo pueden marcar como redimido un código que haya sido pagado previamente
 
-   * ¿Cuál es el número máximo exacto de caracteres permitidos en la descripción? – Revisar con desarrollo
+* Los datos del historial son de solo lectura y no pueden ser modificados
 
-   * ¿Qué sucede si se supera ese límite? ¿Debe mostrarse un contador en tiempo real? Revisar con desarrollo
+* Las fechas se presentan en formato regional (DD/MM/AAAA)
 
-3. **Ubicación**
+**Preguntas para validar**
 
-   * ¿El campo debe validar automáticamente con Google Maps y rechazar entradas que no estén geolocalizadas?  \- No permitir entrada manual 
+1. ¿WOPPA definirá una frecuencia fija de pago (quincenal/mensual) visible desde este módulo? \- Mensual
 
-   * ¿Debe permitirse cargar direcciones personalizadas como “Envío a domicilio” o solo direcciones físicas verificables? \- \`Por ahora solo recolectar en el MVP 
+2. ¿Se permitirá a los comercios aplicar filtros combinados (por fecha \+ categoría \+ estado)?
 
-4. **Carga de imágenes**
+3. ¿La acción “duplicar promoción” debe estar disponible solo para publicaciones aprobadas o también para vencidas/agotadas?
 
-   * ¿Cuál es el peso máximo permitido por imagen? – Revisar con desarrollo – tipo de storage 
+4. ¿El comercio puede ver un resumen financiero general además del detalle por promoción?
 
-   * ¿Qué tipos de archivo están permitidos (.jpg, .png, .webp, otros)? Revisar con desarrollo – tipo de storage
+**Backoffice de WOPPA – Moderación y gestión de promociones**
 
-   * ¿Se permite recorte o edición básica de la imagen antes de publicar? Revisar con desarrollo – tipo de storage
+Este módulo está diseñado para que el equipo de WOPPA pueda revisar y aprobar promociones cargadas por los comercios, gestionar registros de cuentas nuevas, y controlar el estado de los cupones y del stock. El sistema prioriza simplicidad operativa y trazabilidad básica para el MVP.
 
-5. **Validación de duplicados**
+**Acceso y roles**
 
-   * ¿Qué parámetros se consideran para detectar duplicación de publicaciones (nombre \+ ubicación \+ fecha)? Revisar con desarrollo 
+* Acceso restringido mediante login.
 
-   * ¿Se debe notificar al usuario si hay duplicación, o bloquear la publicación directamente? Revisar con desarrollo
+* Rol único para MVP: WOPPA Admin. (Diferenciación entre Staff y Admin puede definirse más adelante.)
 
-6. **Subcategorías dinámicas**
+**Pantalla de validación de promociones**
 
-   * ¿Se pueden agregar nuevas subcategorías en el futuro? ¿Cómo se gestionaría esto en producción? Sí, más adelante se pueden agregar subcategorías 
+Lista de promociones pendientes de revisión.  
+ Campos visibles por promoción:
 
-7. **Estado de la publicación luego de “Pre-publicar”**
+* Nombre del comercio
 
-   * ¿La publicación queda en estado “borrador” hasta que el comercio confirme? – Queda en status de ¨ en revisión¨ revisar el wording 
+* Nombre del producto
 
-   * ¿Existe un paso de moderación/manual review por parte de Woppa o se publica automáticamente? – Sí, el equpo de WOPPA hace un QA antes de la publicación 
+* Categoría / subcategoría
 
-8. **Nombre de la aplicación en versiones públicas**
+* Fecha de vencimiento
 
-   * ¿Debe aparecer el nombre “Woppa” en todas las interfaces, o es un nombre interno del proyecto? – Sí va a ser el nombre público, justo cuando sepamos el nombre definitivo se hace el logo y demás para registrar el nombre oficial. 
+* Imágenes cargadas
 
-**Supuestos**
+* Precio
 
-1. **Validaciones front-end y back-end**
+* Estado actual: en revisión, necesita ajustes, aprobada
 
-   * Todos los campos obligatorios serán validados en frontend con mensajes visuales (rojo, tooltips), y validados nuevamente en backend.
+Acciones posibles:
 
-   * El botón “Pre-publicar” solo se habilita si todos los campos requeridos están completos y válidos.
+* Ver detalles completos de la promoción
 
-2. **Control de imágenes**
+* Aprobar la promoción
 
-   * Permitiremos solo formatos .jpg y .png de hasta 5MB por imagen. Revisar con desarrollo
+* Marcar como “necesita ajustes” (con campo de comentario obligatorio)
 
-   * Se permitirán 2 imágenes por publicación, previsualizadas como miniaturas.
+* Rechazar (si no cumple los lineamientos mínimos)
 
-3. **Subcategorías dinámicas**
+* Historial de decisiones aplicadas a la promoción (opcional para fases futuras)
 
-   * El sistema consulta en tiempo real las subcategorías desde el backend al cambiar de categoría principal.
+Al aprobar una promoción, esta se publica automáticamente en la app móvil de WOPPA.  
+ El comercio recibe notificación por email con el estado actualizado.
 
-   * Si no hay conexión, se mostrará un mensaje de error genérico.
+**Panel de comercios registrados**
 
-4. **Integración de ubicación**
+Lista de todos los comercios registrados.  
+ Cada entrada muestra:
 
-   * Se usará Google Places API para autocompletar ubicaciones y validar que la dirección ingresada sea válida y geolocalizable.
+* Nombre del comercio
 
-5. **Detección de duplicados**
+* Estado de cuenta: pendiente, aprobado, rechazado
 
-   * Si el mismo comercio intenta publicar una oferta idéntica (nombre \+ ubicación \+ categoría) el mismo día, se mostrará una advertencia y no se permitirá continuar. \- Revisar con desarrollo – Mostrar un error
+* Fecha de registro
 
-6. **Accesibilidad**
+* Número de promociones activas
 
-   * Todos los campos tendrán labels visibles y roles para navegación por teclado.
+* Última actividad
 
-   * El contraste cumple con WCAG AA para formularios (texto sobre fondos, botones, validaciones).
+Acciones posibles:
 
-7. **Modo de vista previa**
+* Aprobar o rechazar registros nuevos
 
-   Al hacer clic en “Pre-publicar”, se mostrará un resumen de todos los datos ingresados para revisión final antes de guardar y enviar la publicación. 
+* Editar datos del comercio (por excepción)
 
-**Dudas Generales** 
+* Agregar un nuevo comercio manualmente
 
-* Formas de Pago  \- Revisar notas en wireframres arriba  
-* Nombre de la Aplicación – Revisar notas
+**Gestión de estado de cupones**
 
-Jueves: 17:00 
+Desde el panel de WOPPA, el equipo puede:
+
+* Consultar el estado de cupones individuales
+
+* Cambiar el estado de un cupón de “pagado” a “redimido” si el comercio no lo ha hecho
+
+* Marcar una promoción como “agotada” si se reporta manualmente por el comercio
+
+* Ver actividad asociada al código (fecha de pago, comercio, usuario)
+
+**Panel de métricas operativas** (por definir para el MVP)
+
+Campos propuestos:
+
+* Total de promociones activas
+
+* Total de redenciones por semana
+
+* Comercios activos (últimos 30 días)
+
+* Promociones más vistas
+
+* Promociones con más redenciones
+
+**Notas funcionales**
+
+* No se requiere aprobación por parte de WOPPA para marcar una promoción como expirada (se vence automáticamente por fecha)
+
+* Las acciones tomadas por el equipo deben ser persistentes y reflejadas en los paneles de los comercios
+
+**Preguntas para validar**
+
+1. ¿El equipo de WOPPA podrá desactivar un comercio completo (por incumplimiento)? Sí
+
+2. ¿Cuál es el tiempo máximo de revisión de promociones aceptable desde el lado de WOPPA? (SLA interno) \- 2hrs para el MVP, se esperan pocos comercios la inicio
+
+**Redención y trazabilidad de cupones**
+
+Este módulo define cómo se gestiona el ciclo de vida de un cupón generado por un usuario desde la app, cómo se registra su estado y cómo se vincula con los comercios y el equipo de WOPPA.
+
+**Estados posibles de un cupón**
+
+1. Generado: cuando el usuario accede al beneficio desde la app.
+
+2. Pagado: cuando se completa el proceso de pago.
+
+3. Redimido: cuando el comercio confirma que el usuario canjeó la promoción.
+
+4. Expirado: cuando se supera el tiempo de redención sin uso.
+
+**Generación del cupón**
+
+* Cada cupón tiene un código único, alfanumérico, generado desde backend.
+
+* Se genera al momento en que el usuario finaliza el proceso de pago.
+
+* El cupón queda asociado a una promoción, comercio y usuario.
+
+**Redención del cupón**
+
+* El usuario muestra el código en el comercio.
+
+* El comercio accede a su panel y marca el código como “canjeado”.
+
+* Esta acción actualiza el estado a “redimido” en el sistema.
+
+* Solo los cupones en estado “pagado” pueden ser canjeados.
+
+**Gestión del stock**
+
+* Cuando se marca un cupón como redimido, se reduce el stock automáticamente (si está configurado).
+
+* El equipo de WOPPA puede marcar manualmente una promoción como “agotada” en caso de reporte directo del comercio.
+
+**Trazabilidad**
+
+* Cada acción de estado se registra con fecha y hora.
+
+* El historial de cada cupón está disponible para WOPPA Staff desde el backoffice.
+
+**Acciones posibles por usuario**
+
+* Ver el cupón activo desde el perfil.
+
+* Revisar historial de compras y promociones obtenidas.
+
+* Mostrar el cupón al comercio para redimirlo (flujo visual optimizado).
+
+* Descargar el cupón como PDF o recibirlo por correo (por definir).
+
+**Acciones posibles por comercio**
+
+* Ingresar código manualmente y marcarlo como “redimido”.
+
+* Ver lista de cupones asociados a sus promociones.
+
+* Ver fecha de pago y estado actual.
+
+**Acciones posibles por WOPPA Staff**
+
+* Marcar código como redimido si el comercio no lo hizo (por excepción).
+
+* Consultar trazabilidad completa del cupón.
+
+* Asociar manualmente un código a una redención si hay inconsistencias.
+
+**Casos especiales**
+
+* Cupón no utilizado a tiempo: pasa a “expirado”, no redimible.
+
+* Cupón pagado pero no redimido: visible en historial del usuario, pero no genera ganancia para el comercio hasta redención.
+
+* Cupón redimido por error: no se permite revertir el estado en el MVP.
+
+**Preguntas para validar**
+
+1. ¿El usuario debe recibir el código por email además de verlo en pantalla? \- Sí
+
+2. ¿Desean mostrar una fecha de vencimiento visible dentro del cupón? \- No
+
+3. ¿Se permite redimir más de un cupón de la misma promoción por usuario (ej: grupo de amigos)? \- Sí
+
+**Perfil del comercio y configuraciones generales**
+
+Este módulo permite a cada comercio gestionar su información básica, acceder a su historial operativo y configurar aspectos clave de su cuenta. Se accede una vez iniciado sesión, desde el menú principal del panel web.
+
+**Datos editables desde el perfil**
+
+* Nombre del comercio
+
+* Nombre del responsable
+
+* Teléfono comercial
+
+* Teléfono financiero
+
+* Correo electrónico
+
+* Dirección del comercio (con validación mediante Google Maps)
+
+* Contraseña (con opción para modificar y recuperar)
+
+* Enlace a redes sociales (Instagram opcional, solicitado durante el registro o editable aquí)
+
+* Horario de atención o información adicional (formato libre, visible solo internamente)
+
+**Acciones disponibles**
+
+* Editar información básica (campos validados)
+
+* Cambiar contraseña
+
+* Consultar el estado de la cuenta: pendiente, activa, rechazada
+
+* Ver estado de verificación por parte de WOPPA (si el comercio fue aprobado)
+
+* Descargar resumen operativo (pendiente de definición si se permite exportación)
+
+**Acceso a historial**
+
+Desde esta sección, el comercio también puede:
+
+* Acceder a su historial de promociones aprobadas, vencidas o rechazadas
+
+* Consultar el historial de cupones por estado
+
+* Ver resumen de pagos recibidos y pendientes por parte de WOPPA
+
+**Contacto y soporte**
+
+El perfil del comercio incluye un acceso directo a soporte a través de WhatsApp Business. Esta funcionalidad está orientada a ofrecer asistencia rápida, especialmente en etapas de registro, carga de promociones y validación.
+
+* Se muestra un botón visible: “¿Necesitás ayuda?”
+
+* Al hacer clic, se abre una conversación con el número oficial de WhatsApp Business de WOPPA.
+
+* El sistema precarga un mensaje inicial: “Hola, soy un comercio de WOPPA y necesito ayuda con...”
+
+* Luego de enviado el mensaje, se muestra una respuesta automática del sistema:  
+   “¡Gracias por contactarnos\! Un miembro del equipo WOPPA responderá tu mensaje en breve.”
+
+* Un integrante del equipo WOPPA responderá directamente en la misma conversación cuando esté disponible.
+
+* Esta funcionalidad se puede acceder desde cualquier sección del panel del comercio.
+
+**Mensajes del sistema**
+
+En esta sección se muestran mensajes del sistema relevantes para el comercio:
+
+* Notificación de promociones rechazadas con comentarios de QA
+
+* Confirmaciones de pagos realizados por WOPPA
+
+**Términos y condiciones**
+
+* El comercio debe aceptar los términos y condiciones al momento del registro
+
+* Puede consultar o volver a aceptar términos desde esta sección
+
+**Seguridad**
+
+* Todo cambio sensible (email, contraseña, dirección) requiere autenticación activa del usuario
+
+* Los datos de contacto deben validarse antes de permitir guardado (Validación de e-mail)
 
