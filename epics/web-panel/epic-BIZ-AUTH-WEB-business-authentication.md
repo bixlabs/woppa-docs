@@ -5,7 +5,7 @@
 ---
 
 ## 📄 Functional Description
-Simple business authentication system for the web panel, enabling Brazilian businesses to register, login, and manage basic authentication states. Handles business registration with pending approval workflow and basic session management through Firebase Auth.
+Complete business authentication system for the web panel, enabling Brazilian businesses to register, login, manage authentication states, view their profile information, and access WhatsApp support. Handles business registration with pending approval workflow, basic session management through Firebase Auth, read-only profile display, and integrated support access throughout the platform.
 
 ---
 
@@ -23,17 +23,21 @@ Main flows and interactions included in this epic:
 - Password recovery (forgot password)
 - Basic logout functionality
 - Simple pending approval status display
+- Business profile display (read-only) for approved merchants
+- WhatsApp Business support integration throughout platform
 
 ---
 
 ## 🚫 Out of Scope
 Explicitly excluded elements:
 - WOPPA staff approval/rejection workflows (covered in BIZ-MODERATION-WEB)
-- Complex profile management (handled in separate epic if needed)
+- Profile editing capabilities (read-only only in this epic, editing in future phase)
 - Email verification UI (uses Firebase Auth default)
 - Session management complexity (handled by Firebase Auth)
 - Terms & conditions management beyond simple checkbox
 - Advanced authentication features (2FA, etc.)
+- WhatsApp Business API advanced features (using direct links for MVP)
+- Support ticket system or complex help features
 
 ---
 
@@ -76,7 +80,7 @@ Create Firebase Auth account with business information and set pending approval 
 - Firebase Auth email/password provider
 - Google Maps API for address validation
 - CNPJ validation service for Brazilian tax IDs
-- Firestore for business data storage
+- Backend Fastify API for business data storage
 
 **✅ Acceptance Criteria**:
 - Registration form includes: business name, responsible person name/surname, commercial phone, financial phone (optional), email, CNPJ, address, password
@@ -85,7 +89,7 @@ Create Firebase Auth account with business information and set pending approval 
 - CNPJ field validates Brazilian tax ID format
 - All fields have real-time validation
 - Terms & conditions checkbox is mandatory
-- Registration sets account status to "pending approval" in Firestore
+- Registration sets account status to "pending approval" in Backend Fastify API
 - Success message explains approval process and next steps
 
 **🧰 Technical Tasks**:
@@ -94,7 +98,7 @@ Create Firebase Auth account with business information and set pending approval 
 - Implement real-time field validation (email, phone, CNPJ)
 - Integrate Google Places API for address autocomplete
 - Implement Brazilian CNPJ validation logic
-- Store additional business data in Firestore with "pending" status
+- Store additional business data in Backend Fastify API with "pending" status
 - Add terms & conditions checkbox validation
 - Create registration success page with approval messaging
 - Add Firebase error handling with Portuguese translations
@@ -103,7 +107,7 @@ Create Firebase Auth account with business information and set pending approval 
 - Firebase project setup with Auth enabled
 - Google Places API key configuration
 - Brazilian CNPJ validation service
-- Firestore security rules for business data
+- Backend Fastify API endpoints for business data
 
 **❗ Pending Confirmations**
 - Exact CNPJ validation rules and error messages in Portuguese
@@ -152,11 +156,11 @@ Provide Firebase Auth login with approval status check and appropriate UI state.
 **⛓ Dependencies**:  
 - Firebase Auth system
 - Business registration system (BIZ-AUTH-WEB-001)
-- Firestore for approval status storage
+- Backend Fastify API for approval status storage
 
 **✅ Acceptance Criteria**:
 - Login form with email and password using Firebase Auth signInWithEmailAndPassword
-- After successful login, check approval status from Firestore
+- After successful login, check approval status from Backend Fastify API
 - If status is "pending": show alert/banner with yellow/orange color explaining account is under review
 - If status is "approved": allow full platform access
 - If status is "rejected": show alert/banner with red color explaining rejection with contact info
@@ -168,7 +172,7 @@ Provide Firebase Auth login with approval status check and appropriate UI state.
 - Create responsive React login form
 - Implement Firebase Auth signInWithEmailAndPassword
 - Add form validation and error handling
-- Create approval status checking logic after login
+- Create approval status checking logic after login using Backend Fastify API
 - Build simple alert/banner components for different approval states (colored alerts)
 - Create pending approval dashboard view
 - Implement redirect logic based on approval status
@@ -176,7 +180,7 @@ Provide Firebase Auth login with approval status check and appropriate UI state.
 
 **⚙️ External Setup / Config Required**
 - Firebase Auth configuration
-- Firestore read permissions for approval status
+- Backend Fastify API endpoints for approval status
 
 **❗ Pending Confirmations**
 - Exact messaging for pending/rejected states
@@ -340,59 +344,184 @@ Provide simple logout functionality using Firebase Auth with proper session clea
 
 ---
 
-## 🧪 Post-analysis: Story Set Review
+### 🔹 `BIZ-AUTH-WEB-005` – Business Profile Display (Read-Only)
 
-After analyzing all stories in the epic, I've identified the following observations:
+**Summary**:  
+Display business profile information in read-only format for approved merchants who have successfully logged in.
 
-**Dependencies and Flow**:
-- Stories flow logically: Registration → Login with Status Check → Password Recovery & Logout
-- All stories use Firebase Auth as foundation
-- Clean separation of concerns with minimal overlap
+**Justification**:  
+Approved merchants need to view their complete business information to verify data accuracy and have reference to their stored details.
 
-**Consistency**:
-- All stories use Firebase Auth methods consistently
-- Portuguese localization requirements consistent across stories
-- Firestore used only for business data and approval status
-- Simple MVP approach maintained throughout
+**User Story**:  
+"As an approved business owner, I want to view my complete business profile information, so that I can verify my data is correct and have access to my business details."
 
-**Potential Overlaps**:
-- Firebase Auth error handling should use shared error message translations
-- Form validation logic can be shared between registration and password recovery
-- Approval status checking might be used in other epics
+**🎯 Objective**:  
+Provide a comprehensive read-only view of business profile data retrieved from Backend Fastify API.
 
-**Scope Adjustments**:
-- Epic correctly focused on core authentication only
-- Complex profile management excluded appropriately
-- Session management handled by Firebase Auth reduces complexity significantly
+**⛓ Dependencies**:  
+- Firebase Auth system for authentication
+- Business registration system (BIZ-AUTH-WEB-001)  
+- Business login system (BIZ-AUTH-WEB-002)
+- Backend Fastify API for business data retrieval
+
+**✅ Acceptance Criteria**:
+- Display business name clearly as main header
+- Show responsible person name (first name + surname)
+- Display commercial phone number
+- Show financial phone number (if provided during registration)
+- Display registered email address
+- Show complete business address as stored during registration
+- Display Instagram social media link if provided (optional field)
+- Show CNPJ (Brazilian tax ID) for reference
+- Include account creation date/registration date
+- All information displayed in read-only format (no editing capabilities)
+- Clean, organized layout with clear sections
+- Handle missing optional fields gracefully (show "Not provided" or hide section)
+- Responsive design for different screen sizes
+
+**🧰 Technical Tasks**:
+- Create responsive React business profile display component
+- Implement API call to Backend Fastify to retrieve business profile data
+- Design clean layout with proper typography and spacing
+- Add sections for personal info, contact info, business info, and administrative info
+- Handle optional fields display (Instagram, financial phone)
+- Implement loading states during data retrieval
+- Add error handling for API failures
+- Format CNPJ display with proper Brazilian format (XX.XXX.XXX/XXXX-XX)
+- Format phone numbers for Brazilian display
+- Add proper date formatting for registration date
+- Ensure responsive design across devices
+
+**⚙️ External Setup / Config Required**
+- Backend Fastify API endpoint for business profile retrieval (/api/business/profile)
+- Proper authentication middleware to verify logged-in business
+- Business data model with all required fields
+
+**❗ Pending Confirmations**
+- Exact layout and information hierarchy preferences
+- Whether to show CNPJ in masked format or full format
+- Date format preferences (Brazilian standard: DD/MM/YYYY)
+- Handling of optional fields display strategy
+
+**📝 Notes & Observations**
+- This is read-only in first phase - editing will be separate epic/story
+- Only accessible to approved businesses (login already validates this)
+- No wireframe exists - UI design needed
+- Should integrate with overall web panel design system
+- Focus on clear information presentation
+
+**📊 PERT Estimation**
+```
+📊 PERT Estimation:
+- Optimistic: 3 hours
+- Realistic: 5.5 hours
+    - Frontend UI: ~2.5h (layout design, responsive sections)
+    - Frontend Logic: ~1h (data formatting, optional fields handling)
+    - Integration: ~1h (API integration, error handling)
+    - Backend: ~0.5h (profile endpoint)
+    - Manual Testing: ~0.5h
+- Pessimistic: 8 hours
+- Final PERT Estimate: 5.5h
+```
+
+**🖼 Wireframe Reference**
+- Exists: No
+- Business profile layout design needed
 
 ---
 
-## 📌 Stories with High Risk or Pending Decisions
+### 🔹 `BIZ-AUTH-WEB-006` – WhatsApp Business Support Integration
 
-Stories in this epic that include confirmations pending or high uncertainty:
+**Summary**:  
+Provide easy access to WhatsApp Business support throughout the web panel with pre-loaded context messages.
 
-- **BIZ-AUTH-WEB-001**: Missing wireframes, CNPJ validation rules, approval messaging
-- **BIZ-AUTH-WEB-002**: Approval state messaging, rejection resubmission process
-- **BIZ-AUTH-WEB-003**: Email template design, success messaging
-- **BIZ-AUTH-WEB-004**: Logout confirmation requirements
+**Justification**:  
+Businesses need quick access to support, especially during registration, promotion creation, and validation processes.
 
----
+**User Story**:  
+"As a business owner using the platform, I want to easily contact support when I need help, so that I can get assistance quickly through WhatsApp."
+
+**🎯 Objective**:  
+Implement WhatsApp Business integration with context-aware support access throughout the platform.
+
+**⛓ Dependencies**:  
+- WhatsApp Business API setup
+- Business authentication system (all previous stories)
+- Web panel navigation system
+
+**✅ Acceptance Criteria**:
+- Display "¿Necesitás ayuda?" button/link visible throughout the platform
+- Button should be consistently placed and easily accessible from any screen
+- Clicking opens WhatsApp conversation with Woppa's official WhatsApp Business number
+- System pre-loads context message: "Hola, soy un comercio de WOPPA y necesito ayuda con..."
+- After message is sent, display automatic response: "¡Gracias por contactarnos! Un miembro del equipo WOPPA responderá tu mensaje en breve."
+- Integration works from any section of the business panel
+- Support button has consistent styling and placement
+- WhatsApp opens in new tab/window (doesn't disrupt current session)
+- Works on both desktop and mobile devices
+
+**🧰 Technical Tasks**:
+- Create reusable "¿Necesitás ayuda?" button component
+- Implement WhatsApp Business deep linking functionality
+- Configure pre-loaded message with proper URL encoding
+- Add support button to main layout/navigation component
+- Ensure button is accessible from all authenticated screens
+- Style button consistently with platform design
+- Test WhatsApp integration across different devices and browsers
+- Add proper ARIA labels for accessibility
+- Implement tracking/analytics for support button usage (optional)
+
+**⚙️ External Setup / Config Required**
+- WhatsApp Business account setup
+- Official WhatsApp Business phone number configuration
+- WhatsApp Business API setup (if using API vs. direct links)
+- Support team training for handling business queries
+
+**❗ Pending Confirmations**
+- Exact WhatsApp Business phone number to use
+- Specific pre-loaded message text customization
+- Button placement preferences (header, sidebar, floating)
+- Whether to use WhatsApp API or direct WhatsApp links
+
+**📝 Notes & Observations**
+- Should be accessible from registration through all authenticated screens
+- Can enhance business satisfaction and reduce friction
+- Important for MVP as businesses may need help with platform usage
+- Consider floating button vs. integrated button placement
+
+**📊 PERT Estimation**
+```
+📊 PERT Estimation:
+- Optimistic: 2 hours
+- Realistic: 3 hours
+    - Frontend UI: ~1h (button component, placement)
+    - Frontend Logic: ~1h (WhatsApp link generation, message encoding)
+    - Integration: ~0.5h (component integration across screens)
+    - Backend: ~0h (no backend needed for direct WhatsApp links)
+    - Manual Testing: ~0.5h
+- Pessimistic: 5 hours
+- Final PERT Estimate: 3.2h
+```
+
+**🖼 Wireframe Reference**
+- Exists: No
+- Support button placement and design needed
 
 ## 📊 Epic Estimation Summary
 
-To be completed manually:
+Epic totals:
 
-- Total user stories: 4
-- Stories with high uncertainty: 4
-- Stories pending confirmation: 4
+- Total user stories: 6
+- Stories with high uncertainty: 6
+- Stories pending confirmation: 6
 
 ### Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 14.25h
-- Realistic: 25h
-- Pessimistic: 34h
-- Final PERT Estimate: 24.73 h
+- Optimistic: 19.25h
+- Realistic: 33.5h
+- Pessimistic: 47h
+- Final PERT Estimate: 33.4h
 ```
 
 ---
