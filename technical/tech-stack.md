@@ -45,13 +45,18 @@ Confirmed technology decisions for Woppa MVP development.
 ## Compliance
 - **Data Protection**: LGPD (General Data Protection Law of Brazil)
 
+## Admin Panel
+- **Framework**: AdminJS with existing Node.js backend
+- **Integration**: Direct integration with PostgreSQL database via Prisma ORM
+- **Authentication**: Role-based access control
+- **Reasoning**: Rapid CRUD development, built-in authentication, direct database integration, and reduced development time for back-office operations
+
 ## Pending Decisions
 - Backend framework (Express.js vs alternatives)
 - Authentication system (Firebase Auth vs direct Google OAuth)
 - SMS validation service (Twilio vs Brazilian providers like Zenvia, TotalVoice)
 - Payment processing system
 - Push notifications service
-- Admin panel solution (considering AdminJS)
 
 ---
 *Document updated: 2025-01-24*
