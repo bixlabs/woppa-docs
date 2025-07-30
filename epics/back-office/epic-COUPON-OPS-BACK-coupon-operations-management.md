@@ -19,6 +19,7 @@ This epic applies to:
 Main flows and interactions included in this epic:
 - Coupon status monitoring and individual coupon lookup
 - Manual status changes from "paid" to "redeemed" when merchants need support
+- Payment status management: marking coupons as "paid by Woppa" for merchant tracking
 - Basic coupon oversight and support functionality
 - Basic audit logging for coupon status changes
 - Simple search functionality for coupon lookup by code
@@ -279,20 +280,94 @@ Provide interface to manually link coupon codes with redemption records when aut
 
 ---
 
+### 🔹 `COUPON-OPS-BACK-004` – Payment Status Management
+
+**Summary**:  
+Enable staff to mark coupons as "paid by Woppa" to track which codes have been financially processed for merchant payment calculations.
+
+**Justification**:  
+Merchants need visibility into which codes have been paid by Woppa versus pending payment, as specified in requirements for "códigos ya pagados por WOPPA" and "códigos pendientes de pago" tracking.
+
+**User Story**:  
+"As a Woppa staff member, I want to mark coupons as paid by Woppa, so that merchants can track which codes have been financially processed and calculate pending payments accurately."
+
+**🎯 Objective**:  
+Create AdminJS custom action to mark coupons as "paid by Woppa" with proper validation, batch processing capabilities, and audit logging for payment tracking.
+
+**⛓ Dependencies**:
+- Coupon Status Lookup (COUPON-OPS-BACK-001)
+- Manual Coupon Status Changes (COUPON-OPS-BACK-002)
+- Audit logging system
+
+**✅ Acceptance Criteria**:
+- "Mark as Paid by Woppa" action button available on coupon detail view
+- Action only available for redeemed coupons that haven't been marked as paid
+- Single click changes payment status to "paid by Woppa" with timestamp
+- Action requires mandatory comment field for payment batch reference or justification
+- Action logs payment status change with staff member ID, timestamp, and batch reference
+- Success confirmation message displayed
+- Payment status reflected immediately in merchant sales tracking
+- Optional batch selection functionality for processing multiple coupons simultaneously
+
+**🧰 Technical Tasks**:
+- Create AdminJS custom action for payment status marking (reuses existing infrastructure)
+- Implement payment status validation (only redeemed → paid allowed)
+- Add mandatory comment field for batch reference/justification
+- Implement payment status change logic with timestamp updates
+- Add audit logging for payment status changes (reuses existing audit system)
+- Integrate with merchant sales tracking system for real-time updates
+- Add success/error handling and user feedback
+- Optional: Add batch processing interface for multiple coupons
+
+**⚙️ External Setup / Config Required**
+- Database schema extension for payment status tracking
+- Audit logging database schema (already configured)
+- Integration with merchant sales tracking system
+- Payment batch reference system (optional)
+
+**❗ Pending Confirmations**
+- Payment processing workflow and batch reference requirements
+- Integration timing with merchant payment calculations
+- Bulk payment marking requirements vs. individual processing
+
+**📝 Notes & Observations**
+- Critical for accurate merchant payment tracking and financial reconciliation
+- Reuses existing custom action and audit infrastructure significantly reducing development time
+- Essential for transparency in merchant-Woppa financial relationship
+
+**📊 PERT Estimation**
+```
+📊 PERT Estimation:
+- Optimistic: 2.5 hours
+- Realistic: 4.5 hours
+    - AdminJS custom action: ~0.5h (reuses existing infrastructure)
+    - Payment status validation logic: ~1h
+    - Integration with merchant sales tracking: ~1.5h (real-time updates, data sync)
+    - Audit logging and testing: ~1.5h (payment scenarios, validation testing)
+- Pessimistic: 7 hours
+- Final PERT Estimate: 4.5h
+```
+
+**🖼 Wireframe Reference**
+- Exists: No
+- AdminJS action interface with payment status marking
+
+---
+
 ## 📊 Epic Estimation Summary
 
 Epic totals:
 
-- Total user stories: 3
-- Stories with moderate complexity: 3
-- Stories leveraging AdminJS and existing infrastructure: 3
+- Total user stories: 4
+- Stories with moderate complexity: 4
+- Stories leveraging AdminJS and existing infrastructure: 4
 
 ### Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 11.5 h
-- Realistic: 19.5 h  
-- Pessimistic: 29 h
-- Final PERT Estimate: 19.8 h
+- Optimistic: 14h
+- Realistic: 24h  
+- Pessimistic: 36h
+- Final PERT Estimate: 24.3h
 ```
 ---
