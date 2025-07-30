@@ -1,104 +1,434 @@
-# Epic: Offer Moderation
-**KEY**: `OFFER-MODERATION-BACK`  
-**Platform**: Back-Office (Woppa Staff)  
-**Status**: Defined  
+# 🧩 Epic: Offer Moderation
 
-## Overview
-Quality assurance system for offer validation with 12-hour SLA. Enables Woppa staff to review, approve, reject, or request adjustments to submitted offers. Includes mandatory comment fields for feedback, automatic email notifications, and direct publication to mobile app upon approval.
+**KEY**: `OFFER-MODERATION-BACK`
 
-## User Stories
+---
 
-### Offer Review Queue
+## 📄 Functional Description
+Basic offer validation system for Woppa staff to review and moderate submitted promotions using AdminJS. Focused on essential MVP functionality with 12-hour SLA for offer review, simple approval/rejection/adjustment workflows, and automatic publication to mobile app. Provides streamlined interface for quality assurance with email notifications and basic audit trails.
 
-• **Story 1: Pending Offers Queue**  
-  *Description:* Woppa staff view queue of offers pending review prioritized by submission time to meet 12-hour SLA. Queue shows offer name, merchant name, category, submission date, time remaining for SLA, and current status with visual indicators for urgency.
+---
 
-• **Story 2: Offer Detail Review**  
-  *Description:* Staff access complete offer details for thorough review including all form fields, uploaded images, location verification, pricing, description, expiration date, and merchant information. Interface optimized for quick quality assessment.
+## 💻 Target Platform
+This epic applies to:
+- `back-office` (AdminJS interface)
 
-• **Story 3: SLA Management**  
-  *Description:* System tracks 12-hour SLA for offer review with visual indicators for offers approaching deadline, automatic escalation for overdue reviews, and SLA performance metrics for staff management and process optimization.
+---
 
-### Offer Decision Making
+## 🧭 Functional Scope
+Main flows and interactions included in this epic:
+- Offer review queue with submission time prioritization for 12-hour SLA
+- Complete offer detail review with all submitted information and images
+- Three-state decision workflow: approve, reject, or request adjustments
+- Automatic email notifications for all status changes
+- Direct publication to mobile app upon approval
+- Basic audit logging for all review decisions
+- Basic offer queue management with AdminJS default interface
 
-• **Story 4: Offer Approval Process**  
-  *Description:* Staff approve offers that meet quality standards with single-click approval that changes status to "approved", publishes offer to mobile app immediately, sends confirmation email to merchant, and logs approval with staff identification and timestamp.
+---
 
-• **Story 5: Offer Rejection Process**  
-  *Description:* Staff reject offers that don't meet standards with mandatory comment field explaining specific rejection reasons. System sends detailed feedback email to merchant, maintains offer in merchant's account for potential resubmission, and logs rejection with comprehensive reasoning.
+## 🚫 Out of Scope
+Explicitly excluded elements:
+- Complex SLA analytics and performance dashboards
+- Bulk operations for multiple offers
+- Advanced image editing or enhancement tools
+- Merchant quality tracking and scoring systems
+- Review history appeals process
+- Staff communication and collaboration tools
+- Advanced analytics and reporting beyond basic metrics
+- Comment template management systems
 
-• **Story 6: Request Adjustments Process**  
-  *Description:* Staff request specific adjustments when offers need modifications with detailed comment field specifying required changes. System changes status to "needs adjustments", sends detailed feedback email to merchant, allows merchant to edit and resubmit, and maintains review history.
+---
 
-### Quality Control
+## 🖼 Wireframes Referenced in Epic
+List of wireframes that apply to this epic and the stories that use them.
 
-• **Story 7: Image Quality Validation**  
-  *Description:* Staff verify uploaded images meet quality standards including good lighting, clear product visibility, appropriate composition, and brand compliance. System provides image enhancement tools or rejection guidance for substandard images.
+- No specific wireframes exist for back-office offer moderation screens
+- AdminJS will provide default CRUD interface with customizations
 
-• **Story 8: Content Guidelines Enforcement**  
-  *Description:* Staff enforce content guidelines including appropriate product descriptions, accurate pricing, valid conditions, proper categorization, and compliance with platform policies. Guidelines accessible during review for consistency.
+---
 
-• **Story 9: Offer Information Verification**  
-  *Description:* Staff verify offer information accuracy including price validation, location verification, expiration date reasonableness, category/subcategory appropriateness, and contact information accuracy through cross-referencing with merchant data.
+## 🔍 Epic-level Ambiguities
 
-### Batch Operations & Efficiency
+- 📐 Missing wireframe: No wireframes exist for back-office offer moderation screens
+- 📊 Business decision pending: Specific quality guidelines and rejection criteria
+- 📋 Missing validation rules: Image quality standards and requirements
+- 🔁 Undefined logic: Exact SLA escalation and notification procedures
 
-• **Story 10: Bulk Offer Operations**  
-  *Description:* Staff perform bulk operations on multiple offers including bulk approval of similar offers, bulk rejection with common reasons, batch status changes, and streamlined processing during high-volume periods while maintaining quality standards.
+---
 
-• **Story 11: Quick Action Templates**  
-  *Description:* Pre-defined comment templates for common rejection reasons and adjustment requests including image quality issues, pricing problems, description improvements, and categorization corrections. Templates save time while ensuring comprehensive feedback.
+## 🧵 User Stories
 
-• **Story 12: Offer Comparison Tools**  
-  *Description:* Staff compare similar offers from same merchant or category to ensure consistency in approval decisions, identify patterns in rejections, and maintain fair and uniform quality standards across all merchants.
+---
 
-### Analytics & Process Improvement
+### 🔹 `OFFER-MODERATION-BACK-001` – Offer Review Queue
 
-• **Story 13: Review Performance Analytics**  
-  *Description:* Staff and managers view analytics on review performance including SLA compliance rates, approval/rejection ratios, common rejection reasons, staff productivity metrics, and merchant satisfaction scores to optimize the review process.
+**Summary**:  
+Provide AdminJS-based list view of all submitted offers with review status and SLA tracking.
 
-• **Story 14: Merchant Quality Tracking**  
-  *Description:* System tracks merchant quality over time including approval rates by merchant, common issues by merchant, improvement trends, and quality scores to inform merchant support and partnership decisions.
+**Justification**:  
+Staff need to see all submitted offers in priority order to meet 12-hour SLA requirements efficiently.
 
-• **Story 15: Review History & Appeals**  
-  *Description:* Comprehensive review history for each offer including all decisions, comments, staff actions, and timestamps. Support for merchant appeals process with escalation to senior staff and decision override capabilities.
+**User Story**:  
+"As a Woppa staff member, I want to view a prioritized queue of offers pending review, so that I can meet the 12-hour SLA for offer validation."
 
-### Communication & Notifications
+**🎯 Objective**:  
+Create AdminJS resource for offers with customized list view showing essential review information and SLA indicators.
 
-• **Story 16: Automated Email Notifications**  
-  *Description:* System automatically sends email notifications to merchants for all status changes including approval confirmations, rejection explanations, adjustment requests, and resubmission confirmations. Emails include relevant details and next steps.
+**⛓ Dependencies**:  
+- AdminJS setup with Node.js backend
+- PostgreSQL database with offers table
+- Prisma ORM integration
+- Staff authentication system
 
-• **Story 17: Staff Communication Tools**  
-  *Description:* Internal communication tools for staff including discussion threads on complex offers, escalation to senior reviewers, knowledge sharing for edge cases, and collaborative decision-making on policy questions.
+**✅ Acceptance Criteria**:
+- List displays: business name, offer name, category, submission date, current status, time remaining for SLA
+- Default ordering by submission time (oldest first) to prioritize SLA compliance
+- Status indicators with clear visual distinction (pending, approved, rejected, needs adjustments)
+- Visual urgency indicators for offers approaching 12-hour deadline
+- Pagination for large lists
+- Direct links to detailed review for each offer
+- AdminJS default list interface with custom field configurations and SLA calculations
 
-## Technical Requirements
+**🧰 Technical Tasks**:
+- Configure AdminJS resource for offer model
+- Customize list view fields with SLA time calculations
+- Implement status indicators with appropriate styling
+- Add computed fields for time remaining and urgency indicators
+- Configure pagination and sorting options
+- Set up proper field formatting (dates, status, time remaining)
+- Add SLA urgency styling (red for < 2 hours, yellow for < 6 hours)
 
-- Role-based access control for staff authentication
-- 12-hour SLA tracking and alerting system
-- Email notification automation
-- Image viewing and basic editing tools
-- Bulk operation processing capabilities
-- Review analytics and reporting engine
-- Integration with mobile app publication system
-- Audit logging for all review decisions
-- Comment template management system
+**⚙️ External Setup / Config Required**
+- AdminJS installation and configuration
+- Offer model definition in Prisma schema with submission timestamps
+- Staff authentication middleware setup
+- Database migrations for offers table
 
-## Acceptance Criteria Summary
+**❗ Pending Confirmations**
+- Exact SLA urgency thresholds and color coding
+- Default page size for offer queue
+- Specific field display priorities
 
-- 12-hour SLA maintained for all offer reviews
-- All review decisions include appropriate feedback comments
-- Email notifications sent automatically for status changes
-- Bulk operations maintain quality standards and proper logging
-- Review analytics provide actionable insights for improvement
-- Image quality validation prevents substandard offers
-- Appeal process allows merchant feedback and corrections
-- System integrates seamlessly with mobile app publication
+**📝 Notes & Observations**
+- AdminJS provides built-in CRUD interface reducing development time
+- SLA tracking critical for MVP service level requirements
+- Focus on essential information for quick review decisions
 
-## Dependencies
+**📊 PERT Estimation**
+```
+📊 PERT Estimation:
+- Optimistic: 2.5 hours
+- Realistic: 4 hours
+    - AdminJS Configuration: ~1.5h
+    - SLA calculations and styling: ~1.5h
+    - Custom field setup: ~0.5h
+    - Testing: ~0.5h
+- Pessimistic: 6 hours
+- Final PERT Estimate: 4h
+```
 
-- Offer Management epic (web-panel offer creation system)
-- Business Moderation epic (approved merchants only)
-- Mobile app integration for offer publication
+**🖼 Wireframe Reference**
+- Exists: No
+- AdminJS default interface with SLA customizations
+
+---
+
+### 🔹 `OFFER-MODERATION-BACK-002` – Offer Detail Review
+
+**Summary**:  
+Enable staff to access complete offer details through AdminJS show view for thorough review.
+
+**Justification**:  
+Staff need to review all submitted offer information and images before making approval/rejection decisions.
+
+**User Story**:  
+"As a Woppa staff member, I want to view complete offer details and images, so that I can make informed quality decisions."
+
+**🎯 Objective**:  
+Customize AdminJS show view to display all offer information in organized sections optimized for review.
+
+**⛓ Dependencies**:  
+- Offer Review Queue (OFFER-MODERATION-BACK-001)
+- Image storage service for viewing uploaded images
+
+**✅ Acceptance Criteria**:
+- Show view displays all offer fields: name, description, price, category, expiration date
+- Display all uploaded images with proper sizing and quality
+- Show business information and location details
+- Include submission timestamp and current status
+- Clear section organization: Offer Details, Images, Business Info, Review History
+- AdminJS default show interface with custom field groupings and image display
+
+**🧰 Technical Tasks**:
+- Configure AdminJS show view for offer resource
+- Customize field groupings and sections
+- Implement image display with proper sizing
+- Configure offer detail formatting (price, dates, descriptions)
+- Add business information display integration
+- Implement responsive layout for AdminJS show view
+- Add image viewing capabilities (zoom, multiple images)
+
+**⚙️ External Setup / Config Required**
+- Image storage service integration for display
+- Offer model definition with all submission fields
+- Business relationship for merchant information display
+
+**❗ Pending Confirmations**
+- Image display preferences and sizing
+- Field grouping priorities for review workflow
+- Integration level with business information
+
+**📝 Notes & Observations**
+- AdminJS show view provides good foundation for detail display
+- Image quality review is critical for offer approval
+- Focus on efficient review workflow
+
+**📊 PERT Estimation**
+```
+📊 PERT Estimation:
+- Optimistic: 2 hours
+- Realistic: 3 hours
+    - AdminJS show view configuration: ~1h
+    - Image display setup: ~1h
+    - Field formatting and grouping: ~0.5h
+    - Testing: ~0.5h
+- Pessimistic: 4.5 hours
+- Final PERT Estimate: 3h
+```
+
+**🖼 Wireframe Reference**
+- Exists: No
+- AdminJS default show view with custom sections and image display
+
+---
+
+### 🔹 `OFFER-MODERATION-BACK-003` – Offer Approval Process
+
+**Summary**:  
+Implement single-click offer approval through AdminJS actions with status change and email notification.
+
+**Justification**:  
+Staff need efficient way to approve quality offers and make them visible in the mobile app through status change.
+
+**User Story**:  
+"As a Woppa staff member, I want to approve offers with one click, so that quality offers become visible in the mobile app."
+
+**🎯 Objective**:  
+Create AdminJS custom action for offer approval with status change to "approved" and email notification.
+
+**⛓ Dependencies**:  
+- Offer Detail Review (OFFER-MODERATION-BACK-002)
 - Email service configuration
-- Staff user management and authentication system
-- Image storage and processing service
+
+**✅ Acceptance Criteria**:
+- "Approve" action button available on offer detail view
+- Single click changes status from "pending" to "approved"
+- Status change makes offer visible in mobile app automatically (backend filters by approved status)
+- Email notification sent to merchant confirming approval
+- Action logs approval with staff member ID and timestamp
+- Success confirmation message displayed
+- Status change reflected immediately in queue
+- Action only available for offers in "pending" or "needs adjustments" status
+
+**🧰 Technical Tasks**:
+- Create AdminJS custom action for approval
+- Implement status change logic to "approved"
+- Configure email notification service integration
+- Add audit logging for approval actions
+- Create email template for approval notification
+- Add success/error handling and user feedback
+
+**⚙️ External Setup / Config Required**
+- Email service configuration
+- Email template setup for approval notifications
+- Audit logging database schema
+
+**❗ Pending Confirmations**
+- Email template content and format
+- Specific approval confirmation messaging
+
+**📝 Notes & Observations**
+- AdminJS custom actions provide clean integration
+- Status change automatically makes offer visible in mobile app
+- Email notifications important for merchant communication
+
+**📊 PERT Estimation**
+```
+📊 PERT Estimation:
+- Optimistic: 2 hours
+- Realistic: 3.5 hours
+    - AdminJS custom action setup: ~1.5h
+    - Status change logic: ~0.5h
+    - Email integration: ~1h
+    - Audit logging: ~0.25h
+    - Testing and validation: ~0.25h
+- Pessimistic: 5 hours
+- Final PERT Estimate: 3.5h
+```
+
+**🖼 Wireframe Reference**
+- Exists: No
+- AdminJS action interface with custom approval button
+
+---
+
+### 🔹 `OFFER-MODERATION-BACK-004` – Offer Rejection Process
+
+**Summary**:  
+Implement offer rejection workflow through AdminJS with mandatory comments and email notification.
+
+**Justification**:  
+Staff need to reject substandard offers with clear feedback to help merchants improve submissions.
+
+**User Story**:  
+"As a Woppa staff member, I want to reject offers with explanatory comments, so that merchants understand quality standards."
+
+**🎯 Objective**:  
+Create AdminJS custom action for offer rejection with required comment field and automated email notification.
+
+**⛓ Dependencies**:  
+- Offer Approval Process (OFFER-MODERATION-BACK-003)
+- Email service configuration
+
+**✅ Acceptance Criteria**:
+- "Reject" action button available on offer detail view
+- Action opens modal/form requiring mandatory comment field
+- Status changes from "pending" to "rejected" after confirmation
+- Email notification sent to merchant with rejection reason
+- Action logs rejection with staff member ID, timestamp, and comment
+- Comment character limit (500 characters maximum)
+- Success confirmation message displayed
+- Rejected offers remain accessible to merchant for reference
+
+**🧰 Technical Tasks**:
+- Create AdminJS custom action for rejection with form modal (reuses approval infrastructure)
+- Implement comment validation and storage
+- Configure rejection email notification
+- Add audit logging for rejection actions
+- Create email template for rejection notification
+- Add form validation and error handling
+
+**⚙️ External Setup / Config Required**
+- Email service configuration (already configured from approval)
+- Database schema for storing rejection comments
+- Email template setup for rejection notifications
+
+**❗ Pending Confirmations**
+- Rejection comment guidelines and examples
+- Email template tone and content
+- Character limits for rejection comments
+
+**📝 Notes & Observations**
+- AdminJS forms and modals provide good UX for comment collection
+- Reuses approval infrastructure significantly reducing development time
+- Clear feedback helps merchants improve future submissions
+
+**📊 PERT Estimation**
+```
+📊 PERT Estimation:
+- Optimistic: 1.5 hours
+- Realistic: 2.5 hours
+    - AdminJS custom action with form modal: ~1h (reuses approval infrastructure)
+    - Rejection email template: ~0.5h (copy of approval template)
+    - Comment storage and validation: ~0.5h
+    - Testing: ~0.5h
+- Pessimistic: 4 hours
+- Final PERT Estimate: 2.5h
+```
+
+**🖼 Wireframe Reference**
+- Exists: No
+- AdminJS action interface with custom rejection form
+
+---
+
+### 🔹 `OFFER-MODERATION-BACK-005` – Request Adjustments Process
+
+**Summary**:  
+Implement "needs adjustments" workflow through AdminJS allowing merchants to edit and resubmit offers.
+
+**Justification**:  
+Staff need to request specific changes for offers that have potential but need modifications before approval.
+
+**User Story**:  
+"As a Woppa staff member, I want to request specific adjustments to offers, so that merchants can fix issues and resubmit."
+
+**🎯 Objective**:  
+Create AdminJS custom action for requesting adjustments with detailed feedback and resubmission capability.
+
+**⛓ Dependencies**:  
+- Offer Rejection Process (OFFER-MODERATION-BACK-004)
+- Merchant offer editing system integration
+
+**✅ Acceptance Criteria**:
+- "Request Adjustments" action button available on offer detail view
+- Action opens modal/form requiring mandatory comment field with specific change requests
+- Status changes from "pending" to "needs adjustments" after confirmation
+- Email notification sent to merchant with detailed adjustment requests
+- Merchant can edit offer and resubmit for review
+- Action logs adjustment request with staff member ID, timestamp, and comments
+- Resubmitted offers return to "pending" status for re-review
+- Comment character limit (500 characters maximum)
+
+**🧰 Technical Tasks**:
+- Create AdminJS custom action for adjustment requests (reuses rejection infrastructure)
+- Implement adjustment comment storage and validation
+- Configure adjustment email notification
+- Add audit logging for adjustment requests
+- Create email template for adjustment requests
+- Add integration with merchant editing workflow
+
+**⚙️ External Setup / Config Required**
+- Email service configuration (already configured)
+- Database schema for storing adjustment comments (reuses rejection schema)
+- Email template setup for adjustment requests
+- Integration with merchant offer editing system
+
+**❗ Pending Confirmations**
+- Adjustment request guidelines and common scenarios
+- Email template content and merchant guidance
+- Resubmission workflow integration details
+
+**📝 Notes & Observations**
+- Reuses rejection infrastructure with different status and email template
+- Critical for maintaining merchant relationships while ensuring quality
+- Allows iterative improvement rather than outright rejection
+
+**📊 PERT Estimation**
+```
+📊 PERT Estimation:
+- Optimistic: 1 hour
+- Realistic: 2 hours
+    - AdminJS custom action: ~0.5h (reuses rejection infrastructure)
+    - Adjustment email template: ~0.5h (variation of rejection template)
+    - Integration with merchant editing: ~0.5h
+    - Testing: ~0.5h
+- Pessimistic: 3 hours
+- Final PERT Estimate: 2h
+```
+
+**🖼 Wireframe Reference**
+- Exists: No
+- AdminJS action interface with custom adjustment form
+
+---
+
+## 📊 Epic Estimation Summary
+
+Epic totals:
+
+- Total user stories: 5
+- Stories with moderate complexity: 5
+- Stories leveraging AdminJS and reusing infrastructure: 5
+
+### Manual 3-point Estimation for Epic (PERT)
+
+```
+- Optimistic: 9h
+- Realistic: 15h  
+- Pessimistic: 22.5h
+- Final PERT Estimate: 15.25h
+```
+
+---
