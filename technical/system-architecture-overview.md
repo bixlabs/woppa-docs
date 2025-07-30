@@ -6,75 +6,84 @@ High-level system architecture for the Woppa MVP, a mobile app and web platform 
 
 ### Consumer Mobile App
 - **Role**: Primary consumer interface for promotion discovery and redemption
-- **Technology**: React Native
+- **Technology**: React Native with TypeScript
 - **Responsibilities**:
   - Geolocation-based promotion browsing (map and list views)
-  - Category filtering (Gastronomía, Farmacia)
-  - User registration and authentication (email/password + Google OAuth)
-  - Promotion detail viewing and redemption code generation
+  - Category filtering and search functionality
+  - User registration and authentication (email/password + Google OAuth, no phone required)
+  - Promotion detail viewing with static maps and "Get Directions" functionality
+  - Payment processing integration with Mercado Pago Checkout Pro
+  - Alphanumeric redemption code display and management
   - User profile and purchase history management
 
-### Web Panel
-- **Role**: Combined interface for merchants and Woppa staff with role-based access
-- **Technology**: React
+### Business Web Panel
+- **Role**: Business-facing interface for promotion management
+- **Technology**: React with TypeScript and shadcn/ui
 - **Responsibilities**:
-  - **Merchant Functions**:
-    - Merchant registration and profile management
-    - Promotion creation with images, categories, and conditions
-    - Sales history and redemption tracking
-    - Promotion status monitoring (pending, approved, rejected)
-    - Coupon validation and confirmation for product delivery
-  - **Woppa Staff Functions**:
-    - Promotion validation and approval/rejection workflow
-    - Merchant verification and management
-    - Promotion highlighting and tagging (urgency labels)
-    - System monitoring and user activity oversight
+  - Business registration with manual validation workflow
+  - Promotion creation and management (1+1 type promotions)
+  - Sales tracking and redemption analytics
+  - Publication management with status monitoring
+  - Manual coupon redemption confirmation
+
+### Admin/Moderation Web Panel
+- **Role**: Woppa staff interface for content and business moderation
+- **Technology**: React with TypeScript (potentially shared codebase)
+- **Responsibilities**:
+  - Business validation and approval/rejection workflows
+  - Promotion moderation with 12-hour SLA
+  - Coupon operations management
+  - Operational metrics dashboard
+  - System monitoring and oversight
 
 ### Core API Backend
 - **Role**: Centralized business logic and data management
-- **Technology**: Node.js with PostgreSQL
+- **Technology**: Node.js with TypeScript, PostgreSQL with Prisma ORM
 - **Responsibilities**:
   - RESTful API serving all frontend applications
   - Business logic for promotions, users, and redemptions
   - Authentication and authorization management
   - Database operations and data integrity
-  - Integration with external services (Google APIs, AWS)
+  - Integration with external services (Google APIs, AWS, Mercado Pago)
+  - Webhook handling for payment confirmations
+  - Redemption code generation and validation
 
-### Authentication Service
+### Authentication System
 - **Role**: User identity and access management
-- **Technology**: Google OAuth 2.0 + custom JWT implementation
+- **Technology**: Google OAuth 2.0 integration
 - **Responsibilities**:
-  - Consumer and merchant authentication
+  - Consumer and business authentication (email/password + Google OAuth)
   - Session management and token validation
   - Profile data synchronization with Google accounts
-  - Role-based access control (consumer, merchant, staff)
+  - Role-based access control (consumer, business, admin)
+  - Simplified registration without phone number requirement
 
-### File Storage Service
+### File Storage System
 - **Role**: Image management and delivery
 - **Technology**: AWS S3 + CloudFront CDN
 - **Responsibilities**:
   - Promotion image upload and storage
-  - Image optimization and resizing
-  - Global content delivery via CDN
+  - Image optimization and quality validation
+  - Content delivery via CDN from São Paulo region
   - Secure file access control
 
-### Geolocation Service
+### Geolocation System
 - **Role**: Maps and location-based functionality
 - **Technology**: Google Maps API + Google Places API
 - **Responsibilities**:
-  - Interactive map rendering for mobile app
-  - Merchant address validation and geocoding
+  - Static map rendering for mobile app with "Get Directions" links
+  - Business address validation and geocoding
   - Proximity-based promotion filtering
-  - Location autocomplete for merchant registration
+  - Address autocomplete for business registration
 
 ### Payment Processing Service
 - **Role**: Handle payment transactions for promotion redemptions
-- **Technology**: Mercado Pago API + Payment Networks (Redes de Cobranza)
+- **Technology**: Mercado Pago Checkout Pro
 - **Responsibilities**:
-  - Process online payments via Mercado Pago
-  - Generate payment codes for offline payment networks
+  - Process online payments via Mercado Pago Checkout Pro
+  - Handle webhook notifications for payment confirmation
   - Payment validation and confirmation
-  - Transaction status tracking and notifications
+  - Transaction status tracking and redemption code generation
 
 ## Component Interaction Model
 
@@ -83,24 +92,24 @@ High-level system architecture for the Woppa MVP, a mobile app and web platform 
 The system follows a **centralized API architecture** where all business logic flows through the Core API Backend:
 
 ```
-┌─────────────────┐              ┌─────────────────┐
-│   Consumer      │              │   Web Panel     │
-│   Mobile App    │              │                 │
-└─────────┬───────┘              │ (Merchants +    │
-          │                      │  Woppa Staff)   │
-          │                      └─────────┬───────┘
-          │                                │
-          └────────────────────────────────┘
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Consumer      │    │   Business      │    │   Admin/        │
+│   Mobile App    │    │   Web Panel     │    │   Moderation    │
+│                 │    │                 │    │   Web Panel     │
+└─────────┬───────┘    └─────────┬───────┘    └─────────┬───────┘
+          │                      │                      │
+          └──────────────────────┼──────────────────────┘
                                  │
                     ┌─────────────▼──────────────┐
                     │     Core API Backend       │
+                    │   (Node.js + TypeScript)   │
                     └─────────────┬──────────────┘
                                   │
     ┌─────────────┬─────────────────┼─────────────────┬─────────────┐
     │             │                 │                 │             │
 ┌───▼───┐  ┌──────▼──────┐  ┌──────▼──────┐  ┌──────▼──────┐  ┌────▼────┐
 │ Auth  │  │ File Storage│  │ Geolocation │  │ Database    │  │ Payment │
-│Service│  │  Service    │  │  Service    │  │(PostgreSQL) │  │ Service │
+│System │  │  (AWS S3)   │  │  (Google)   │  │(PostgreSQL)│  │(MercadoPago)│
 └───────┘  └─────────────┘  └─────────────┘  └─────────────┘  └─────────┘
 ```
 
@@ -111,14 +120,18 @@ The system follows a **centralized API architecture** where all business logic f
 **Monolithic Approach**: Single Node.js backend instead of microservices to accelerate development and reduce operational complexity during validation phase.
 
 **Manual Operations**: 
-- Promotion validation requires human approval (12-hour SLA)
-- Redemption requires merchant to validate customer's redemption code through web panel
+- Business registration requires manual validation by Woppa staff
+- Promotion moderation requires human approval (12-hour SLA)
+- Single-use coupon redemption with alphanumeric codes (no QR codes)
+- Manual coupon validation by businesses through web panel
 - No automated fraud detection or real-time inventory management
 
 **Limited Scope**:
-- Only two main categories (Gastronomía, Farmacia) with predefined subcategories
-- Brazil-only launch with LGPD compliance
-- Manual merchant onboarding process
+- Focus on 2x1 promotions and simple discounts
+- Brazil-only launch with LGPD compliance and AWS São Paulo region
+- Manual business onboarding and validation process
+- Mercado Pago as the sole payment method (no cash networks in MVP)
+- Static maps instead of dynamic interactive maps
 
 ### Shared Services and Dependencies
 
@@ -127,11 +140,10 @@ The system follows a **centralized API architecture** where all business logic f
 **Unified Data Model**: PostgreSQL database with relational design supporting users, merchants, promotions, and redemptions across all interfaces.
 
 **External Service Dependencies**:
-- Google OAuth for simplified user registration
-- Google Maps/Places APIs for geolocation functionality
-- AWS infrastructure for file storage and CDN delivery
-- Mercado Pago API for online payment processing
-- Payment networks (Redes de Cobranza) for offline transactions
+- Google OAuth for simplified user registration (no phone number required)
+- Google Maps/Places APIs for static maps and address validation
+- AWS infrastructure (São Paulo region) for file storage and CDN delivery
+- Mercado Pago Checkout Pro for payment processing with webhook notifications
 
 ### Assumptions and Trade-offs
 
@@ -141,9 +153,11 @@ The system follows a **centralized API architecture** where all business logic f
 - Manual validation workflow limits scalability but ensures quality control
 
 **Business Model Assumptions**:
-- 2x1 promotions only (no complex discount structures)
+- 2x1 promotions and simple discounts (no complex discount structures)
 - Geographic proximity drives user engagement
-- Dual payment flow (online via Mercado Pago, offline via payment networks)
+- Payment required before redemption code delivery
+- Single payment method (Mercado Pago) for MVP validation
+- Single-use coupons with quantity-based purchases (one presentation = full redemption)
 - Staff-curated content quality over automated scale
 
 **Scalability Considerations**:
@@ -155,12 +169,15 @@ The system follows a **centralized API architecture** where all business logic f
 ### Future Evolution Paths
 
 The architecture supports gradual enhancement without major rewrites:
-- Additional payment methods can be integrated through existing Payment Service
+- Additional payment methods (cash networks) can be integrated in future phases
+- QR code redemption can replace alphanumeric codes
+- Dynamic interactive maps can replace static maps
 - AI-based validation can replace manual approval workflow  
-- Push notifications can be integrated through existing mobile app
-- Additional categories and features can extend existing data models
+- Push notifications and advanced features can be integrated
+- Phone number registration can be added for enhanced verification
+- Additional categories and complex promotion types can extend existing data models
 - Caching layer (Redis or similar) can be added if scale demands it
 - Microservices migration possible if scale demands it
 
 ---
-*Document created: 2025-01-24*
+*Document updated: 2025-01-30*
