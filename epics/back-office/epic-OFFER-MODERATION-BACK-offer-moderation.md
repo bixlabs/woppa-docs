@@ -414,21 +414,91 @@ Create AdminJS custom action for requesting adjustments with detailed feedback a
 
 ---
 
+### 🔹 `OFFER-MODERATION-BACK-006` – Offer Stock Management
+
+**Summary**:  
+Enable staff to manually mark offers as "sold-out" when merchants report stock depletion that cannot be tracked automatically.
+
+**Justification**:  
+Merchants may offer promotions "until stock runs out" and need to manually report when stock is depleted to prevent additional coupon generation.
+
+**User Story**:  
+"As a Woppa staff member, I want to mark offers as sold-out when merchants report stock depletion, so that no additional coupons are generated for unavailable offers."
+
+**🎯 Objective**:  
+Add stock management functionality to existing offer moderation interface to prevent coupon generation for depleted offers.
+
+**⛓ Dependencies**:  
+- Offer Review Queue (OFFER-MODERATION-BACK-001)
+- Email service configuration (already configured from approval/rejection)
+
+**✅ Acceptance Criteria**:
+- "Mark as Sold-Out" action button available on offer detail view for approved offers
+- Action changes offer status to prevent new coupon generation
+- Existing valid coupons remain redeemable (not affected by stock depletion)
+- Action requires mandatory comment field for stock depletion reason
+- Action logs change with staff member ID and timestamp
+- Email notification sent to merchant confirming stock status change
+- Ability to reactivate offers if stock becomes available again
+- Status change reflected immediately in offer queue
+
+**🧰 Technical Tasks**:
+- Add "Mark as Sold-Out" custom action to existing AdminJS offer interface (reuses approval/rejection infrastructure)
+- Implement stock status validation and prevention logic for coupon generation
+- Add comment field for stock change justification (reuses rejection comment system)
+- Configure stock status email notification (reuses existing email templates)
+- Add audit logging for stock status changes (reuses existing audit system)
+- Create reactivation workflow for restocked offers
+
+**⚙️ External Setup / Config Required**
+- Offer model extension for stock status tracking
+- Email service configuration (already configured)
+- Integration with coupon generation system to respect stock status
+
+**❗ Pending Confirmations**
+- Stock management workflow and merchant communication procedures
+- Reactivation process for restocked offers
+- Email notification content and timing
+
+**📝 Notes & Observations**
+- Reuses existing offer moderation infrastructure significantly reducing development time
+- Important for merchant satisfaction and customer experience
+- Manual process suitable for MVP scale
+
+**📊 PERT Estimation**
+```
+📊 PERT Estimation:
+- Optimistic: 1.5 hours
+- Realistic: 2.5 hours
+    - AdminJS custom action: ~0.5h (reuses approval/rejection infrastructure)
+    - Stock status validation logic: ~0.5h
+    - Email notification: ~0.5h (reuses existing templates)
+    - Audit logging and testing: ~1h
+- Pessimistic: 4 hours
+- Final PERT Estimate: 2.5h
+```
+
+**🖼 Wireframe Reference**
+- Exists: No
+- AdminJS action interface with stock management action
+
+---
+
 ## 📊 Epic Estimation Summary
 
 Epic totals:
 
-- Total user stories: 5
-- Stories with moderate complexity: 5
-- Stories leveraging AdminJS and reusing infrastructure: 5
+- Total user stories: 6
+- Stories with moderate complexity: 6
+- Stories leveraging AdminJS and reusing infrastructure: 6
 
 ### Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 9h
-- Realistic: 15h  
-- Pessimistic: 22.5h
-- Final PERT Estimate: 15.25h
+- Optimistic: 10.5h
+- Realistic: 17.5h  
+- Pessimistic: 26.5h
+- Final PERT Estimate: 17.8h
 ```
 
 ---
