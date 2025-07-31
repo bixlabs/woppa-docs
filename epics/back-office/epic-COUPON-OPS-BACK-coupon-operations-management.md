@@ -114,6 +114,7 @@ Create AdminJS resource for coupons with search capability and detailed view sho
 - AdminJS provides built-in search and CRUD interface
 - Coupon code search is primary functionality for merchant support
 - Focus on essential information display for quick issue resolution
+- Future optimization: Consider materialized views for coupon search and aggregation queries (post-MVP)
 
 **📊 PERT Estimation**
 ```

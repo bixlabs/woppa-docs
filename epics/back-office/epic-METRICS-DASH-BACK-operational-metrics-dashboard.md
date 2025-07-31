@@ -113,6 +113,7 @@ Create AdminJS dashboard displaying the 3 core activity KPIs with basic data vis
 - Leverage AdminJS dashboard capabilities for rapid development
 - Prioritize data accuracy and performance over complex visualization
 - Keep implementation simple for MVP requirements
+- Future optimization: Consider materialized views for KPI aggregations (post-MVP)
 
 **📊 PERT Estimation**
 ```
@@ -182,6 +183,7 @@ Create AdminJS interface displaying ranked lists of most viewed offers and most 
 - Performance queries may need caching for efficiency
 - Focus on actionable insights for merchant guidance
 - Keep visualization simple with ranked lists
+- Future optimization: Consider materialized views for offer performance rankings (post-MVP)
 
 **📊 PERT Estimation**
 ```
