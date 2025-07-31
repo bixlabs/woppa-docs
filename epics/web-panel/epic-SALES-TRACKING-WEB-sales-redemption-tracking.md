@@ -84,23 +84,27 @@ Create React component displaying the 5 core sales metrics from requirements: pa
 - Display accumulated earnings from all merchant offers (total revenue generated)
 - Show codes already paid by Woppa (codes Woppa has financially processed to merchant)
 - Display codes pending payment from Woppa (redeemed codes awaiting payment processing)
+- Include date range filtering to calculate metrics for specific time periods
+- Include category and subcategory filtering to view metrics by offer type
 - Simple, clean layout with clear metric labels and values distinguishing customer payments vs. Woppa payments
-- Data refreshes when page is loaded or refreshed
+- Data refreshes when page is loaded or refreshed or filters change
 - Basic error handling for data unavailability
 - Responsive design for mobile and desktop access
 
 **🧰 Technical Tasks**:
 - Create React component for sales overview
 - Implement API calls for sales metrics data
-- Add sales data aggregation logic
+- Add sales data aggregation logic with filtering capabilities
 - Build simple metrics display components (counters with labels)
+- Implement date range filtering functionality
+- Add category and subcategory filtering components
 - Implement error handling and loading states
 - Style interface using existing design system
 - Add responsive design considerations
 
 **⚙️ External Setup / Config Required**
-- API endpoints for sales data retrieval
-- Database queries for sales metrics calculations
+- API endpoints for sales data retrieval with filtering parameters
+- Database queries for sales metrics calculations with date and category filters
 - Merchant authentication middleware
 - React routing configuration for sales section
 
@@ -113,19 +117,21 @@ Create React component displaying the 5 core sales metrics from requirements: pa
 - Focus on essential sales metrics only as specified in requirements
 - Keep implementation simple for MVP without complex analytics
 - Leverage existing React components and design patterns
+- Future optimization: Consider materialized views for sales metrics aggregations (post-MVP)
 
 **📊 PERT Estimation**
 ```
 📊 PERT Estimation:
-- Optimistic: 6 hours
-- Realistic: 10 hours
-    - React component development: ~2h
+- Optimistic: 12 hours
+- Realistic: 19.5 hours
+    - React component development: ~2.5h (no wireframes - design decisions included)
     - API integration and data fetching: ~2h
-    - Metrics display and styling: ~1.5h
-    - Backend (sales metrics aggregation, payment calculations, API endpoints): ~3h
-    - Error handling and testing: ~1.5h
-- Pessimistic: 14 hours
-- Final PERT Estimate: 10h
+    - Metrics display and styling: ~2.5h (dashboard layout design + responsive)
+    - Date range and category filtering components: ~5h (UI/UX design + implementation)
+    - Backend (sales metrics aggregation, payment calculations, filtering logic, API endpoints): ~6.5h
+    - Error handling and testing: ~1h
+- Pessimistic: 27 hours
+- Final PERT Estimate: 19.5h
 ```
 
 **🖼 Wireframe Reference**
@@ -192,15 +198,16 @@ Create React interface for manual coupon redemption with code input, validation,
 **📊 PERT Estimation**
 ```
 📊 PERT Estimation:
-- Optimistic: 5 hours
-- Realistic: 8.5 hours
-    - React form component: ~1.5h
-    - API integration and validation: ~2h
-    - Error handling and user feedback: ~1.5h
-    - Backend (coupon validation, status updates, ownership verification, API endpoints): ~2.5h
-    - Testing and validation: ~1h
-- Pessimistic: 12 hours
-- Final PERT Estimate: 8.5h
+- Optimistic: 4 hours
+- Realistic: 6 hours
+    - React form component: ~1h (AI-accelerated development)
+    - API integration: ~0.5h (simple POST endpoint call)
+    - Error handling and user feedback: ~1h (AI-assisted patterns)
+    - Backend (coupon validation, status updates, ownership verification, API endpoints): ~2h (AI-assisted with business logic)
+    - Testing and integration: ~1h (real testing and system integration)
+    - Buffer: ~0.5h
+- Pessimistic: 8 hours
+- Final PERT Estimate: 6h
 ```
 
 **🖼 Wireframe Reference**
@@ -209,19 +216,19 @@ Create React interface for manual coupon redemption with code input, validation,
 
 ---
 
-### 🔹 `SALES-TRACKING-WEB-003` – Per-Promotion Performance Metrics
+### 🔹 `SALES-TRACKING-WEB-003` – Per-Offer Performance Metrics
 
 **Summary**:  
-Display detailed performance metrics for individual promotions including total coupons generated, redeemed, accumulated earnings per promotion as specified in requirements.
+Display detailed performance metrics for individual offers including total coupons generated, redeemed, accumulated earnings per offer as specified in requirements.
 
 **Justification**:  
-Merchants need granular visibility into each promotion's performance to understand which offers work best and optimize future campaigns.
+Merchants need granular visibility into each offer's performance to understand which offers work best and optimize future campaigns.
 
 **User Story**:  
-"As a merchant, I want to see detailed metrics for each of my promotions, so that I can understand which offers perform best and plan future campaigns accordingly."
+"As a merchant, I want to see detailed metrics for each of my offers, so that I can understand which offers perform best and plan future campaigns accordingly."
 
 **🎯 Objective**:  
-Create React component displaying the 5 core metrics per promotion from requirements: total coupons generated, redeemed coupons, accumulated earnings, paid codes, pending codes.
+Create React component displaying the 5 core metrics per offer from requirements: total coupons generated, redeemed coupons, accumulated earnings, paid codes, pending codes.
 
 **⛓ Dependencies**:
 - Sales History Overview (SALES-TRACKING-WEB-001)
@@ -229,29 +236,32 @@ Create React component displaying the 5 core metrics per promotion from requirem
 - Backend sales data aggregation system
 
 **✅ Acceptance Criteria**:
-- Display metrics per individual promotion with date range selection
-- Show total coupons generated for each promotion
+- Display metrics per individual offer with date range selection
+- Show total coupons generated for each offer
 - Display redeemed coupons count and percentage
 - Calculate and show accumulated earnings (price × redeemed quantity)
 - Show codes already paid by Woppa and codes pending payment
-- Include basic filtering by date range as specified in requirements
+- Include filtering by date range as specified in requirements
+- Include filtering by category and subcategory to focus on specific offer types
 - Responsive design for mobile and desktop access
 - Data refreshes when page is loaded or filters change
 
 **🧰 Technical Tasks**:
-- Create React component for per-promotion metrics display
-- Implement API calls for promotion-specific performance data
+- Create React component for per-offer metrics display
+- Implement API calls for offer-specific performance data
 - Add earnings calculation logic (price × redeemed quantity)
 - Build metrics display components with proper formatting
-- Implement basic date range filtering
+- Implement date range filtering functionality
+- Add category and subcategory filtering components
 - Style interface using existing design system
 - Add responsive design considerations
 - Implement error handling and loading states
 
 **⚙️ External Setup / Config Required**
-- API endpoints for per-promotion metrics retrieval
-- Database queries for promotion performance calculations
+- API endpoints for per-offer metrics retrieval with filtering parameters
+- Database queries for offer performance calculations with date and category filters
 - Date range filtering logic implementation
+- Category and subcategory filtering logic implementation
 - Payment status tracking integration
 
 **❗ Pending Confirmations**
@@ -262,25 +272,27 @@ Create React component displaying the 5 core metrics per promotion from requirem
 **📝 Notes & Observations**
 - Core functionality for merchants to evaluate offer success
 - Focus on the 5 essential metrics specified in requirements
-- Provides actionable insights for future promotion planning
+- Provides actionable insights for future offer planning
+- Future optimization: Consider materialized views for per-offer metrics aggregations (post-MVP)
 
 **📊 PERT Estimation**
 ```
 📊 PERT Estimation:
-- Optimistic: 5.5 hours
-- Realistic: 9.5 hours
-    - React metrics component: ~2h
+- Optimistic: 10 hours
+- Realistic: 16.5 hours
+    - React metrics component: ~3h (per-offer display design + layout decisions)
     - API integration and calculations: ~2.5h
-    - Date filtering functionality: ~1.5h
-    - Backend (per-promotion metrics calculations, complex aggregations, date filtering): ~3h
-    - Testing and error handling: ~0.5h
-- Pessimistic: 14 hours
-- Final PERT Estimate: 9.5h
+    - Date filtering functionality: ~2h (UI/UX design + implementation)
+    - Category and subcategory filtering components: ~2.5h (complex filtering UI design)
+    - Backend (per-offer metrics calculations, complex aggregations, date and category filtering logic, API endpoints): ~5.5h
+    - Testing and error handling: ~1h (multiple offer scenarios + responsive testing)
+- Pessimistic: 23 hours
+- Final PERT Estimate: 16.5h
 ```
 
 **🖼 Wireframe Reference**
 - Exists: No
-- React interface with per-promotion metrics and date filters
+- React interface with per-offer metrics and filtering capabilities
 
 ---
 
@@ -295,10 +307,10 @@ Epic totals:
 ### Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 15h
-- Realistic: 28h  
-- Pessimistic: 40h
-- Final PERT Estimate: 28h
+- Optimistic: 26h
+- Realistic: 42h  
+- Pessimistic: 58h
+- Final PERT Estimate: 42h
 ```
 
 **React and Requirements-Based Impact:**
@@ -307,5 +319,6 @@ Epic totals:
 - Elimination of offer management overlap with OFFER-MGMT-WEB epic
 - Leveraging existing React components and design system for consistency
 - Simple API integration focused on sales data aggregation and coupon validation
+- **Future Performance Optimization**: Consider materialized views for sales metrics aggregations when scaling beyond MVP (reduces database query complexity and improves response times)
 
 ---
