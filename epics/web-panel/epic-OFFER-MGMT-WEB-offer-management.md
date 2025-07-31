@@ -128,16 +128,16 @@ Provide complete offer creation form with 10 specific fields, dynamic category l
 **📊 PERT Estimation**
 ```
 📊 PERT Estimation:
-- Optimistic: 10 hours
-- Realistic: 17 hours
-    - Frontend UI (10-field form): ~5h
-    - Frontend Logic (validation, dynamic loading): ~3h
-    - Integration (Google Maps, image upload): ~3h
-    - Backend (offer CRUD endpoints, validations, image storage, Google Maps integration): ~3h
+- Optimistic: 12 hours
+- Realistic: 15.5 hours
+    - Frontend UI (10-field form, responsive, no wireframe): ~5h
+    - Frontend Logic (Zod validation, dynamic loading): ~2h
+    - Integration (Google Maps, image upload with quality validation): ~3h
+    - Backend (offer CREATE endpoints, image storage): ~2.5h
     - Manual Testing: ~1h
     - Backend Testing: ~2h
-- Pessimistic: 24 hours
-- Final PERT Estimate: 17h
+- Pessimistic: 22 hours
+- Final PERT Estimate: 16h
 ```
 
 **🖼 Wireframe Reference**
@@ -204,15 +204,15 @@ Reuse offer creation form for editing with restrictions based on offer status.
 **📊 PERT Estimation**
 ```
 📊 PERT Estimation:
-- Optimistic: 4 hours
-- Realistic: 7 hours
-    - Frontend Logic (edit mode, data loading): ~2h
-    - Status validation and restrictions: ~1.5h
-    - Backend (update endpoints, status validations, data retrieval): ~2.5h
+- Optimistic: 3.5 hours
+- Realistic: 5.5 hours
+    - Frontend Logic (edit mode, data loading, reuses generated components): ~1.5h
+    - Status validation and restrictions: ~1h
+    - Backend (update endpoints, status validations, data retrieval): ~2h
     - Testing and error handling: ~0.5h
     - Backend Testing: ~0.5h
-- Pessimistic: 10 hours
-- Final PERT Estimate: 7h
+- Pessimistic: 8 hours
+- Final PERT Estimate: 5.6h
 ```
 
 **🖼 Wireframe Reference**
@@ -278,15 +278,15 @@ Create preview interface that accurately represents mobile app offer display.
 **📊 PERT Estimation**
 ```
 📊 PERT Estimation:
-- Optimistic: 5 hours
-- Realistic: 8 hours
-    - Frontend UI (preview component): ~3h
-    - Preview formatting and styling: ~2h
-    - Integration with forms and submission: ~1.5h
+- Optimistic: 4 hours
+- Realistic: 6 hours
+    - Frontend UI (preview component, auto-generated): ~2h
+    - Preview formatting and styling (accelerated with AI): ~1.5h
+    - Integration with forms and submission: ~1h
     - Backend (submission endpoint, status management): ~1h
     - Testing and refinement: ~0.5h
-- Pessimistic: 12 hours
-- Final PERT Estimate: 8h
+- Pessimistic: 9 hours
+- Final PERT Estimate: 6.17h
 ```
 
 **🖼 Wireframe Reference**
@@ -355,12 +355,12 @@ Provide duplication functionality that copies all offer data and opens creation 
 📊 PERT Estimation:
 - Optimistic: 3 hours
 - Realistic: 6 hours
-    - Frontend Logic (duplication workflow): ~2h
-    - Data copying and form pre-population: ~1.5h
-    - Backend (data retrieval, copy logic, image handling): ~2h
+    - Frontend Logic (duplication workflow, auto-generated): ~1.5h
+    - Data copying and form pre-population (accelerated): ~1h
+    - Backend (data retrieval, copy logic, image handling): ~3h
     - Testing and edge cases: ~0.5h
-- Pessimistic: 9 hours
-- Final PERT Estimate: 6h
+- Pessimistic: 10 hours
+- Final PERT Estimate: 6.17h
 ```
 
 **🖼 Wireframe Reference**
@@ -399,23 +399,28 @@ Implement comprehensive status tracking system with clear visual indicators for 
 - Status history/timestamps visible for transparency
 - Email notifications sent when status changes
 - Status filtering capabilities in offer lists
-- Real-time status updates when page refreshes
+- Date range filtering to view offers by creation/expiration date
+- Category and subcategory filtering to view offers by type
+- Real-time status updates when page refreshes or filters change
 
 **🧰 Technical Tasks**:
 - Create status indicator components with appropriate styling
 - Implement status display logic for offer lists and details
 - Add automatic status update system for expired offers
 - Create status filtering functionality
+- Implement date range filtering for offer lists
+- Add category and subcategory filtering components
 - Implement status change notification system
 - Add status history tracking and display
 - Style status indicators with consistent design
 - Add status-based action restrictions (edit, duplicate, etc.)
 
 **⚙️ External Setup / Config Required**
-- Backend API endpoints for status management
+- Backend API endpoints for status management with filtering parameters
 - Scheduled jobs for automatic status updates (expiration)
 - Email service configuration for status notifications
 - Status change webhooks from staff moderation system
+- Database queries with date range and category filtering capabilities
 
 **❗ Pending Confirmations**
 - Exact status transition rules and timing
@@ -431,15 +436,16 @@ Implement comprehensive status tracking system with clear visual indicators for 
 **📊 PERT Estimation**
 ```
 📊 PERT Estimation:
-- Optimistic: 5 hours
-- Realistic: 9.5 hours
-    - Frontend UI (status indicators, filtering): ~3h
-    - Status update logic and automation: ~2h
-    - Backend (status management, auto-updates, email notifications, scheduled jobs): ~3.5h
-    - Testing and status transitions: ~0.5h
-    - Backend Testing: ~0.5h
+- Optimistic: 6 hours
+- Realistic: 10 hours
+    - Frontend UI (offers table/list with columns, pagination): ~4h
+    - Status indicators and visual badges: ~1h
+    - Date range filtering components (accelerated): ~1h
+    - Category and subcategory filtering components (accelerated): ~1h
+    - Backend (list API endpoints, filtering logic): ~2.5h
+    - Testing and UI validation: ~0.5h
 - Pessimistic: 14 hours
-- Final PERT Estimate: 9.5h
+- Final PERT Estimate: 10h
 ```
 
 **🖼 Wireframe Reference**
@@ -460,18 +466,10 @@ Epic totals:
 ### Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 27h
-- Realistic: 47.5h  
-- Pessimistic: 69h
-- Final PERT Estimate: 47.5h
+- Optimistic: 28.5h
+- Realistic: 43h  
+- Pessimistic: 63h
+- Final PERT Estimate: 44h
 ```
-
-**React and Requirements-Based Impact:**
-- Comprehensive coverage of offer management requirements from "Carga de promociones por parte del comercio" section
-- Focus on essential MVP functionality: creation, editing, preview, duplication, status tracking
-- Elimination of sales/performance features reduces scope overlap with SALES-TRACKING-WEB epic
-- Leveraging existing React components and design system for consistency
-- Google Maps and image processing integration adds complexity but provides core functionality
-- Clear separation from sales tracking and staff moderation epics
 
 ---
