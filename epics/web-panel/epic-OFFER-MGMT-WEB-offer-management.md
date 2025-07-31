@@ -454,22 +454,101 @@ Implement comprehensive status tracking system with clear visual indicators for 
 
 ---
 
+### 🔹 `OFFER-MGMT-WEB-006` – Scheduled Jobs and Automation
+
+**Summary**:  
+Implement backend scheduled jobs for automated coupon expiration processing and email notifications as specified in requirements.
+
+**Justification**:  
+System requires automated processes to handle coupon expiration based on redemption time limits and send email notifications for status changes without manual intervention.
+
+**User Story**:  
+"As a system administrator, I want automated jobs to handle coupon expiration and email notifications, so that the platform operates correctly without manual intervention."
+
+**🎯 Objective**:  
+Implement scheduled jobs for coupon expiration processing and email notification system using backend job scheduling.
+
+**⛓ Dependencies**:
+- Offer creation system (OFFER-MGMT-WEB-001)
+- Coupon generation system (from mobile app requirements)
+- Email service configuration
+- Backend job scheduling infrastructure
+
+**✅ Acceptance Criteria**:
+- Daily job to process expired coupons based on redemption time limits (6h, 12h, 1 day, 3 days, 1 week)
+- Change coupon status from "pagado" to "expirado" when redemption deadline passes
+- Email notification job for time-based notifications (coupon expiration alerts if needed)
+- Job monitoring and error handling for failed executions
+- Configurable job schedules and retry mechanisms
+- Logging system for job execution tracking and debugging
+- Database cleanup jobs for expired temporary data if needed
+
+**🧰 Technical Tasks**:
+- Implement job scheduling infrastructure (cron jobs or task queue)
+- Create coupon expiration job with time-based logic
+- Implement time-based email notifications (if required for coupon expiration)
+- Add job monitoring and error handling mechanisms
+- Create database queries for bulk coupon status updates
+- Implement email templates for automated notifications
+- Add logging and monitoring for scheduled job execution
+- Configure retry mechanisms for failed jobs
+- Add job execution history tracking
+
+**⚙️ External Setup / Config Required**
+- Job scheduling service configuration (cron, node-cron, or task queue)
+- Email service provider setup (SendGrid, SES, or similar)
+- Email templates configuration for different notification types
+- Job monitoring and alerting system setup
+
+**❗ Pending Confirmations**
+- Email service provider preference and configuration
+- Specific email template content and styling requirements
+- Job execution frequency and timing preferences
+- Error handling and retry policy specifications
+
+**📝 Notes & Observations**
+- Critical for system functionality - coupons must expire automatically
+- Email notifications are required per business requirements
+- Jobs should be resilient and handle failures gracefully
+- Consider timezone handling for Brazilian market
+
+**📊 PERT Estimation**
+```
+📊 PERT Estimation:
+- Optimistic: 3.5 hours
+- Realistic: 6 hours
+    - Job scheduling infrastructure setup: ~1.5h
+    - Coupon expiration job implementation: ~2.5h
+    - Time-based notifications (if needed): ~1h
+    - Job monitoring and error handling: ~0.5h
+    - Testing and validation: ~0.5h
+- Pessimistic: 9 hours
+- Final PERT Estimate: 6h
+```
+
+**🖼 Wireframe Reference**
+- Exists: No
+- Backend system - no UI required
+
+---
+
 ## 📊 Epic Estimation Summary
 
 Epic totals:
 
-- Total user stories: 5
-- Stories with moderate complexity: 4
+- Total user stories: 6
+- Stories with moderate complexity: 5
 - Stories with high complexity: 1
 - Stories requiring external API integration: 5
+- Backend-only stories: 1
 
 ### Manual 3-point Estimation for Epic (PERT)
 
 ```
-- Optimistic: 28.5h
-- Realistic: 43h  
-- Pessimistic: 63h
-- Final PERT Estimate: 44h
+- Optimistic: 32h
+- Realistic: 49h  
+- Pessimistic: 72h
+- Final PERT Estimate: 50h
 ```
 
 ---
